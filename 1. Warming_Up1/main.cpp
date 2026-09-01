@@ -317,6 +317,7 @@ int main(void) {
 
 		// 프로그램 종료
 		else if (command == "q") isRunning = false;
+		else cout << "잘못된 명령어입니다. \"help\"를 통해 명령어를 확인할 수 있습니다." << endl;
 	}
 
 	system("pause");
