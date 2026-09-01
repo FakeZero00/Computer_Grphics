@@ -9,11 +9,16 @@ public:
 			int v31, int v32, int v33, int v34,
 			int v41, int v42, int v43, int v44);
 
-	void printmMatrix() const;
 	void printMatrix() const;
+	void printtMatrix() const;
+
+	int getData(int row, int col) const;
+	int setData(int row, int col, int value);
+	void settData();
 	int getmmDet() const;
 	int getmDet() const;
 	int getDet() const;
+	int gettDet() const;
 
 	CMatrix operator*(CMatrix& other);
 	CMatrix operator+(CMatrix& other);
@@ -21,4 +26,5 @@ public:
 
 private:
 	int matrixData[4][4] = { {0} };
+	int tmatrixData[4][4] = { {0} };
 };

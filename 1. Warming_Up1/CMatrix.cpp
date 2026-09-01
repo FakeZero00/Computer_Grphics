@@ -24,24 +24,72 @@ CMatrix::CMatrix(int v00, int v01, int v02, int v03,
 	matrixData[3][1] = v31;
 	matrixData[3][2] = v32;
 	matrixData[3][3] = v33;
-}
 
-void CMatrix::printmMatrix() const {
-	for (int i : views::iota(0, 3)) {
-		for (int j : views::iota(0, 3)) {
-			std::cout << matrixData[j][i] << " ";
-		}
-		std::cout << std::endl;
-	}
+	tmatrixData[0][0] = v00;
+	tmatrixData[0][1] = v10;
+	tmatrixData[0][2] = v20;
+	tmatrixData[0][3] = v30;
+	tmatrixData[1][0] = v01;
+	tmatrixData[1][1] = v11;
+	tmatrixData[1][2] = v21;
+	tmatrixData[1][3] = v31;
+	tmatrixData[2][0] = v02;
+	tmatrixData[2][1] = v12;
+	tmatrixData[2][2] = v22;
+	tmatrixData[2][3] = v32;
+	tmatrixData[3][0] = v03;
+	tmatrixData[3][1] = v13;
+	tmatrixData[3][2] = v23;
+	tmatrixData[3][3] = v33;
 }
 
 void CMatrix::printMatrix() const {
 	for (int i : views::iota(0, 4)) {
 		for (int j : views::iota(0, 4)) {
-			std::cout << matrixData[j][i] << " ";
+			cout << matrixData[i][j] << " ";
 		}
-		std::cout << std::endl;
+		cout << endl;
 	}
+}
+
+void CMatrix::printtMatrix() const {
+	for (int i : views::iota(0, 4)) {
+		for (int j : views::iota(0, 4)) {
+			cout << tmatrixData[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+int CMatrix::getData(int row, int col) const {
+	return matrixData[row][col];
+}
+
+int CMatrix::setData(int row, int col, int value) {
+	matrixData[row][col] = value;
+	CMatrix::settData();
+	return value;
+}
+
+void CMatrix::settData() {
+	tmatrixData[0][0] = matrixData[0][0];
+	tmatrixData[0][1] = matrixData[1][0];
+	tmatrixData[0][2] = matrixData[2][0];
+	tmatrixData[0][3] = matrixData[3][0];
+	tmatrixData[1][0] = matrixData[0][1];
+	tmatrixData[1][1] = matrixData[1][1];
+	tmatrixData[1][2] = matrixData[2][1];
+	tmatrixData[1][3] = matrixData[3][1];
+	tmatrixData[2][0] = matrixData[0][2];
+	tmatrixData[2][1] = matrixData[1][2];
+	tmatrixData[2][2] = matrixData[2][2];
+	tmatrixData[2][3] = matrixData[3][2];
+	tmatrixData[3][0] = matrixData[0][3];
+	tmatrixData[3][1] = matrixData[1][3];
+	tmatrixData[3][2] = matrixData[2][3];
+	tmatrixData[3][3] = matrixData[3][3];
+
+	return;
 }
 
 int CMatrix::getmmDet() const {
@@ -50,33 +98,97 @@ int CMatrix::getmmDet() const {
 
 int CMatrix::getmDet() const {
 	int det = 0;
-	for (int i : views::iota(0, 3)) {
-		CMatrix minorMatrix{
-			matrixData[(i + 1) % 3][1], matrixData[(i + 2) % 3][1], 0, 0,
-			matrixData[(i + 1) % 3][2], matrixData[(i + 2) % 3][2], 0, 0,
+	CMatrix minorMatrix1{
+			matrixData[1][1], matrixData[1][2], 0, 0,
+			matrixData[2][1], matrixData[2][2], 0, 0,
 			0, 0, 0, 0,
 			0, 0, 0, 0
-		};
-		//minorMatrix.printmMatrix();
-		det += (matrixData[i][0] * minorMatrix.getmmDet() * ((i % 2 == 0) ? 1 : -1));
-	}
-	cout << "3x3 행렬의 행렬식: " << det << endl;
+	};
+	CMatrix minorMatrix2{
+		matrixData[1][0], matrixData[1][2], 0, 0,
+		matrixData[2][0], matrixData[2][2], 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0
+	};
+	CMatrix minorMatrix3{
+		matrixData[1][0], matrixData[1][1], 0, 0,
+		matrixData[2][0], matrixData[2][1], 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0
+	};
+	det += matrixData[0][0] * minorMatrix1.getmmDet();
+	det -= matrixData[0][1] * minorMatrix2.getmmDet();
+	det += matrixData[0][2] * minorMatrix3.getmmDet();
 
 	return det;
 }
 
 int CMatrix::getDet() const {
 	int det = 0;
-	for (int i : views::iota(0, 4)) {
-		CMatrix minorMatrix{
-			matrixData[(i + 1) % 4][1], matrixData[(i + 1) % 4][2], matrixData[(i + 1) % 4][3], 0,
-			matrixData[(i + 2) % 4][1], matrixData[(i + 2) % 4][2], matrixData[(i + 2) % 4][3], 0,
-			matrixData[(i + 3) % 4][1], matrixData[(i + 3) % 4][2], matrixData[(i + 3) % 4][3], 0,
+	CMatrix minorMatrix1{
+			matrixData[1][1], matrixData[1][2], matrixData[1][3], 0,
+			matrixData[2][1], matrixData[2][2], matrixData[2][3], 0,
+			matrixData[3][1], matrixData[3][2], matrixData[3][3], 0,
 			0, 0, 0, 0
-		};
-		minorMatrix.printmMatrix();
-		det += (matrixData[i][0] * minorMatrix.getmDet() * ((i % 2 == 0) ? 1 : -1));
-	}
+	};
+	CMatrix minorMatrix2{
+			matrixData[1][0], matrixData[1][2], matrixData[1][3], 0,
+			matrixData[2][0], matrixData[2][2], matrixData[2][3], 0,
+			matrixData[3][0], matrixData[3][2], matrixData[3][3], 0,
+			0, 0, 0, 0
+	};
+	CMatrix minorMatrix3{
+			matrixData[1][0], matrixData[1][1], matrixData[1][3], 0,
+			matrixData[2][0], matrixData[2][1], matrixData[2][3], 0,
+			matrixData[3][0], matrixData[3][1], matrixData[3][3], 0,
+			0, 0, 0, 0
+	};
+	CMatrix minorMatrix4{
+			matrixData[1][0], matrixData[1][1], matrixData[1][2], 0,
+			matrixData[2][0], matrixData[2][1], matrixData[2][2], 0,
+			matrixData[3][0], matrixData[3][1], matrixData[3][2], 0,
+			0, 0, 0, 0
+	};
+
+	det += matrixData[0][0] * minorMatrix1.getmDet();
+	det -= matrixData[0][1] * minorMatrix2.getmDet();
+	det += matrixData[0][2] * minorMatrix3.getmDet();
+	det -= matrixData[0][3] * minorMatrix4.getmDet();
+
+	return det;
+}
+
+int CMatrix::gettDet() const {
+	int det = 0;
+	CMatrix minorMatrix1{
+			tmatrixData[1][1], tmatrixData[1][2], tmatrixData[1][3], 0,
+			tmatrixData[2][1], tmatrixData[2][2], tmatrixData[2][3], 0,
+			tmatrixData[3][1], tmatrixData[3][2], tmatrixData[3][3], 0,
+			0, 0, 0, 0
+	};
+	CMatrix minorMatrix2{
+			tmatrixData[1][0], tmatrixData[1][2], tmatrixData[1][3], 0,
+			tmatrixData[2][0], tmatrixData[2][2], tmatrixData[2][3], 0,
+			tmatrixData[3][0], tmatrixData[3][2], tmatrixData[3][3], 0,
+			0, 0, 0, 0
+	};
+	CMatrix minorMatrix3{
+			tmatrixData[1][0], tmatrixData[1][1], tmatrixData[1][3], 0,
+			tmatrixData[2][0], tmatrixData[2][1], tmatrixData[2][3], 0,
+			tmatrixData[3][0], tmatrixData[3][1], tmatrixData[3][3], 0,
+			0, 0, 0, 0
+	};
+	CMatrix minorMatrix4{
+			tmatrixData[1][0], tmatrixData[1][1], tmatrixData[1][2], 0,
+			tmatrixData[2][0], tmatrixData[2][1], tmatrixData[2][2], 0,
+			tmatrixData[3][0], tmatrixData[3][1], tmatrixData[3][2], 0,
+			0, 0, 0, 0
+	};
+
+	det += tmatrixData[0][0] * minorMatrix1.getmDet();
+	det -= tmatrixData[0][1] * minorMatrix2.getmDet();
+	det += tmatrixData[0][2] * minorMatrix3.getmDet();
+	det -= tmatrixData[0][3] * minorMatrix4.getmDet();
 
 	return det;
 }
