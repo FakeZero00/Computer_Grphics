@@ -50,6 +50,7 @@ int main() {
 		//종료
 		else if (command == "q") isRunning = false;
 
+		//명령어 목록
 		else if (command == "help") {
 			cout << "명령어 목록:\n";
 			cout << "r: 보드를 리셋하고 다시 시작\n";
