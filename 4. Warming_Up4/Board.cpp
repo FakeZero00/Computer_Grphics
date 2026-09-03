@@ -1,5 +1,6 @@
 #include<iostream>
 #include <random>
+#include <cctype>
 #include <windows.h>
 #include "Board.h"
 using namespace std;
@@ -78,12 +79,14 @@ void Board::print() const {
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[i][j]);
 				cout << data[i][j] << "\t";
 			}
-			if (isSuccess[i][j]) {
+			else if (isSuccess[i][j]) {
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[i][j]);
-				cout << toupper(data[i][j]) << "\t";
+				cout << static_cast<char>(toupper(data[i][j])) << "\t";
 			}
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-			cout << "*" << "\t";
+			else {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+				cout << "*" << "\t";
+			}
 		}
 		cout << endl;
 	}
@@ -104,7 +107,7 @@ void Board::printAll() const {
 		for (size_t j = 0; j < col; ++j) {
 			if (isSuccess[i][j]) {
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[i][j]);
-				cout << toupper(data[i][j]) << "\t";
+				cout << static_cast<char>(toupper(data[i][j])) << "\t";
 			}
 			else {
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[i][j]);
@@ -136,6 +139,14 @@ char Board::getCell(size_t row, size_t col) const {
 
 void Board::setVisited(size_t row, size_t col, bool visited) {
 	isVisited[row][col] = visited;
+}
+
+void Board::setSuccess(size_t row, size_t col, bool success) {
+	isSuccess[row][col] = success;
+}
+
+void Board::openJoker() {
+	isSuccess[jokerPos[0]][jokerPos[1]] = true;
 }
 
 bool Board::validCheck(size_t row, size_t col) const {

@@ -15,6 +15,8 @@ public:
 	void setCell(size_t row, size_t col, char value);
 	char getCell(size_t row, size_t col) const;
 	void setVisited(size_t row, size_t col, bool visited);
+	void setSuccess(size_t row, size_t col, bool success);
+	void openJoker();
 	bool validCheck(size_t row, size_t col) const;
 	bool isComplete() const;
 
