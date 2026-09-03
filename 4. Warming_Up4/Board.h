@@ -9,10 +9,12 @@ public:
 	Board(size_t row, size_t col);
 
 	void print() const;
+	void printAll() const;
 	void clearVisited();
 
 	void setCell(size_t row, size_t col, char value);
 	char getCell(size_t row, size_t col) const;
+	void setVisited(size_t row, size_t col, bool visited);
 	bool validCheck(size_t row, size_t col) const;
 	bool isComplete() const;
 

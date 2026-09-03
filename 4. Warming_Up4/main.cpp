@@ -21,7 +21,42 @@ int main() {
 	}
 
 	Board board(row, col);
-	board.print();
+	bool isRunning = true;
+	string command;
+
+	while (isRunning)
+	{
+		board.print();
+
+		cout << "뒤집을 좌표(예: \"a1 b2\")나 명령어(\"help\"로 명령어들을 볼 수 있습니다)를 입력하세요\n";
+		cout << "명령어 입력: ";
+		getline(cin, command);
+
+		//리셋하고 다시 시작
+		if (command == "r") {
+			board = Board(row, col);
+			system("cls");
+		}
+
+		//일시적으로 모든 칸을 뒤집음
+		else if (command == "h") {
+			system("cls");
+			board.printAll();
+			system("pause");
+
+			system("cls");
+		}
+
+		//종료
+		else if (command == "q") isRunning = false;
+
+		else if (command == "help") {
+			cout << "명령어 목록:\n";
+			cout << "r: 보드를 리셋하고 다시 시작\n";
+			cout << "h: 모든 칸을 일시적으로 뒤집음\n";
+			cout << "q: 게임 종료\n";
+		}
+	}
 
 	system("pause");
 }

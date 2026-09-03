@@ -26,13 +26,13 @@ Board::Board(size_t row, size_t col) : row(row), col(col), data(row, vector<char
 	int setColor = 1;
 
 	while (!isComplete()) {
-		size_t row = randomRow(dre);
-		size_t col = randomCol(dre);
+		size_t prow = randomRow(dre);
+		size_t pcol = randomCol(dre);
 
 		if (value == '@' && (row * col) % 2 == 1) {
-			data[row][col] = value;
-			isValid[row][col] = true;
-			color[row][col] = 15;
+			data[prow][pcol] = value;
+			isValid[prow][pcol] = true;
+			color[prow][pcol] = 15;
 
 			value = 'a';
 			continue;
@@ -42,15 +42,15 @@ Board::Board(size_t row, size_t col) : row(row), col(col), data(row, vector<char
 			continue;
 		}
 
-		if (validCheck(row, col)) continue;
+		if (validCheck(prow, pcol)) continue;
 		
-		data[row][col] = value;
-		isValid[row][col] = true;
-		color[row][col] = setColor;
+		data[prow][pcol] = value;
+		isValid[prow][pcol] = true;
+		color[prow][pcol] = setColor;
 
 		if (isComplete()) {
-			jokerPos[0] = row;
-			jokerPos[1] = col;
+			jokerPos[0] = prow;
+			jokerPos[1] = pcol;
 			break;
 		}
 
@@ -87,6 +87,43 @@ void Board::print() const {
 		}
 		cout << endl;
 	}
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+}
+
+void Board::printAll() const {
+	cout << "\t";
+	for (char i = 'a'; i < 'a' + static_cast<char>(col); ++i) {
+		cout << i << "\t";
+	}
+
+	cout << endl;
+
+	for (size_t i = 0; i < row; ++i) {
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+		cout << i << "\t";
+		for (size_t j = 0; j < col; ++j) {
+			if (isSuccess[i][j]) {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[i][j]);
+				cout << toupper(data[i][j]) << "\t";
+			}
+			else {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[i][j]);
+				cout << data[i][j] << "\t";
+			}
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+		}
+		cout << endl;
+	}
+
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+}
+
+void Board::clearVisited() {
+	for (size_t i = 0; i < row; ++i) {
+		for (size_t j = 0; j < col; ++j) {
+			isVisited[i][j] = false;
+		}
+	}
 }
 
 void Board::setCell(size_t row, size_t col, char value) {
@@ -95,6 +132,10 @@ void Board::setCell(size_t row, size_t col, char value) {
 
 char Board::getCell(size_t row, size_t col) const {
 	return data[row][col];
+}
+
+void Board::setVisited(size_t row, size_t col, bool visited) {
+	isVisited[row][col] = visited;
 }
 
 bool Board::validCheck(size_t row, size_t col) const {
