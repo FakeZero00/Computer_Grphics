@@ -1,67 +1,175 @@
+#include <iostream>
+#include <iomanip>
+#include <windows.h>
 #include "Square.h"
 #include "Board.h"
 using namespace std;
+
+Board::Board() {
+	for (int i = 0; i < width; i++) {
+		board.push_back(vector<char>());
+		for (int j = 0; j < height; j++) {
+			board[i].push_back('.');
+		}
+	}
+}
 
 void Board::addSquare(const Square& square) {
 	squares.push_back(square);
 }
 
-void Board::checkCollisions() {
-	for (int i = 0; i < squares.size(); i++) {
-		for (int j = i + 1; j < squares.size(); j++) {
-			//사각형1의 왼쪽이 사각형2의 오른쪽보다 오른쪽
-			if (squares[i].getMin().first > squares[j].getMax().first) continue;
-			//사각형1의 오른쪽이 사각형2의 왼쪽보다 왼쪽
-			else if (squares[i].getMax().first < squares[j].getMin().first) continue;
-			//사각형1의 위가 사각형2의 아래보다 아래
-			else if (squares[i].getMin().second > squares[j].getMax().second) continue;
-			//사각형1의 아래가 사각형2의 위보다 위
-			else if (squares[i].getMax().second < squares[j].getMin().second) continue;
-
-			pair<int, int> iPos;
-			pair<int, int> jPos;
-
-			//범위 겹치는 사각형1의 X 구하기
-			if (squares[i].getMin().first >= squares[j].getMin().first &&
-				squares[i].getMin().first <= squares[j].getMax().first) iPos.first = squares[i].getMin().first;
-			else if (squares[i].getMax().first >= squares[j].getMin().first &&
-					squares[i].getMax().first <= squares[j].getMax().first) iPos.first = squares[i].getMax().first;
-
-			//범위 겹치는 사각형1의 Y 구하기
-			if (squares[i].getMin().second >= squares[j].getMin().second &&
-				squares[i].getMin().second <= squares[j].getMax().second) iPos.second = squares[i].getMin().second;
-			else if (squares[i].getMax().second >= squares[j].getMin().second &&
-				squares[i].getMax().second <= squares[j].getMax().second) iPos.second = squares[i].getMax().second;
-
-			//범위 겹치는 사각형2의 X 구하기
-			if (squares[j].getMin().first >= squares[i].getMin().first &&
-				squares[j].getMin().first <= squares[i].getMax().first) jPos.first = squares[j].getMin().first;
-			else if (squares[j].getMax().first >= squares[i].getMin().first &&
-				squares[j].getMax().first <= squares[i].getMax().first) jPos.first = squares[j].getMax().first;
-
-			//범위 겹치는 사각형2의 Y 구하기
-			if (squares[j].getMin().second >= squares[i].getMin().second &&
-				squares[j].getMin().second <= squares[i].getMax().second) jPos.second = squares[j].getMin().second;
-			else if (squares[j].getMax().second >= squares[i].getMin().second &&
-				squares[j].getMax().second <= squares[i].getMax().second) jPos.second = squares[j].getMax().second;
-
-			pair<int, int> minPos;
-			pair<int, int> maxPos;
-
-			minPos.first = min(iPos.first, jPos.first);
-			minPos.second = min(iPos.second, jPos.second);
-			maxPos.first = max(iPos.first, jPos.first);
-			maxPos.second = max(iPos.second, jPos.second);
-
-			hitCollisions.push_back(make_pair(minPos, maxPos));
-		}
-	}
+int Board::getSquare1Width() const {
+	return squares[0].getWidth();
 }
 
-void Board::printBoard() const {
-	for (int u = 0; u < 30; u++) {
-		for (int v = 0; v < 30; v++) {
+int Board::getSquare1Height() const {
+	return squares[0].getHeight();
+}
 
+int Board::getSquare2Width() const {
+	return squares[1].getWidth();
+}
+
+int Board::getSquare2Height() const {
+	return squares[1].getHeight();
+}
+
+void Board::moveSquare1(int dx, int dy) {
+	pair<int, int> minPos = squares[0].getMin();
+	pair<int, int> maxPos = squares[0].getMax();
+	minPos.first += dy;
+	minPos.second += dx;
+	maxPos.first += dy;
+	maxPos.second += dx;
+	squares[0].setMin(minPos.first, minPos.second);
+	squares[0].setMax(maxPos.first, maxPos.second);
+}
+
+void Board::moveSquare2(int dx, int dy) {
+	pair<int, int> minPos = squares[1].getMin();
+	pair<int, int> maxPos = squares[1].getMax();
+	minPos.first += dy;
+	minPos.second += dx;
+	maxPos.first += dy;
+	maxPos.second += dx;
+	squares[1].setMin(minPos.first, minPos.second);
+	squares[1].setMax(maxPos.first, maxPos.second);
+}
+
+void Board::zoomSquare1(int dx, int dy) {
+	pair<int, int> minPos = squares[0].getMin();
+	pair<int, int> maxPos = squares[0].getMax();
+
+	if (squares[0].getWidth() + dx >= width ||
+		squares[0].getWidth() + dx < 0) return;
+	if (squares[0].getHeight() + dy >= height ||
+		squares[0].getHeight() + dy < 0) return;
+
+	if (maxPos.first + dy >= height) minPos.first -= dy;
+	else maxPos.first += dy;
+
+	if (maxPos.second + dx >= width) minPos.second -= dx;
+	else maxPos.second += dx;
+
+	squares[0].setMin(minPos.first, minPos.second);
+	squares[0].setMax(maxPos.first, maxPos.second);
+}
+
+void Board::zoomSquare2(int dx, int dy) {
+	pair<int, int> minPos = squares[1].getMin();
+	pair<int, int> maxPos = squares[1].getMax();
+
+	if (squares[1].getWidth() + dx >= width ||
+		squares[1].getWidth() + dx < 0) return;
+	if (squares[1].getHeight() + dy >= height ||
+		squares[1].getHeight() + dy < 0) return;
+
+	if (maxPos.first + dy >= height) minPos.first -= dy;
+	else maxPos.first += dy;
+
+	if (maxPos.second + dx >= width) minPos.second -= dx;
+	else maxPos.second += dx;
+
+	squares[1].setMin(minPos.first, minPos.second);
+	squares[1].setMax(maxPos.first, maxPos.second);
+}
+
+int Board::getWidth() const {
+	return width;
+}
+
+int Board::getHeight() const {
+	return height;
+}
+
+void Board::setWidth(int w) {
+	if (w < 10) return;
+	else if (w > 40) return;
+	width = w;
+}
+
+void Board::setHeight(int h) {
+	if (h < 10) return;
+	else if (h > 40) return;
+	height = h;
+}
+
+void Board::resetBoard() {
+	vector<vector<char>> newBoard;
+
+	for (int i = 0; i < width; i++) {
+		newBoard.push_back(vector<char>());
+		for (int j = 0; j < height; j++) {
+			newBoard[i].push_back('.');
 		}
 	}
+	
+	board = newBoard;
+}
+
+void Board::printBoard() {
+	resetBoard();
+
+	char alphabet = 'O';
+	for (auto& square : squares) {
+		for (int u = square.getMin().first; u <= square.getMax().first; u++) {
+			for (int v = square.getMin().second; v <= square.getMax().second; v++) {
+				int row = u;
+				int col = v;
+				
+				if (row < 0) {
+					while (row >= 0) row += width;
+				}
+				else if (u >= width) {
+					while (row >= width) row -= width;
+				}
+				else row = u;
+
+				if (col < 0) {
+					while (col >= 0) col += height;
+				}
+				else if (col >= height) {
+					while (col >= height) col -= height;
+				}
+				else col = v;
+
+				if (alphabet == 'X' && board[row][col] == 'O') board[row][col] = '#';
+				else board[row][col] = alphabet;
+			}
+		}
+		alphabet = 'X';
+	}
+
+	cout << setw(5);
+	for (int u = 0; u < width; u++) {
+		for (int v = 0; v < height; v++) {
+			if (board[u][v] == 'O') SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4); // 붉은색
+			else if (board[u][v] == 'X') SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3); // 파란색
+			else if (board[u][v] == '#') SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5); // 보라색
+			else SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7); // 기본 색상
+			cout << board[u][v] << setw(5);
+		}
+		cout << endl;
+	}
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }

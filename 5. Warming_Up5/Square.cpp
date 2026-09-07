@@ -19,9 +19,9 @@ void Square::setMax(int x, int y) {
 }
 
 int Square::getWidth() const {
-	return abs(maxPos.first - minPos.first);
+	return abs(maxPos.second - minPos.second) + 1;
 }
 
 int Square::getHeight() const {
-	return abs(maxPos.second - minPos.second);
+	return abs(maxPos.first - minPos.first) + 1;
 }
