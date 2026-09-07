@@ -1,27 +1,27 @@
 #include "Square.h"
 
-Square::Square(int x1, int y1, int x2, int y2) : pos1(x1, y1), pos2(x2, y2) {}
+Square::Square(int x1, int y1, int x2, int y2) : minPos(x1, y1), maxPos(x2, y2) {}
 
-pair<int, int> Square::getPos1() const {
-	return pos1;
+pair<int, int> Square::getMin() const {
+	return minPos;
 }
 
-pair<int, int> Square::getPos2() const {
-	return pos2;
+pair<int, int> Square::getMax() const {
+	return maxPos;
 }
 
-void Square::setPos1(int x, int y) {
-	pos1 = { x, y };
+void Square::setMin(int x, int y) {
+	minPos = { x, y };
 }
 
-void Square::setPos2(int x, int y) {
-	pos2 = { x, y };
+void Square::setMax(int x, int y) {
+	maxPos = { x, y };
 }
 
 int Square::getWidth() const {
-	return abs(pos2.first - pos1.first);
+	return abs(maxPos.first - minPos.first);
 }
 
 int Square::getHeight() const {
-	return abs(pos2.second - pos1.second);
+	return abs(maxPos.second - minPos.second);
 }
