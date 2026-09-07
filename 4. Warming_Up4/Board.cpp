@@ -25,6 +25,7 @@ Board::Board(size_t row, size_t col) : row(row), col(col), data(row, vector<char
 	char value = '@';
 	int count = 0;
 	int setColor = 1;
+	pair<size_t, size_t> currentPos;
 
 	while (!isComplete()) {
 		size_t prow = randomRow(dre);
@@ -49,16 +50,15 @@ Board::Board(size_t row, size_t col) : row(row), col(col), data(row, vector<char
 		isValid[prow][pcol] = true;
 		color[prow][pcol] = setColor;
 
-		if (isComplete()) {
-			jokerPos[0] = prow;
-			jokerPos[1] = pcol;
-			break;
+		if (count == 0) {
+			currentPos = make_pair(prow, pcol);
+			count++;
 		}
-
-		if (count == 0) count++;
 		else if (count == 1) {
 			value++;
 			setColor++;
+			pairs[currentPos] = make_pair(prow, pcol);
+			pairs[make_pair(prow, pcol)] = currentPos;
 			count = 0;
 		}
 	}
@@ -75,13 +75,13 @@ void Board::print() const {
 	for (size_t i = 0; i < row; ++i) {
 		cout << i << "\t";
 		for (size_t j = 0; j < col; ++j) {
-			if (isVisited[i][j]) {
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[i][j]);
-				cout << data[i][j] << "\t";
-			}
-			else if (isSuccess[i][j]) {
+			if (isSuccess[i][j]) {
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[i][j]);
 				cout << static_cast<char>(toupper(data[i][j])) << "\t";
+			}
+			else if (isVisited[i][j]) {
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color[i][j]);
+				cout << data[i][j] << "\t";
 			}
 			else {
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
@@ -145,8 +145,9 @@ void Board::setSuccess(size_t row, size_t col, bool success) {
 	isSuccess[row][col] = success;
 }
 
-void Board::openJoker() {
-	isSuccess[jokerPos[0]][jokerPos[1]] = true;
+void Board::openJoker(pair<size_t, size_t> pos) {
+	isSuccess[pos.first][pos.second] = true;
+	isSuccess[pairs[pos].first][pairs[pos].second] = true;
 }
 
 bool Board::validCheck(size_t row, size_t col) const {

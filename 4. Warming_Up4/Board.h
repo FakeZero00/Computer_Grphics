@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
 #include <vector>
+#include <map>
 using namespace std;
 
 class Board {
@@ -16,7 +17,7 @@ public:
 	char getCell(size_t row, size_t col) const;
 	void setVisited(size_t row, size_t col, bool visited);
 	void setSuccess(size_t row, size_t col, bool success);
-	void openJoker();
+	void openJoker(pair<size_t, size_t> pos);
 	bool validCheck(size_t row, size_t col) const;
 	bool isComplete() const;
 
@@ -28,5 +29,5 @@ private:
 	vector<vector<bool>> isVisited;
 	vector<vector<bool>> isSuccess;
 	vector<vector<int>> color;
-	array<int, 2> jokerPos;
+	map<pair<size_t, size_t>, pair<size_t, size_t>> pairs;
 };

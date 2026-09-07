@@ -90,10 +90,15 @@ int main() {
 
 				else if (board.getCell(posMap[pos1].first, posMap[pos1].second) == '@' ||
 						board.getCell(posMap[pos2].first, posMap[pos2].second) == '@') {
-					if(board.getCell(posMap[pos1].first, posMap[pos1].second) == '@') board.setSuccess(posMap[pos1].first, posMap[pos1].second, true);
-					else if(board.getCell(posMap[pos2].first, posMap[pos2].second) == '@') board.setSuccess(posMap[pos2].first, posMap[pos2].second, true);
 
-					board.openJoker();
+					if (board.getCell(posMap[pos1].first, posMap[pos1].second) == '@') {
+						board.setSuccess(posMap[pos1].first, posMap[pos1].second, true);
+						board.openJoker(posMap[pos2]);
+					}
+					else if (board.getCell(posMap[pos2].first, posMap[pos2].second) == '@') {
+						board.setSuccess(posMap[pos2].first, posMap[pos2].second, true);
+						board.openJoker(posMap[pos1]);
+					}
 				}
 
 				system("cls");
