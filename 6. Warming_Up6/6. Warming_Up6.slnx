@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="6. Warming_Up6.vcxproj" />
+  <Project Path="6. Warming_Up6.vcxproj" Id="4d099511-72ae-45de-93c2-c825fbc0ab86" />
 </Solution>

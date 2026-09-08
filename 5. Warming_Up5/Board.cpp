@@ -138,15 +138,15 @@ void Board::printBoard() {
 				int col = v;
 				
 				if (row < 0) {
-					while (row >= 0) row += width;
+					while (row < 0) row += width;
 				}
-				else if (u >= width) {
+				else if (row >= width) {
 					while (row >= width) row -= width;
 				}
 				else row = u;
 
 				if (col < 0) {
-					while (col >= 0) col += height;
+					while (col < 0) col += height;
 				}
 				else if (col >= height) {
 					while (col >= height) col -= height;
