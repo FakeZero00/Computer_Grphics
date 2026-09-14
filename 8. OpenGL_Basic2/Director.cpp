@@ -98,6 +98,11 @@ void Director::Update(float deltaTime) {
 		size2 = 0.8f;
 		size3 = 0.8f;
 		size4 = 0.8f;
+
+		Square1->GetComponent<MeshRenderer2D>()->color = Color{ urd(dre), urd(dre), urd(dre), 1.0f };
+		Square2->GetComponent<MeshRenderer2D>()->color = Color{ urd(dre), urd(dre), urd(dre), 1.0f };
+		Square3->GetComponent<MeshRenderer2D>()->color = Color{ urd(dre), urd(dre), urd(dre), 1.0f };
+		Square4->GetComponent<MeshRenderer2D>()->color = Color{ urd(dre), urd(dre), urd(dre), 1.0f };
 	}
 
 	if (inputManager.GetKeyDown(GLFW_MOUSE_BUTTON_LEFT)) {
