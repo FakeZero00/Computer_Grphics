@@ -1,60 +1,152 @@
 #include <gl/glew.h>
 #include <gl/glfw3.h>
 #include <iostream>
+#include <random>
 using namespace std;
 
+template <typename T>
+void ChangeParam(T* param, T value) {
+	*param = value;
+}
+
+typedef struct color {
+	float r;
+	float g;
+	float b;
+	float a;
+} Color;
+
+struct AppContext {
+	Color bgColor = { 1.0f, 1.0f, 1.0f, 1.0f }; //¹è°æ»ö ÃÊ±âÈ­
+	bool isRdAnim = false;
+	double time = 0.0;
+};
+
+random_device rd;
+default_random_engine dre{ rd() };
+uniform_real_distribution<float> ufd(0.0f, 1.0f);
+
+
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void InputProcess(GLFWwindow* window);
+void DrawScene(GLFWwindow* window);
+
 int main() {
-	//GLFW ì´ˆê¸°í™”
+	//GLFW ÃÊ±âÈ­
 	if (!glfwInit()) {
-		cerr << "GLFW ì´ˆê¸°í™” ì‹¤íŒ¨" << endl;
+		cerr << "GLFW ÃÊ±âÈ­ ½ÇÆÐ" << endl;
 		return -1;
 	}
 
-	//OpenGL ë²„ì „ ì„¤ì •
+	//OpenGL ¹öÀü ¼³Á¤
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
-	//ìœˆë„ìš° ìƒì„±
+	//À©µµ¿ì »ý¼º
 	GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL Window", nullptr, nullptr);
 	if (!window) {
-		cerr << "ìœˆë„ìš° ìƒì„± ì‹¤íŒ¨" << endl;
+		cerr << "À©µµ¿ì »ý¼º ½ÇÆÐ" << endl;
 		glfwTerminate();
 		return -1;
 	}
 
-	//ì»¨í…ìŠ¤íŠ¸ ì„¤ì •
+	//ÄÁÅØ½ºÆ® ¼³Á¤
 	glfwMakeContextCurrent(window);
 
-	//GLEW ì´ˆê¸°í™”
-	glewExperimental = GL_TRUE;	//ìµœì‹  ê¸°ëŠ¥ ì‚¬ìš©
+	//ÄÁÅØ½ºÆ® º¯¼ö »ý¼º, À©µµ¿ì °´Ã¼¿¡ ¿¬°á
+	AppContext ctx;
+	glfwSetWindowUserPointer(window, &ctx);
+
+	//GLEW ÃÊ±âÈ­
+	glewExperimental = GL_TRUE;	//ÃÖ½Å ±â´É »ç¿ë
 	if (glewInit() != GLEW_OK) {
-		cerr << "GLEW ì´ˆê¸°í™” ì‹¤íŒ¨" << endl;
+		cerr << "GLEW ÃÊ±âÈ­ ½ÇÆÐ" << endl;
 		glfwTerminate();
 		return -1;
 	}
 
-	glViewport(0, 0, 800, 600);	//ë·°í¬íŠ¸ ì„¤ì •
+	//Å°º¸µå ÀÔ·Â ÄÝ¹é ÇÔ¼ö ¼³Á¤
+	glfwSetKeyCallback(window, KeyCallback);
 
-	//ë©”ì¸ ë£¨í”„
+	glViewport(0, 0, 800, 600);	//ºäÆ÷Æ® ¼³Á¤
+
+	//¸ÞÀÎ ·çÇÁ
 	while (!glfwWindowShouldClose(window)) {
-		//ì´ë²¤íŠ¸ ì²˜ë¦¬
+		//½Ã°£ °è»ê
+		ctx.time = glfwGetTime();
+
+		//ÀÌº¥Æ® Ã³¸®
 		glfwPollEvents();
 
-		//ìž…ë ¥ ì²˜ë¦¬
-		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-			glfwSetWindowShouldClose(window, true);
+		//ÀÔ·Â Ã³¸®
+		InputProcess(window);
 
-		//í™”ë©´ ì§€ìš°ê¸°
-		glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		////////////////////////°ÔÀÓ ·çÇÁ////////////////////////
 
-		//ë²„í¼ ìŠ¤ì™‘
+		if (ctx.isRdAnim) {
+			if (ctx.time >= 3.0) {
+				ChangeParam(&ctx.bgColor, Color{ ufd(dre), ufd(dre), ufd(dre), 1.0f });
+				glfwSetTime(0.0);
+				ctx.time = 0.0;
+			}
+		}
+
+		////////////////////////////////////////////////////////
+
+		//È­¸é ·»´õ¸µ
+		DrawScene(window);
+
+		//¹öÆÛ ½º¿Ò
 		glfwSwapBuffers(window);
 	}
 
-	//ë¦¬ì†ŒìŠ¤ í•´ì œ
+	//¸®¼Ò½º ÇØÁ¦
 	glfwDestroyWindow(window);
 	glfwTerminate();
 	return 0;
+}
+
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (action == GLFW_PRESS) {
+		switch (key) {
+			case GLFW_KEY_ESCAPE:
+				glfwSetWindowShouldClose(window, true);
+				break;
+
+			default:
+				break;
+		}
+	}
+}
+
+void InputProcess(GLFWwindow* window)
+{
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+
+	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+		ChangeParam(&ctx->bgColor, Color{ 0.0f, 1.0f, 1.0f, 1.0f });
+	else if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
+		ChangeParam(&ctx->bgColor, Color{ 1.0f, 0.0f, 1.0f, 1.0f });
+	else if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
+		ChangeParam(&ctx->bgColor, Color{ 1.0f, 1.0f, 0.0f, 1.0f });
+	else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		ChangeParam(&ctx->bgColor, Color{ ufd(dre), ufd(dre), ufd(dre), 1.0f});
+	else if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
+		ChangeParam(&ctx->bgColor, Color{ 0.5f, 0.5f, 0.5f, 1.0f });
+	else if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+		ChangeParam(&ctx->bgColor, Color{ 0.0f, 0.0f, 0.0f, 1.0f });
+	else if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
+		ChangeParam(&ctx->isRdAnim, true);
+	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		ChangeParam(&ctx->isRdAnim, false);
+}
+
+void DrawScene(GLFWwindow* window)
+{
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+
+	glClearColor(ctx->bgColor.r, ctx->bgColor.g, ctx->bgColor.b, ctx->bgColor.a);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
