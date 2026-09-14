@@ -6,7 +6,12 @@
 #include <iostream>
 #include "Object.h"
 #include "MeshRenderer2D.h"
+#include "InputManager.h"
 using namespace std;
+
+/////////////////오브젝트 적용 스크립트 import/////////////////////
+#include "InputTest.h"
+///////////////////////////////////////////////////////////////////
 
 template <typename T>
 void ChangeParam(T* param, T value) {
@@ -17,6 +22,7 @@ struct AppContext {
 	Color bgColor = { 1.0f, 1.0f, 1.0f, 1.0f };			//배경색 초기화
 	double time = 0.0;
 	double deltaTime = 0.0;
+	InputManager inputManager;							//입력 관리 객체
 
 	vector<unique_ptr<Object>> Hierarchy;				//게임 오브젝트 계층 구조를 저장하는 벡터
 };
@@ -87,11 +93,8 @@ int main() {
 	SquareTr1->SetLocalPosition(0.5f, 0.5f, 0.0f);
 	Square1->AddComponent<MeshRenderer2D>(1.0f, 1.0f, Color{ 1.0f, 0.0f, 0.0f, 1.0f });
 
-	Object* Square2 = Instantiate(ctx, "Square2");
-	Transform* SquareTr2 = Square2->GetComponent<Transform>();
-	SquareTr2->SetLocalPosition(-0.5f, 0.5f, 0.0f);
-	Square2->AddComponent<MeshRenderer2D>(1.0f, 1.0f, Color{ 0.0f, 1.0f, 0.0f, 1.0f });
-
+	Object* EmptyObj = Instantiate(ctx, "Empty Object");
+	EmptyObj->AddComponent<InputTest>(ctx.inputManager);
 
 	while (!glfwWindowShouldClose(window)) {
 		//시간 계산
@@ -99,11 +102,12 @@ int main() {
 		ctx.deltaTime = currentTime - ctx.time;
 		ctx.time = currentTime;
 
-		//이벤트 처리
-		glfwPollEvents();
-
 		//입력 처리
 		InputProcess(window);
+		ctx.inputManager.Update();
+
+		//이벤트 처리
+		glfwPollEvents();
 
 		//Update 처리
 		for (auto& obj : ctx.Hierarchy) {
@@ -123,16 +127,11 @@ int main() {
 
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (action == GLFW_PRESS) {
-		switch (key) {
-			case GLFW_KEY_ESCAPE:
-				glfwSetWindowShouldClose(window, true);
-				break;
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+	if (!ctx) return;
 
-			default:
-				break;
-		}
-	}
+	if (action == GLFW_PRESS) ctx->inputManager.SetKey(key, true);
+	else if (action == GLFW_RELEASE) ctx->inputManager.SetKey(key, false);
 }
 
 void InputProcess(GLFWwindow* window)
