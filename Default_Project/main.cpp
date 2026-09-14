@@ -3,9 +3,25 @@
 #include <iostream>
 using namespace std;
 
+template <typename T>
+void ChangeParam(T* param, T value) {
+	*param = value;
+}
+
+typedef struct color {
+	float r;
+	float g;
+	float b;
+	float a;
+} Color;
+
+struct AppContext {
+	Color bgColor = { 1.0f, 1.0f, 1.0f, 1.0f }; //배경색 초기화
+};
+
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void InputProcess(GLFWwindow* window);
-void DrawScene();
+void DrawScene(Color bgColor);
 
 int main() {
 	//GLFW 초기화
@@ -30,6 +46,10 @@ int main() {
 	//컨텍스트 설정
 	glfwMakeContextCurrent(window);
 
+	//컨텍스트 변수 생성, 윈도우 객체에 연결
+	AppContext ctx;
+	glfwSetWindowUserPointer(window, &ctx);
+
 	//GLEW 초기화
 	glewExperimental = GL_TRUE;	//최신 기능 사용
 	if (glewInit() != GLEW_OK) {
@@ -52,7 +72,7 @@ int main() {
 		InputProcess(window);
 
 		//화면 렌더링
-		DrawScene();
+		DrawScene(ctx.bgColor);
 
 		//버퍼 스왑
 		glfwSwapBuffers(window);
@@ -80,13 +100,15 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 
 void InputProcess(GLFWwindow* window)
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+
+	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+		ChangeParam(&ctx->bgColor, Color{ 0.0f, 1.0f, 1.0f, 1.0f });
 }
 
-void DrawScene()
+void DrawScene(Color bgColor)
 {
 	//화면 지우기
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
