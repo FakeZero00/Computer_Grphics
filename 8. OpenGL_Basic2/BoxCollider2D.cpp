@@ -10,12 +10,27 @@ BoxCollider2D::BoxCollider2D(float width, float height) : width(width), height(h
 	maxPos.y = 0.0f;
 }
 
+void BoxCollider2D::SetSize(float width, float height) {
+	this->width = width;
+	this->height = height;
+}
+
 bool BoxCollider2D::Contains(float x, float y) {
 	//AABB 충돌 감지: 점이 박스 안에 있는지 확인
 	cout << "Checking if point (" << x << ", " << y << ") is within BoxCollider2D bounds: "
 		<< "MinPos(" << minPos.x << ", " << minPos.y << "), "
 		<< "MaxPos(" << maxPos.x << ", " << maxPos.y << ")" << endl;
 	return (x >= minPos.x && x <= maxPos.x && y >= minPos.y && y <= maxPos.y);
+}
+
+void BoxCollider2D::RecalculateCollision() {
+	transform = gameObject->GetComponent<Transform>();
+	transform->CalculateWorldPosition();
+
+	minPos.x = transform->worldPosition.x - width / 2.0f;
+	minPos.y = transform->worldPosition.y - height / 2.0f;
+	maxPos.x = transform->worldPosition.x + width / 2.0f;
+	maxPos.y = transform->worldPosition.y + height / 2.0f;
 }
 
 void BoxCollider2D::Awake() {
@@ -25,9 +40,10 @@ void BoxCollider2D::Awake() {
 		std::cerr << "Warning: BoxCollider2D requires a Transform component." << std::endl;
 		return;
 	}
+	transform->CalculateWorldPosition();
 
-	minPos.x = transform->parent->worldPosition.x - width / 2.0f;
-	minPos.y = transform->parent->worldPosition.y - height / 2.0f;
-	maxPos.x = transform->parent->worldPosition.x + width / 2.0f;
-	maxPos.y = transform->parent->worldPosition.y + height / 2.0f;
+	minPos.x = transform->worldPosition.x - width / 2.0f;
+	minPos.y = transform->worldPosition.y - height / 2.0f;
+	maxPos.x = transform->worldPosition.x + width / 2.0f;
+	maxPos.y = transform->worldPosition.y + height / 2.0f;
 }

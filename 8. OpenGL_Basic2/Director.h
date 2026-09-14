@@ -1,16 +1,18 @@
 #pragma once
 #include "Component.h"
 #include "InputManager.h"
+#include "AppContext.h"
 #include <random>
 #include <iostream>
 
 class Director : public Component {
 public:
-	Director(InputManager& inputMgr);
+	Director(AppContext& ctx, InputManager& inputMgr);
 
 	void Update(float deltaTime) override;
 
 private:
+	AppContext& context;
 	InputManager& inputManager;
 
 	Object* Square1;

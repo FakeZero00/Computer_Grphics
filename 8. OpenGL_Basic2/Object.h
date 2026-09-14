@@ -41,6 +41,7 @@ public:
 	void Start();
 	void Update(double deltaTime);
 	void Render();
+	void Destroy();
 
 private:
 	//컴포넌트들을 소유하고 있는 벡터

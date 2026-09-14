@@ -108,7 +108,7 @@ int main() {
 	Square4->AddComponent<MeshRenderer2D>(1.0f, 1.0f, Color{ urd(dre), urd(dre), urd(dre), 1.0f });
 
 	Object* DirectorObj = Instantiate(ctx, "Director");
-	Director* directorSC = DirectorObj->AddComponent<Director>(ctx.inputManager);
+	Director* directorSC = DirectorObj->AddComponent<Director>(ctx, ctx.inputManager);
 	directorSC->SetPropertyValue("Square1", Square1);
 	directorSC->SetPropertyValue("Square2", Square2);
 	directorSC->SetPropertyValue("Square3", Square3);
@@ -133,11 +133,35 @@ int main() {
 			obj->Update(ctx.deltaTime);
 		}
 
+		//추가할 오브젝트가 있다면 Hierarchy에 추가
 		if (!ctx.pendingHierarchy.empty()) {
 			for (auto& newObj : ctx.pendingHierarchy) {
 				ctx.Hierarchy.push_back(move(newObj));
 			}
 			ctx.pendingHierarchy.clear();
+		}
+
+		//제거할 오브젝트가 있다면 Hierarchy에서 제거
+		if (!ctx.pendingDestroyObjects.empty()) {
+			for (auto& targetObj : ctx.pendingDestroyObjects) {
+				//CollisionObjects에서도 제거
+				auto& collist = ctx.CollisionObjects;
+				collist.erase(remove(collist.begin(), collist.end(), targetObj), collist.end());
+
+				//부모 자식 관계 정리
+				Transform* targetTr = targetTr = targetObj->GetComponent<Transform>();
+				if (targetTr && targetTr->parent != nullptr) {
+					auto& siblings = targetTr->parent->children;
+					siblings.erase(remove(siblings.begin(), siblings.end(), targetTr), siblings.end());
+				}
+
+				//Hierarchy에서 제거
+				auto& hierarchy = ctx.Hierarchy;
+				hierarchy.erase(remove_if(hierarchy.begin(), hierarchy.end(),
+					[targetObj](const unique_ptr<Object>& obj) { return obj.get() == targetObj; }),
+					hierarchy.end());
+			}
+			ctx.pendingDestroyObjects.clear();
 		}
 
 		//화면 렌더링

@@ -50,3 +50,7 @@ void Object::Render() {
 		comp->Render();
 	}
 }
+
+void Object::Destroy() {
+	ctx.pendingDestroyObjects.push_back(this);
+}

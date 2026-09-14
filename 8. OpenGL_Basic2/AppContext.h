@@ -14,4 +14,7 @@ struct AppContext {
 
 	vector<unique_ptr<Object>> Hierarchy;				//게임 오브젝트 계층 구조를 저장하는 벡터
 	vector<unique_ptr<Object>> pendingHierarchy;		//새로 생성된 게임 오브젝트를 임시로 저장하는 벡터
+
+	vector<Object*> pendingDestroyObjects;				//제거할 오브젝트를 저장하는 벡터
+	vector<Object*> CollisionObjects;					//충돌 감지를 위한 오브젝트 벡터
 };

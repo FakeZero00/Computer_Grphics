@@ -5,13 +5,6 @@
 
 class BoxCollider2D : public Component {
 public:
-	BoxCollider2D(float width, float height);
-
-	bool Contains(float x, float y);
-
-	void Awake() override;
-
-private:
 	Transform* transform = nullptr;
 
 	Position2D minPos;
@@ -19,4 +12,12 @@ private:
 
 	float width;
 	float height;
+
+	BoxCollider2D(float width, float height);
+
+	void SetSize(float width, float height);
+	void RecalculateCollision();
+	bool Contains(float x, float y);
+
+	void Awake() override;
 };
