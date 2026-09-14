@@ -19,8 +19,26 @@
     <Filter Include="헤더 파일\Structure">
       <UniqueIdentifier>{7307de58-a851-4e16-8c1d-9f7563e2d20e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Script">
+      <UniqueIdentifier>{2f1e25a6-925f-4307-be74-59c731c6919f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Script">
+      <UniqueIdentifier>{61cca4b0-5114-46b6-8261-0478d8ff260f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header\Color.h">
+      <Filter>헤더 파일\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Position2D.h">
+      <Filter>헤더 파일\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\AppContext.h">
+      <Filter>헤더 파일\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectorScript.h">
+      <Filter>헤더 파일\Script</Filter>
+    </ClInclude>
     <ClInclude Include="Header\BoxCollider2D.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -39,15 +57,6 @@
     <ClInclude Include="Header\Transform.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Header\Color.h">
-      <Filter>헤더 파일\Structure</Filter>
-    </ClInclude>
-    <ClInclude Include="Header\Position2D.h">
-      <Filter>헤더 파일\Structure</Filter>
-    </ClInclude>
-    <ClInclude Include="Header\AppContext.h">
-      <Filter>헤더 파일\Structure</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -64,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="Source\Transoform.cpp">
       <Filter>소스 파일\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectorScript.cpp">
+      <Filter>소스 파일\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

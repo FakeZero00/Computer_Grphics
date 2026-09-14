@@ -12,6 +12,11 @@
 #include "MeshRenderer2D.h"
 using namespace std;
 
+/////////////스크립트 임포트/////////////
+#include "DirectorScript.h"
+////////////////////////////////////////
+
+
 template <typename T>
 void ChangeParam(T* param, T value) {
 	*param = value;
@@ -86,10 +91,8 @@ int main() {
 	ctx.time = glfwGetTime();
 
 	////////////////////////메인 루프/////////////////////////
-	Object* Square1 = Instantiate(ctx, "Square1");
-	Transform* SquareTr1 = Square1->GetComponent<Transform>();
-	SquareTr1->SetLocalPosition(0.5f, 0.5f, 0.0f);
-	Square1->AddComponent<MeshRenderer2D>(1.0f, 1.0f, Color{ urd(dre) , urd(dre), urd(dre), 1.0f });
+	Object* DirectorObj = Instantiate(ctx, "Director");
+	DirectorObj->AddComponent<DirectorScript>();
 
 	while (!glfwWindowShouldClose(window)) {
 		//시간 계산
