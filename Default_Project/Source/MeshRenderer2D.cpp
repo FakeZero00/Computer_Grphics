@@ -13,6 +13,8 @@ MeshRenderer2D::MeshRenderer2D() {
 	//초기 크기 설정
 	width = (maxPos.x - minPos.x);
 	height = (maxPos.y - minPos.y);
+
+	Expose("isOutline", &isOutline);
 }
 
 MeshRenderer2D::MeshRenderer2D(float width, float height, Color color) {
@@ -33,15 +35,21 @@ void MeshRenderer2D::Render() {
 
 	float scaledWidth = width * transform->scale.x;
 	float scaledHeight = height * transform->scale.y;
+	transform->CalculateWorldPosition();
+
+	//꼭짓점 좌표 계산
+	minPos.x = transform->worldPosition.x - scaledWidth / 2.0f;
+	minPos.y = transform->worldPosition.y - scaledHeight / 2.0f;
+	maxPos.x = transform->worldPosition.x + scaledWidth / 2.0f;
+	maxPos.y = transform->worldPosition.y + scaledHeight / 2.0f;
+	
+	//외곽선 그리기
+	if (isOutline) {
+		glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+		glRectf(minPos.x - 0.01f, minPos.y - 0.01f, maxPos.x + 0.01f, maxPos.y + 0.01f);
+	}
 
 	//사각형 그리기
-	minPos.x = transform->position.x - scaledWidth / 2.0f;
-	minPos.y = transform->position.y - scaledHeight / 2.0f;
-	maxPos.x = transform->position.x + scaledWidth / 2.0f;
-	maxPos.y = transform->position.y + scaledHeight / 2.0f;
-
-	//색상 설정
 	glColor4f(color.r, color.g, color.b, color.a);
-
 	glRectf(minPos.x, minPos.y, maxPos.x, maxPos.y);
 }

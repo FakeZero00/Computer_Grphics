@@ -3,20 +3,16 @@
 #include <string>
 #include <memory>
 #include "Component.h"
-#include "Transform.h"
+#include "AppContext.h"
 using namespace std;
 
 class Object {
 public:
 	string name = "GameObject";
+	AppContext& ctx;
 
-	Object(string str) : name(str) {
-		//Transform 컴포넌트 생성 및 추가
-		auto transform = make_unique<Transform>();
-		transform->gameObject = this; //Transform의 gameObject를 현재 Object로 설정
-
-		components.push_back(move(transform)); //컴포넌트 벡터에 추가
-	}
+	Object(AppContext& context, string str);
+	Object* Instantiate(string name);
 
 	template <typename T, typename... Args>
 	T* AddComponent(Args&&... args) {
@@ -41,34 +37,11 @@ public:
 		return nullptr;
 	}
 
-	void Awake() {
-		for (auto& comp : components) {
-			comp->Awake();
-		}
-	}
-
-	void Start() {
-		for (auto& comp : components) {
-			comp->Start();
-		}
-	}
-
-	void Update(double deltaTime) {
-		for (auto& comp : components) {
-			if (!comp->hasStarted) {
-				comp->Start();
-				comp->hasStarted = true;
-			}
-
-			comp->Update(static_cast<float>(deltaTime));
-		}
-	}
-
-	void Render() {
-		for (auto& comp : components) {
-			comp->Render();
-		}
-	}
+	void Awake();
+	void Start();
+	void Update(double deltaTime);
+	void Render();
+	void Destroy();
 
 private:
 	//컴포넌트들을 소유하고 있는 벡터

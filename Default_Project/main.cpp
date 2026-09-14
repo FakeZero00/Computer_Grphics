@@ -4,35 +4,31 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <random>
+#include "Color.h"
+#include "AppContext.h"
 #include "Object.h"
+#include "Transform.h"
 #include "MeshRenderer2D.h"
-#include "InputManager.h"
 using namespace std;
-
-/////////////////오브젝트 적용 스크립트 import/////////////////////
-#include "InputTest.h"
-///////////////////////////////////////////////////////////////////
 
 template <typename T>
 void ChangeParam(T* param, T value) {
 	*param = value;
 }
 
-struct AppContext {
-	Color bgColor = { 1.0f, 1.0f, 1.0f, 1.0f };			//배경색 초기화
-	double time = 0.0;
-	double deltaTime = 0.0;
-	InputManager inputManager;							//입력 관리 객체
-
-	vector<unique_ptr<Object>> Hierarchy;				//게임 오브젝트 계층 구조를 저장하는 벡터
-};
-
 struct ScreenSize {
 	int width;
 	int height;
 };
 
+random_device rd;
+default_random_engine dre{ rd() };
+uniform_real_distribution<float> urd{0.0f, 1.0f};
+
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 void InputProcess(GLFWwindow* window);
 void DrawScene(GLFWwindow* window);
 Object* Instantiate(AppContext& ctx, string name);
@@ -74,8 +70,10 @@ int main() {
 
 	//////////////////사용자 정의 초기화////////////////////
 
-	//키보드 입력 콜백 함수 설정
+	//외부 입력 콜백 함수 설정
 	glfwSetKeyCallback(window, KeyCallback);
+	glfwSetMouseButtonCallback(window, MouseButtonCallback);
+	glfwSetCursorPosCallback(window, CursorPosCallback);
 
 	//뷰포트 설정
 	glViewport(0, 0, screenSize.width, screenSize.height);
@@ -91,10 +89,7 @@ int main() {
 	Object* Square1 = Instantiate(ctx, "Square1");
 	Transform* SquareTr1 = Square1->GetComponent<Transform>();
 	SquareTr1->SetLocalPosition(0.5f, 0.5f, 0.0f);
-	Square1->AddComponent<MeshRenderer2D>(1.0f, 1.0f, Color{ 1.0f, 0.0f, 0.0f, 1.0f });
-
-	Object* EmptyObj = Instantiate(ctx, "Empty Object");
-	EmptyObj->AddComponent<InputTest>(ctx.inputManager);
+	Square1->AddComponent<MeshRenderer2D>(1.0f, 1.0f, Color{ urd(dre) , urd(dre), urd(dre), 1.0f });
 
 	while (!glfwWindowShouldClose(window)) {
 		//시간 계산
@@ -103,8 +98,8 @@ int main() {
 		ctx.time = currentTime;
 
 		//입력 처리
-		InputProcess(window);
 		ctx.inputManager.Update();
+		InputProcess(window);
 
 		//이벤트 처리
 		glfwPollEvents();
@@ -112,6 +107,37 @@ int main() {
 		//Update 처리
 		for (auto& obj : ctx.Hierarchy) {
 			obj->Update(ctx.deltaTime);
+		}
+
+		//추가할 오브젝트가 있다면 Hierarchy에 추가
+		if (!ctx.pendingHierarchy.empty()) {
+			for (auto& newObj : ctx.pendingHierarchy) {
+				ctx.Hierarchy.push_back(move(newObj));
+			}
+			ctx.pendingHierarchy.clear();
+		}
+
+		//제거할 오브젝트가 있다면 Hierarchy에서 제거
+		if (!ctx.pendingDestroyObjects.empty()) {
+			for (auto& targetObj : ctx.pendingDestroyObjects) {
+				//CollisionObjects에서도 제거
+				auto& collist = ctx.CollisionObjects;
+				collist.erase(remove(collist.begin(), collist.end(), targetObj), collist.end());
+
+				//부모 자식 관계 정리
+				Transform* targetTr = targetTr = targetObj->GetComponent<Transform>();
+				if (targetTr && targetTr->parent != nullptr) {
+					auto& siblings = targetTr->parent->children;
+					siblings.erase(remove(siblings.begin(), siblings.end(), targetTr), siblings.end());
+				}
+
+				//Hierarchy에서 제거
+				auto& hierarchy = ctx.Hierarchy;
+				hierarchy.erase(remove_if(hierarchy.begin(), hierarchy.end(),
+					[targetObj](const unique_ptr<Object>& obj) { return obj.get() == targetObj; }),
+					hierarchy.end());
+			}
+			ctx.pendingDestroyObjects.clear();
 		}
 
 		//화면 렌더링
@@ -129,17 +155,41 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 {
 	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
 	if (!ctx) return;
-
+	
 	if (action == GLFW_PRESS) ctx->inputManager.SetKey(key, true);
 	else if (action == GLFW_RELEASE) ctx->inputManager.SetKey(key, false);
+}
+
+void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+	if (!ctx) return;
+
+	if (action == GLFW_PRESS) ctx->inputManager.SetKey(button, true);
+	else if (action == GLFW_RELEASE) ctx->inputManager.SetKey(button, false);
+}
+
+void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
+{
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+	if (!ctx) return;
+
+	//마우스 좌표를 OpenGL 좌표계로 변환
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+
+	float glX = (xpos / width) * 2.0f - 1.0f;
+	float glY = 1.0f - (ypos / height) * 2.0f; //Y축 반전
+	ctx->inputManager.SetMousePosition(glX, glY);
 }
 
 void InputProcess(GLFWwindow* window)
 {
 	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
 
-	/*if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-		ChangeParam(&ctx->bgColor, Color{ 0.0f, 1.0f, 1.0f, 1.0f });*/
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GL_TRUE);
+	}
 }
 
 void DrawScene(GLFWwindow* window)
@@ -160,7 +210,7 @@ void DrawScene(GLFWwindow* window)
 }
 
 Object* Instantiate(AppContext& ctx, string name) {
-	auto newObj = make_unique<Object>(name);
+	auto newObj = make_unique<Object>(ctx, name);
 	Object* ptr = newObj.get();
 
 	ctx.Hierarchy.push_back(move(newObj));

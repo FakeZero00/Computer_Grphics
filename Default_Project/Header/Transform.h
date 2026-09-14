@@ -18,6 +18,7 @@ struct Scale {
 class Transform : public Component {
 public:
 	Position position;
+	Position worldPosition;
 	Scale scale;
 
 	Transform* parent = nullptr;
@@ -26,5 +27,6 @@ public:
 	Transform();
 	
 	void SetLocalPosition(float x, float y, float z);
+	void CalculateWorldPosition();
 	void SetParent(Transform* newParent);
 };
