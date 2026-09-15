@@ -23,11 +23,4 @@ public:
 	bool Contains(float x, float y);
 
 	void Awake() override;
-
-	bool operator== (const BoxCollider2D& other) const {
-		return this == &other;
-	}
-	bool operator== (const BoxCollider2D* other) const {
-		return this == other;
-	}
 };

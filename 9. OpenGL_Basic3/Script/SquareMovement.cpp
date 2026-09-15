@@ -1,8 +1,46 @@
 #include "SquareMovement.h"
 #include "Transform.h"
+#include "Position2D.h"
 #include "Object.h"
+#include "MeshRenderer2D.h"
 #include "BoxCollider2D.h"
 #include "InputManager.h"
+
+void SquareMovement::OnTriggerStay(Object* other) {
+	if (combineReady) {
+		cout << "Trigger stay with: " << gameObject->name << endl;
+		//두 오브젝트를 합치기
+		MeshRenderer2D* mr1 = gameObject->GetComponent<MeshRenderer2D>();
+		MeshRenderer2D* mr2 = other->GetComponent<MeshRenderer2D>();
+		
+		Position2D minPos1 = mr1->minPos;
+		Position2D maxPos1 = mr1->maxPos;
+		Position2D minPos2 = mr2->minPos;
+		Position2D maxPos2 = mr2->maxPos;
+
+		Position2D newMinPos{ std::min(minPos1.x, minPos2.x), std::min(minPos1.y, minPos2.y) };
+		Position2D newMaxPos{ std::max(maxPos1.x, maxPos2.x), std::max(maxPos1.y, maxPos2.y) };
+
+		mr1->minPos = newMinPos;
+		mr1->maxPos = newMaxPos;
+
+		mr1->SetSize(newMaxPos.x - newMinPos.x, newMaxPos.y - newMinPos.y);
+		
+		Transform* tr1 = gameObject->GetComponent<Transform>();
+		tr1->position = { (newMinPos.x + newMaxPos.x) / 2.0f, (newMinPos.y + newMaxPos.y) / 2.0f, 0.0f };
+		tr1->CalculateWorldPosition();
+		
+		BoxCollider2D* bc1 = gameObject->GetComponent<BoxCollider2D>();
+		bc1->SetSize(newMaxPos.x - newMinPos.x, newMaxPos.y - newMinPos.y);
+		bc1->RecalculateCollision();
+
+		//다른 오브젝트 제거
+		other->Destroy();
+
+		isMoving = false;
+		combineReady = false;
+	}
+}
 
 void SquareMovement::Update(float deltaTime) {
 	if (isMoving) {

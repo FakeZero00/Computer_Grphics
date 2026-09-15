@@ -10,5 +10,5 @@ public:
 	void Update(float deltaTime) override;
 
 private:
-	vector<Object*> Squares;
+	int count = 0;
 };
