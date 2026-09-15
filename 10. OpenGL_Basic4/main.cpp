@@ -14,7 +14,7 @@
 using namespace std;
 
 /////////////스크립트 임포트/////////////
-
+#include "SquareGenerator.h"
 ////////////////////////////////////////
 
 
@@ -94,6 +94,9 @@ int main() {
 	ctx.time = glfwGetTime();
 
 	////////////////////////메인 루프/////////////////////////
+	Object* generator = Instantiate(ctx, "Generator");
+	generator->AddComponent<SquareGenerator>();
+
 	while (!glfwWindowShouldClose(window)) {
 		//시간 계산
 		double currentTime = glfwGetTime();

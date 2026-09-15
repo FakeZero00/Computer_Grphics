@@ -8,7 +8,7 @@
 class Object;
 
 struct AppContext {
-	Color bgColor = { 1.0f, 1.0f, 1.0f, 1.0f };				//배경색 초기화
+	Color bgColor = { 0.0f, 0.0f, 0.0f, 0.0f };				//배경색 초기화
 	double time = 0.0;
 	double deltaTime = 0.0;
 	InputManager inputManager;								//입력 관리 객체
