@@ -7,10 +7,16 @@
 #include <random>
 #include "Color.h"
 #include "AppContext.h"
+#include "ColliderManager.h"
 #include "Object.h"
 #include "Transform.h"
 #include "MeshRenderer2D.h"
 using namespace std;
+
+/////////////스크립트 임포트/////////////
+
+////////////////////////////////////////
+
 
 template <typename T>
 void ChangeParam(T* param, T value) {
@@ -82,15 +88,12 @@ int main() {
 	AppContext ctx;
 	glfwSetWindowUserPointer(window, &ctx);
 
+	ColliderManager colliderManager(ctx);
+
 	//시간 초기화
 	ctx.time = glfwGetTime();
 
 	////////////////////////메인 루프/////////////////////////
-	Object* Square1 = Instantiate(ctx, "Square1");
-	Transform* SquareTr1 = Square1->GetComponent<Transform>();
-	SquareTr1->SetLocalPosition(0.5f, 0.5f, 0.0f);
-	Square1->AddComponent<MeshRenderer2D>(1.0f, 1.0f, Color{ urd(dre) , urd(dre), urd(dre), 1.0f });
-
 	while (!glfwWindowShouldClose(window)) {
 		//시간 계산
 		double currentTime = glfwGetTime();
@@ -103,6 +106,9 @@ int main() {
 
 		//이벤트 처리
 		glfwPollEvents();
+		
+		//충돌 감지
+		colliderManager.Update();
 
 		//Update 처리
 		for (auto& obj : ctx.Hierarchy) {
@@ -117,15 +123,27 @@ int main() {
 			ctx.pendingHierarchy.clear();
 		}
 
+		//추가할 충돌 감지 콜리전이 있다면 CollisionObjects에 추가
+		if (!ctx.pendingCollisionObjects.empty()) {
+			for (auto& newCol : ctx.pendingCollisionObjects) {
+				ctx.CollisionObjects.push_back(newCol);
+			}
+			ctx.pendingCollisionObjects.clear();
+		}
+
 		//제거할 오브젝트가 있다면 Hierarchy에서 제거
 		if (!ctx.pendingDestroyObjects.empty()) {
 			for (auto& targetObj : ctx.pendingDestroyObjects) {
 				//CollisionObjects에서도 제거
 				auto& collist = ctx.CollisionObjects;
-				collist.erase(remove(collist.begin(), collist.end(), targetObj), collist.end());
+				collist.erase(remove_if(collist.begin(), collist.end(),
+					[targetObj](BoxCollider2D* col) {
+						return col->gameObject == targetObj;
+					}),
+					collist.end());
 
 				//부모 자식 관계 정리
-				Transform* targetTr = targetTr = targetObj->GetComponent<Transform>();
+				Transform* targetTr = targetObj->GetComponent<Transform>();
 				if (targetTr && targetTr->parent != nullptr) {
 					auto& siblings = targetTr->parent->children;
 					siblings.erase(remove(siblings.begin(), siblings.end(), targetTr), siblings.end());

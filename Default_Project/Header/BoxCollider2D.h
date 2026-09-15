@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "Component.h"
 #include "Transform.h"
 #include "Position2D.h"
@@ -12,6 +13,8 @@ public:
 
 	float width;
 	float height;
+
+	vector<BoxCollider2D*> collidingColliders;
 
 	BoxCollider2D(float width, float height);
 

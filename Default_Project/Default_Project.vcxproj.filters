@@ -19,6 +19,12 @@
     <Filter Include="헤더 파일\Structure">
       <UniqueIdentifier>{7307de58-a851-4e16-8c1d-9f7563e2d20e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Script">
+      <UniqueIdentifier>{26020892-af8c-47e7-b2aa-5ad69cca7d3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Script">
+      <UniqueIdentifier>{b0bfe55f-99d3-452d-bafc-a00ed006e142}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\BoxCollider2D.h">
@@ -48,6 +54,9 @@
     <ClInclude Include="Header\AppContext.h">
       <Filter>헤더 파일\Structure</Filter>
     </ClInclude>
+    <ClInclude Include="Header\ColliderManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,6 +72,9 @@
       <Filter>소스 파일\Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Transoform.cpp">
+      <Filter>소스 파일\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ColliderManager.cpp">
       <Filter>소스 파일\Source</Filter>
     </ClCompile>
   </ItemGroup>

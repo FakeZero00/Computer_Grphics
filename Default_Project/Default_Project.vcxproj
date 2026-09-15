@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="Header\AppContext.h" />
     <ClInclude Include="Header\BoxCollider2D.h" />
+    <ClInclude Include="Header\ColliderManager.h" />
     <ClInclude Include="Header\Color.h" />
     <ClInclude Include="Header\Component.h" />
     <ClInclude Include="Header\InputManager.h" />
@@ -156,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source\BoxCollider2D.cpp" />
+    <ClCompile Include="Source\ColliderManager.cpp" />
     <ClCompile Include="Source\MeshRenderer2D.cpp" />
     <ClCompile Include="Source\Object.cpp" />
     <ClCompile Include="Source\Transoform.cpp" />
