@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Source">
+      <UniqueIdentifier>{bd2abeff-420b-4e55-b9ed-24cc63809e90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Structure">
+      <UniqueIdentifier>{7307de58-a851-4e16-8c1d-9f7563e2d20e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Script">
+      <UniqueIdentifier>{26020892-af8c-47e7-b2aa-5ad69cca7d3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Script">
+      <UniqueIdentifier>{b0bfe55f-99d3-452d-bafc-a00ed006e142}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Header\BoxCollider2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Component.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\InputManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\MeshRenderer2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Object.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Transform.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Color.h">
+      <Filter>헤더 파일\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Position2D.h">
+      <Filter>헤더 파일\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\AppContext.h">
+      <Filter>헤더 파일\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\ColliderManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BoxCollider2D.cpp">
+      <Filter>소스 파일\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshRenderer2D.cpp">
+      <Filter>소스 파일\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object.cpp">
+      <Filter>소스 파일\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Transoform.cpp">
+      <Filter>소스 파일\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ColliderManager.cpp">
+      <Filter>소스 파일\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

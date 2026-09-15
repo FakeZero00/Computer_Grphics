@@ -9,32 +9,35 @@
 
 void SquareMovement::Seperate() {
 	Transform* tr = gameObject->GetComponent<Transform>();
-	MeshRenderer2D* mr = gameObject->GetComponent<MeshRenderer2D>();
-	BoxCollider2D* bc = gameObject->GetComponent<BoxCollider2D>();
-	float width = mr->width;
-	float height = mr->height;
-	
-	width /= 2.0f;
 
-	//기존 오브젝트 크기 조정
-	mr->SetSize(width, height);
-	bc->SetSize(width, height);
-	tr->position.x -= width / 2.0f;
+	if (tr->parent->children.size() <= 19) {
+		MeshRenderer2D* mr = gameObject->GetComponent<MeshRenderer2D>();
+		BoxCollider2D* bc = gameObject->GetComponent<BoxCollider2D>();
+		float width = mr->width;
+		float height = mr->height;
 
-	tr->CalculateWorldPosition();
-	bc->RecalculateCollision();
+		width /= 2.0f;
 
-	//새로운 오브젝트 생성
-	random_device rd;
-	default_random_engine dre{ rd() };
-	uniform_real_distribution<float> urd{ 0.0f, 1.0f };
+		//기존 오브젝트 크기 조정
+		mr->SetSize(width, height);
+		bc->SetSize(width, height);
+		tr->position.x -= width / 2.0f;
 
-	Object* nSquare = tr->parent->gameObject->Instantiate(string{ "Square (Seperated)" });
-	Transform* nSquareTr = nSquare->GetComponent<Transform>();
-	nSquareTr->SetLocalPosition(tr->position.x + width, tr->position.y, 0.0f);
-	nSquare->AddComponent<MeshRenderer2D>(width, height, Color{ urd(dre), urd(dre), urd(dre), 1.0f });
-	nSquare->AddComponent<BoxCollider2D>(width, height);
-	nSquare->AddComponent<SquareMovement>();
+		tr->CalculateWorldPosition();
+		bc->RecalculateCollision();
+
+		//새로운 오브젝트 생성
+		random_device rd;
+		default_random_engine dre{ rd() };
+		uniform_real_distribution<float> urd{ 0.0f, 1.0f };
+
+		Object* nSquare = tr->parent->gameObject->Instantiate(string{ "Square (Seperated)" });
+		Transform* nSquareTr = nSquare->GetComponent<Transform>();
+		nSquareTr->SetLocalPosition(tr->position.x + width, tr->position.y, 0.0f);
+		nSquare->AddComponent<MeshRenderer2D>(width, height, Color{ urd(dre), urd(dre), urd(dre), 1.0f });
+		nSquare->AddComponent<BoxCollider2D>(width, height);
+		nSquare->AddComponent<SquareMovement>();
+	}
 }
 
 void SquareMovement::OnTriggerStay(Object* other) {
