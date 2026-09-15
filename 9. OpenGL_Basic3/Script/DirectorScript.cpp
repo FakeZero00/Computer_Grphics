@@ -29,6 +29,10 @@ void DirectorScript::Update(float deltaTime) {
 			nSquare->AddComponent<SquareMovement>();
 
 			count++;
+
+			for (auto& child : this->gameObject->GetComponent<Transform>()->children) {
+				cout << "Child: " << child->gameObject->name << endl;
+			}
 		}
 	}
 

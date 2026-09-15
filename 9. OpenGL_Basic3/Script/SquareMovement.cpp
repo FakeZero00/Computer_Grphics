@@ -9,7 +9,7 @@
 
 void SquareMovement::Seperate() {
 	Transform* tr = gameObject->GetComponent<Transform>();
-
+	cout << tr->parent->children.size() << endl;
 	if (tr->parent->children.size() <= 19) {
 		MeshRenderer2D* mr = gameObject->GetComponent<MeshRenderer2D>();
 		BoxCollider2D* bc = gameObject->GetComponent<BoxCollider2D>();
