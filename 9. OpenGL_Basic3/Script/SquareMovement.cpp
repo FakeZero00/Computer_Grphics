@@ -15,13 +15,16 @@ void SquareMovement::Seperate() {
 		BoxCollider2D* bc = gameObject->GetComponent<BoxCollider2D>();
 		float width = mr->width;
 		float height = mr->height;
+		float newWidth = width;
+		float newHeight = height;
 
-		width /= 2.0f;
+		if(width >= height) newWidth /= 2.0f;
+		else newHeight /= 2.0f;
 
 		//기존 오브젝트 크기 조정
-		mr->SetSize(width, height);
-		bc->SetSize(width, height);
-		tr->position.x -= width / 2.0f;
+		mr->SetSize(newWidth, newHeight);
+		bc->SetSize(newWidth, newHeight);
+		tr->position.x -= newWidth / 2.0f;
 
 		tr->CalculateWorldPosition();
 		bc->RecalculateCollision();
@@ -33,9 +36,9 @@ void SquareMovement::Seperate() {
 
 		Object* nSquare = tr->parent->gameObject->Instantiate(string{ "Square (Seperated)" });
 		Transform* nSquareTr = nSquare->GetComponent<Transform>();
-		nSquareTr->SetLocalPosition(tr->position.x + width, tr->position.y, 0.0f);
-		nSquare->AddComponent<MeshRenderer2D>(width, height, Color{ urd(dre), urd(dre), urd(dre), 1.0f });
-		nSquare->AddComponent<BoxCollider2D>(width, height);
+		nSquareTr->SetLocalPosition(tr->position.x + newWidth, tr->position.y, 0.0f);
+		nSquare->AddComponent<MeshRenderer2D>(newWidth, newHeight, Color{ urd(dre), urd(dre), urd(dre), 1.0f });
+		nSquare->AddComponent<BoxCollider2D>(newWidth, newHeight);
 		nSquare->AddComponent<SquareMovement>();
 	}
 }

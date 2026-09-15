@@ -46,7 +46,7 @@ void DirectorScript::Update(float deltaTime) {
 		}
 	}
 
-	if (inputManager.GetKeyDown(GLFW_MOUSE_BUTTON_RIGHT)) {
+	if (inputManager.GetKeyUp(GLFW_MOUSE_BUTTON_RIGHT)) {
 		for (auto& col : views::reverse(gameObject->ctx.CollisionObjects)) {
 			if (col->Contains(inputManager.GetMouseX(), inputManager.GetMouseY())) {
 				Object* targetObj = col->gameObject;
