@@ -10,6 +10,7 @@ class Object {
 public:
 	string name = "GameObject";
 	AppContext& ctx;
+	vector<unique_ptr<Component>> components;
 
 	Object(AppContext& context, string str);
 	Object* Instantiate(string name);
@@ -42,8 +43,4 @@ public:
 	void Update(double deltaTime);
 	void Render();
 	void Destroy();
-
-private:
-	//컴포넌트들을 소유하고 있는 벡터
-	vector<unique_ptr<Component>> components;
 };

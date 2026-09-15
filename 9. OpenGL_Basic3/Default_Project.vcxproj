@@ -143,9 +143,9 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DirectorScript.h" />
     <ClInclude Include="Header\AppContext.h" />
     <ClInclude Include="Header\BoxCollider2D.h" />
+    <ClInclude Include="Header\ColliderManager.h" />
     <ClInclude Include="Header\Color.h" />
     <ClInclude Include="Header\Component.h" />
     <ClInclude Include="Header\InputManager.h" />
@@ -153,11 +153,15 @@
     <ClInclude Include="Header\Object.h" />
     <ClInclude Include="Header\Position2D.h" />
     <ClInclude Include="Header\Transform.h" />
+    <ClInclude Include="Script\DirectorScript.h" />
+    <ClInclude Include="Script\SquareMovement.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DirectorScript.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Script\DirectorScript.cpp" />
+    <ClCompile Include="Script\SquareMovement.cpp" />
     <ClCompile Include="Source\BoxCollider2D.cpp" />
+    <ClCompile Include="Source\ColliderManager.cpp" />
     <ClCompile Include="Source\MeshRenderer2D.cpp" />
     <ClCompile Include="Source\Object.cpp" />
     <ClCompile Include="Source\Transoform.cpp" />

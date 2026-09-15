@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "Component.h"
 #include "Transform.h"
 #include "Position2D.h"
@@ -13,6 +14,8 @@ public:
 	float width;
 	float height;
 
+	vector<BoxCollider2D*> collidingColliders;
+
 	BoxCollider2D(float width, float height);
 
 	void SetSize(float width, float height);
@@ -20,4 +23,11 @@ public:
 	bool Contains(float x, float y);
 
 	void Awake() override;
+
+	bool operator== (const BoxCollider2D& other) const {
+		return this == &other;
+	}
+	bool operator== (const BoxCollider2D* other) const {
+		return this == other;
+	}
 };

@@ -38,6 +38,11 @@ public:
 	virtual void Update(float deltaTime) {}
 	virtual void Render() {}
 
+	//콜라이더 충돌 처리 함수
+	virtual void OnTriggerEnter(Object* other) {}
+	virtual void OnTriggerStay(Object* other) {}
+	virtual void OnTriggerExit(Object* other) {}
+
 	//아웃렛 접속 함수
 	template <typename T>
 	void Expose(string name, T* varAddr) {

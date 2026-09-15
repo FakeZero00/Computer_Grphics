@@ -46,4 +46,6 @@ void BoxCollider2D::Awake() {
 	minPos.y = transform->worldPosition.y - height / 2.0f;
 	maxPos.x = transform->worldPosition.x + width / 2.0f;
 	maxPos.y = transform->worldPosition.y + height / 2.0f;
+
+	gameObject->ctx.pendingCollisionObjects.push_back(this);
 }

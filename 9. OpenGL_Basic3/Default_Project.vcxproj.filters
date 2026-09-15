@@ -36,9 +36,6 @@
     <ClInclude Include="Header\AppContext.h">
       <Filter>헤더 파일\Structure</Filter>
     </ClInclude>
-    <ClInclude Include="DirectorScript.h">
-      <Filter>헤더 파일\Script</Filter>
-    </ClInclude>
     <ClInclude Include="Header\BoxCollider2D.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -57,6 +54,15 @@
     <ClInclude Include="Header\Transform.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Header\ColliderManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\DirectorScript.h">
+      <Filter>헤더 파일\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\SquareMovement.h">
+      <Filter>헤더 파일\Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,7 +80,13 @@
     <ClCompile Include="Source\Transoform.cpp">
       <Filter>소스 파일\Source</Filter>
     </ClCompile>
-    <ClCompile Include="DirectorScript.cpp">
+    <ClCompile Include="Source\ColliderManager.cpp">
+      <Filter>소스 파일\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\DirectorScript.cpp">
+      <Filter>소스 파일\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\SquareMovement.cpp">
       <Filter>소스 파일\Script</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,6 +7,7 @@
 #include <random>
 #include "Color.h"
 #include "AppContext.h"
+#include "ColliderManager.h"
 #include "Object.h"
 #include "Transform.h"
 #include "MeshRenderer2D.h"
@@ -87,6 +88,8 @@ int main() {
 	AppContext ctx;
 	glfwSetWindowUserPointer(window, &ctx);
 
+	ColliderManager colliderManager(ctx);
+
 	//시간 초기화
 	ctx.time = glfwGetTime();
 
@@ -106,6 +109,9 @@ int main() {
 
 		//이벤트 처리
 		glfwPollEvents();
+		
+		//충돌 감지
+		colliderManager.Update();
 
 		//Update 처리
 		for (auto& obj : ctx.Hierarchy) {
@@ -120,15 +126,27 @@ int main() {
 			ctx.pendingHierarchy.clear();
 		}
 
+		//추가할 충돌 감지 콜리전이 있다면 CollisionObjects에 추가
+		if (!ctx.pendingCollisionObjects.empty()) {
+			for (auto& newCol : ctx.pendingCollisionObjects) {
+				ctx.CollisionObjects.push_back(newCol);
+			}
+			ctx.pendingCollisionObjects.clear();
+		}
+
 		//제거할 오브젝트가 있다면 Hierarchy에서 제거
 		if (!ctx.pendingDestroyObjects.empty()) {
 			for (auto& targetObj : ctx.pendingDestroyObjects) {
 				//CollisionObjects에서도 제거
 				auto& collist = ctx.CollisionObjects;
-				collist.erase(remove(collist.begin(), collist.end(), targetObj), collist.end());
+				collist.erase(remove_if(collist.begin(), collist.end(),
+					[targetObj](BoxCollider2D* col) {
+						return col->gameObject == targetObj;
+					}),
+					collist.end());
 
 				//부모 자식 관계 정리
-				Transform* targetTr = targetTr = targetObj->GetComponent<Transform>();
+				Transform* targetTr = targetObj->GetComponent<Transform>();
 				if (targetTr && targetTr->parent != nullptr) {
 					auto& siblings = targetTr->parent->children;
 					siblings.erase(remove(siblings.begin(), siblings.end(), targetTr), siblings.end());
