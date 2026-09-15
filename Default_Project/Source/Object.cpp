@@ -18,7 +18,6 @@ Object* Object::Instantiate(string name) {
 	ctx.pendingHierarchy.push_back(move(newObj));
 	Transform* newObjTr = ptr->GetComponent<Transform>();
 	newObjTr->SetParent(this->GetComponent<Transform>()); //부모 Transform 설정
-	this->GetComponent<Transform>()->children.push_back(newObjTr); //자식 Transform 추가
 	return ptr;
 }
 
