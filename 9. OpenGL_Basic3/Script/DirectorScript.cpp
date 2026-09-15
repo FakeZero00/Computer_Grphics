@@ -42,6 +42,16 @@ void DirectorScript::Update(float deltaTime) {
 		}
 	}
 
+	if (inputManager.GetKeyDown(GLFW_MOUSE_BUTTON_RIGHT)) {
+		for (auto& col : views::reverse(gameObject->ctx.CollisionObjects)) {
+			if (col->Contains(inputManager.GetMouseX(), inputManager.GetMouseY())) {
+				Object* targetObj = col->gameObject;
+				targetObj->GetComponent<SquareMovement>()->Seperate();
+				break;
+			}
+		}
+	}
+
 	if (inputManager.GetKeyUp(GLFW_MOUSE_BUTTON_LEFT)) {
 		for (auto& col : views::reverse(gameObject->ctx.CollisionObjects)) {
 			if (col->gameObject->GetComponent<SquareMovement>()->isMoving) {

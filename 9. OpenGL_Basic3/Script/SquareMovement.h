@@ -8,6 +8,8 @@ public:
 
 	SquareMovement() = default;
 
+	void Seperate();
+
 	void OnTriggerStay(Object* other) override;
 
 	void Update(float deltaTime) override;
