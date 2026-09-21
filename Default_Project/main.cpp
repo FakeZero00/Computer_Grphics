@@ -89,11 +89,6 @@ int main() {
 	//시간 초기화
 	ctx.time = glfwGetTime();
 
-	//Start 처리
-	for (auto& obj : ctx.Hierarchy) {
-		obj->Start();
-	}
-
 	////////////////////////메인 루프/////////////////////////
 	while (!glfwWindowShouldClose(window)) {
 		//시간 계산
@@ -110,6 +105,14 @@ int main() {
 		
 		//충돌 감지
 		colliderManager.Update();
+
+		//Start 처리
+		for (auto& obj : ctx.Hierarchy) {
+			if (obj->isValid && !obj->isStarted) {
+				obj->isStarted = true;
+				obj->Start();
+			}
+		}
 
 		//Update 처리
 		for (auto& obj : ctx.Hierarchy) {
