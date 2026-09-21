@@ -113,7 +113,7 @@ int main() {
 
 		//Update 처리
 		for (auto& obj : ctx.Hierarchy) {
-			obj->Update(ctx.deltaTime);
+			if (obj->isValid) obj->Update(ctx.deltaTime);
 		}
 
 		//추가할 오브젝트가 있다면 Hierarchy에 추가
