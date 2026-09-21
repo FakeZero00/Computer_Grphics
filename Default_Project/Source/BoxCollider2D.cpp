@@ -27,10 +27,13 @@ void BoxCollider2D::RecalculateCollision() {
 	transform = gameObject->GetComponent<Transform>();
 	transform->CalculateWorldPosition();
 
-	minPos.x = transform->worldPosition.x - width / 2.0f;
-	minPos.y = transform->worldPosition.y - height / 2.0f;
-	maxPos.x = transform->worldPosition.x + width / 2.0f;
-	maxPos.y = transform->worldPosition.y + height / 2.0f;
+	float scaledWidth = width * transform->scale.x;
+	float scaledHeight = height * transform->scale.y;
+
+	minPos.x = transform->worldPosition.x - scaledWidth / 2.0f;
+	minPos.y = transform->worldPosition.y - scaledHeight / 2.0f;
+	maxPos.x = transform->worldPosition.x + scaledWidth / 2.0f;
+	maxPos.y = transform->worldPosition.y + scaledHeight / 2.0f;
 }
 
 void BoxCollider2D::Awake() {
@@ -42,10 +45,13 @@ void BoxCollider2D::Awake() {
 	}
 	transform->CalculateWorldPosition();
 
-	minPos.x = transform->worldPosition.x - width / 2.0f;
-	minPos.y = transform->worldPosition.y - height / 2.0f;
-	maxPos.x = transform->worldPosition.x + width / 2.0f;
-	maxPos.y = transform->worldPosition.y + height / 2.0f;
+	float scaledWidth = width * transform->scale.x;
+	float scaledHeight = height * transform->scale.y;
+
+	minPos.x = transform->worldPosition.x - scaledWidth / 2.0f;
+	minPos.y = transform->worldPosition.y - scaledHeight / 2.0f;
+	maxPos.x = transform->worldPosition.x + scaledWidth / 2.0f;
+	maxPos.y = transform->worldPosition.y + scaledHeight / 2.0f;
 
 	gameObject->ctx.pendingCollisionObjects.push_back(this);
 }

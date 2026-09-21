@@ -4,7 +4,6 @@
 #include <string>
 #include <memory>
 #include <iostream>
-#include <random>
 #include "Color.h"
 #include "AppContext.h"
 #include "ColliderManager.h"
@@ -27,10 +26,6 @@ struct ScreenSize {
 	int width;
 	int height;
 };
-
-random_device rd;
-default_random_engine dre{ rd() };
-uniform_real_distribution<float> urd{0.0f, 1.0f};
 
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
@@ -87,6 +82,7 @@ int main() {
 	//컨텍스트 변수 생성, 윈도우 객체에 연결
 	AppContext ctx;
 	glfwSetWindowUserPointer(window, &ctx);
+	ctx.bgColor = { 0.2f, 0.2f, 0.2f, 1.0f }; //배경색 설정
 
 	ColliderManager colliderManager(ctx);
 
@@ -208,6 +204,9 @@ void InputProcess(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
+	else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GL_TRUE);
+	}
 }
 
 void DrawScene(GLFWwindow* window)
@@ -220,7 +219,7 @@ void DrawScene(GLFWwindow* window)
 
 	//오브젝트 렌더링
 	for (auto& obj : ctx->Hierarchy) {
-		obj->Render();
+		if(obj->isValid) obj->Render();
 	}
 
 	//버퍼 스왑

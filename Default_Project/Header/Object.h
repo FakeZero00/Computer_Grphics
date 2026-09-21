@@ -8,6 +8,8 @@ using namespace std;
 
 class Object {
 public:
+	bool isValid = true;
+
 	string name = "GameObject";
 	AppContext& ctx;
 	vector<unique_ptr<Component>> components;
