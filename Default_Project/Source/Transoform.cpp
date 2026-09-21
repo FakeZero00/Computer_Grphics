@@ -28,6 +28,16 @@ void Transform::SetLocalPosition(float x, float y, float z) {
 		gameObject->GetComponent<BoxCollider2D>()->RecalculateCollision();
 }
 
+void Transform::Translate(float x, float y, float z) {
+	position.x += x;
+	position.y += y;
+	position.z += z;
+
+	CalculateWorldPosition();
+	if (gameObject->GetComponent<BoxCollider2D>())
+		gameObject->GetComponent<BoxCollider2D>()->RecalculateCollision();
+}
+
 void Transform::CalculateWorldPosition() {
 	if (parent != nullptr) {
 		//부모가 있는 경우, 부모의 위치를 더함
