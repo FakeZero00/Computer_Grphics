@@ -17,9 +17,9 @@ void BoxCollider2D::SetSize(float width, float height) {
 
 bool BoxCollider2D::Contains(float x, float y) {
 	//AABB 충돌 감지: 점이 박스 안에 있는지 확인
-	cout << "Checking if point (" << x << ", " << y << ") is within BoxCollider2D bounds: "
+	/*cout << "Checking if point (" << x << ", " << y << ") is within BoxCollider2D bounds: "
 		<< "MinPos(" << minPos.x << ", " << minPos.y << "), "
-		<< "MaxPos(" << maxPos.x << ", " << maxPos.y << ")" << endl;
+		<< "MaxPos(" << maxPos.x << ", " << maxPos.y << ")" << endl;*/
 	return (x >= minPos.x && x <= maxPos.x && y >= minPos.y && y <= maxPos.y);
 }
 

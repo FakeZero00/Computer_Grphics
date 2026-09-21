@@ -27,6 +27,7 @@ public:
 	Transform();
 	
 	void SetLocalPosition(float x, float y, float z);
+	void Translate(float x, float y, float z);
 	void CalculateWorldPosition();
 	void SetParent(Transform* newParent);
 };

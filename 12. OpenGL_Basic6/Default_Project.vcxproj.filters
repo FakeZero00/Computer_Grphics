@@ -60,6 +60,15 @@
     <ClInclude Include="Common.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Script\SquareManager.h">
+      <Filter>헤더 파일\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\SquareSpawner.h">
+      <Filter>헤더 파일\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Particle.h">
+      <Filter>헤더 파일\Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -79,6 +88,15 @@
     </ClCompile>
     <ClCompile Include="Source\ColliderManager.cpp">
       <Filter>소스 파일\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\SquareManager.cpp">
+      <Filter>소스 파일\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\SquareSpawner.cpp">
+      <Filter>소스 파일\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Particle.cpp">
+      <Filter>소스 파일\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
