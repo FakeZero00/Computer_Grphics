@@ -89,6 +89,11 @@ int main() {
 	//시간 초기화
 	ctx.time = glfwGetTime();
 
+	//Start 처리
+	for (auto& obj : ctx.Hierarchy) {
+		obj->Start();
+	}
+
 	////////////////////////메인 루프/////////////////////////
 	while (!glfwWindowShouldClose(window)) {
 		//시간 계산
