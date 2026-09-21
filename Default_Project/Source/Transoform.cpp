@@ -1,4 +1,6 @@
 #include "Transform.h"
+#include "BoxCollider2D.h"
+#include "Object.h"
 
 Transform::Transform() {
 	//초기 위치 설정
@@ -20,6 +22,10 @@ void Transform::SetLocalPosition(float x, float y, float z) {
 	position.x = x;
 	position.y = y;
 	position.z = z;
+
+	CalculateWorldPosition();
+	if (gameObject->GetComponent<BoxCollider2D>())
+		gameObject->GetComponent<BoxCollider2D>()->RecalculateCollision();
 }
 
 void Transform::CalculateWorldPosition() {

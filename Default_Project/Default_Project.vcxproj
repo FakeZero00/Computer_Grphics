@@ -143,6 +143,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Common.h" />
     <ClInclude Include="Header\AppContext.h" />
     <ClInclude Include="Header\BoxCollider2D.h" />
     <ClInclude Include="Header\ColliderManager.h" />

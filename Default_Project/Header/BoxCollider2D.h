@@ -23,4 +23,5 @@ public:
 	bool Contains(float x, float y);
 
 	void Awake() override;
+	void Update(float deltaTime) override;
 };

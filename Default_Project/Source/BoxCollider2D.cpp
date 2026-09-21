@@ -55,3 +55,7 @@ void BoxCollider2D::Awake() {
 
 	gameObject->ctx.pendingCollisionObjects.push_back(this);
 }
+
+void BoxCollider2D::Update(float deltaTime) {
+	RecalculateCollision();
+}

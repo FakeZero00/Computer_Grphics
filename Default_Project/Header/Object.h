@@ -9,6 +9,7 @@ using namespace std;
 class Object {
 public:
 	bool isValid = true;
+	bool isStarted = false;
 
 	string name = "GameObject";
 	AppContext& ctx;
