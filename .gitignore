@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudio,c++
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,c++
 
+Lecture_Test/
+
 ### C++ ###
 # Prerequisites
 *.d
@@ -435,5 +437,3 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,c++
-
-Lecture_Test/
