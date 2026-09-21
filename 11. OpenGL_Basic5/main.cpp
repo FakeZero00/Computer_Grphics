@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <algorithm>
 #include <iostream>
 #include "Color.h"
 #include "AppContext.h"
@@ -13,7 +14,8 @@
 using namespace std;
 
 /////////////스크립트 임포트/////////////
-
+#include "Eraser.h"
+#include "EraserManager.h"
 ////////////////////////////////////////
 
 
@@ -90,6 +92,16 @@ int main() {
 	ctx.time = glfwGetTime();
 
 	////////////////////////메인 루프/////////////////////////
+	Object* eraser = Instantiate(ctx, "Eraser");
+	eraser->isValid = false;
+	eraser->AddComponent<MeshRenderer2D>(0.2f, 0.2f, Color{ 0.0f, 0.0f, 0.0f, 1.0f });
+	eraser->AddComponent<BoxCollider2D>(0.2f, 0.2f);
+	eraser->AddComponent<Eraser>();
+	eraser->GetComponent<Transform>()->SetLocalPosition(0.0f, 0.0f, 1.0f);
+
+	Object* manager = Instantiate(ctx, "Manager");
+	manager->AddComponent<EraserManager>(eraser);
+
 	while (!glfwWindowShouldClose(window)) {
 		//시간 계산
 		double currentTime = glfwGetTime();
@@ -102,9 +114,6 @@ int main() {
 
 		//이벤트 처리
 		glfwPollEvents();
-		
-		//충돌 감지
-		colliderManager.Update();
 
 		//Start 처리
 		for (auto& obj : ctx.Hierarchy) {
@@ -118,6 +127,9 @@ int main() {
 		for (auto& obj : ctx.Hierarchy) {
 			if (obj->isValid) obj->Update(ctx.deltaTime);
 		}
+
+		//충돌 감지
+		colliderManager.Update();
 
 		//추가할 오브젝트가 있다면 Hierarchy에 추가
 		if (!ctx.pendingHierarchy.empty()) {
@@ -225,8 +237,26 @@ void DrawScene(GLFWwindow* window)
 	glClearColor(ctx->bgColor.r, ctx->bgColor.g, ctx->bgColor.b, ctx->bgColor.a);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//오브젝트 렌더링
+	//렌더링 큐 생성
+	vector<Object*> renderQueue;
+	renderQueue.reserve(ctx->Hierarchy.size());
 	for (auto& obj : ctx->Hierarchy) {
+		renderQueue.push_back(obj.get());
+	}
+
+	//렌더링 큐 정렬 (Z값 기준. Z값이 클 수록 나중에 렌더링)
+	stable_sort(renderQueue.begin(), renderQueue.end(),
+		[](Object* a, Object* b) {
+			Transform* trA = a->GetComponent<Transform>();
+			Transform* trB = b->GetComponent<Transform>();
+			if (trA && trB) {
+				return trA->worldPosition.z < trB->worldPosition.z;
+			}
+			return false;
+		});
+
+	//오브젝트 렌더링
+	for (auto& obj : renderQueue) {
 		if(obj->isValid) obj->Render();
 	}
 

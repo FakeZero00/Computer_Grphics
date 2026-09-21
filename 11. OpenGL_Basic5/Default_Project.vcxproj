@@ -153,9 +153,15 @@
     <ClInclude Include="Header\Object.h" />
     <ClInclude Include="Header\Position2D.h" />
     <ClInclude Include="Header\Transform.h" />
+    <ClInclude Include="Script\Eraser.h" />
+    <ClInclude Include="Script\EraserManager.h" />
+    <ClInclude Include="Script\NewSquare.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Script\Eraser.cpp" />
+    <ClCompile Include="Script\EraserManager.cpp" />
+    <ClCompile Include="Script\NewSquare.cpp" />
     <ClCompile Include="Source\BoxCollider2D.cpp" />
     <ClCompile Include="Source\ColliderManager.cpp" />
     <ClCompile Include="Source\MeshRenderer2D.cpp" />

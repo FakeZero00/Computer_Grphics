@@ -57,6 +57,15 @@
     <ClInclude Include="Header\ColliderManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Script\EraserManager.h">
+      <Filter>헤더 파일\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Eraser.h">
+      <Filter>헤더 파일\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\NewSquare.h">
+      <Filter>헤더 파일\Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -76,6 +85,15 @@
     </ClCompile>
     <ClCompile Include="Source\ColliderManager.cpp">
       <Filter>소스 파일\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\EraserManager.cpp">
+      <Filter>소스 파일\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Eraser.cpp">
+      <Filter>소스 파일\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\NewSquare.cpp">
+      <Filter>소스 파일\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

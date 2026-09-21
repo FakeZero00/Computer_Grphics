@@ -28,6 +28,9 @@ void ColliderManager::Update() {
 			BoxCollider2D* colA = CollisionObjects[i];
 			BoxCollider2D* colB = CollisionObjects[j];
 
+			if (!colA->gameObject->isValid) continue;
+			if (!colB->gameObject->isValid) continue;
+
 			if (colA && colB) {
 				bool isColliding = CheckCollision(colA, colB);
 
