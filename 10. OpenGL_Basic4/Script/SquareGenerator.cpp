@@ -23,6 +23,7 @@ void SquareGenerator::CreateSquare() {
 		nSquareTr->position.x = inputManager.GetMouseX();
 		nSquareTr->position.y = inputManager.GetMouseY();
 		nSquareTr->CalculateWorldPosition();
+		positions.push_back({ nSquareTr->position.x, nSquareTr->position.y });
 
 		nSquareMr->SetSize(width, height);
 		nSquareMr->color = Color{ urd(dre), urd(dre), urd(dre), 1.0f};
@@ -35,4 +36,18 @@ void SquareGenerator::Update(float deltaTime) {
 	InputManager& inputManager = gameObject->ctx.inputManager;
 
 	if (inputManager.GetKeyDown(GLFW_MOUSE_BUTTON_LEFT)) CreateSquare();
+	else if (inputManager.GetKeyDown(GLFW_KEY_M)) {
+		int index = 0;
+		for (auto& square: gameObject->GetComponent<Transform>()->children) {
+			Transform* squareTr = square->gameObject->GetComponent<Transform>();
+			squareTr->SetLocalPosition(positions[index].first, positions[index].second, 0.0f);
+			index++;
+		}
+	}
+	else if (inputManager.GetKeyDown(GLFW_KEY_R)) {
+		for (auto& square : gameObject->GetComponent<Transform>()->children) {
+			square->gameObject->Destroy();
+		}
+		positions.clear();
+	}
 }
