@@ -1,60 +1,263 @@
-#include <gl/glew.h>
-#include <gl/glfw3.h>
-#include <iostream>
+#include "Common.h"
 using namespace std;
 
+/////////////½ºÅ©¸³Æ® ÀÓÆ÷Æ®/////////////
+
+////////////////////////////////////////
+
+template <typename T>
+void ChangeParam(T* param, T value) {
+	*param = value;
+}
+
+struct ScreenSize {
+	int width;
+	int height;
+};
+
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
+void InputProcess(GLFWwindow* window);
+void DrawScene(GLFWwindow* window);
+Object* Instantiate(AppContext& ctx, string name);
+Object* FindObject(AppContext& ctx, string name);
+
 int main() {
-	//GLFW ì´ˆê¸°í™”
+	//½ºÅ©¸° »çÀÌÁî ¼³Á¤
+	ScreenSize screenSize{800, 800};
+
+	//GLFW ÃÊ±âÈ­
 	if (!glfwInit()) {
-		cerr << "GLFW ì´ˆê¸°í™” ì‹¤íŒ¨" << endl;
+		cerr << "GLFW ÃÊ±âÈ­ ½ÇÆÐ" << endl;
 		return -1;
 	}
 
-	//OpenGL ë²„ì „ ì„¤ì •
+	//OpenGL ¹öÀü ¼³Á¤
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
-	//ìœˆë„ìš° ìƒì„±
-	GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL Window", nullptr, nullptr);
+	//À©µµ¿ì »ý¼º
+	GLFWwindow* window = glfwCreateWindow(screenSize.width, screenSize.height, "OpenGL Window", nullptr, nullptr);
 	if (!window) {
-		cerr << "ìœˆë„ìš° ìƒì„± ì‹¤íŒ¨" << endl;
+		cerr << "À©µµ¿ì »ý¼º ½ÇÆÐ" << endl;
 		glfwTerminate();
 		return -1;
 	}
 
-	//ì»¨í…ìŠ¤íŠ¸ ì„¤ì •
+	//ÄÁÅØ½ºÆ® ¼³Á¤
 	glfwMakeContextCurrent(window);
 
-	//GLEW ì´ˆê¸°í™”
-	glewExperimental = GL_TRUE;	//ìµœì‹  ê¸°ëŠ¥ ì‚¬ìš©
+	//GLEW ÃÊ±âÈ­
+	glewExperimental = GL_TRUE;	//ÃÖ½Å ±â´É »ç¿ë
 	if (glewInit() != GLEW_OK) {
-		cerr << "GLEW ì´ˆê¸°í™” ì‹¤íŒ¨" << endl;
+		cerr << "GLEW ÃÊ±âÈ­ ½ÇÆÐ" << endl;
 		glfwTerminate();
 		return -1;
 	}
 
-	glViewport(0, 0, 800, 600);	//ë·°í¬íŠ¸ ì„¤ì •
+	//////////////////»ç¿ëÀÚ Á¤ÀÇ ÃÊ±âÈ­////////////////////
 
-	//ë©”ì¸ ë£¨í”„
+	//¿ÜºÎ ÀÔ·Â ÄÝ¹é ÇÔ¼ö ¼³Á¤
+	glfwSetKeyCallback(window, KeyCallback);
+	glfwSetMouseButtonCallback(window, MouseButtonCallback);
+	glfwSetCursorPosCallback(window, CursorPosCallback);
+
+	//ºäÆ÷Æ® ¼³Á¤
+	glViewport(0, 0, screenSize.width, screenSize.height);
+
+	//ÄÁÅØ½ºÆ® º¯¼ö »ý¼º, À©µµ¿ì °´Ã¼¿¡ ¿¬°á
+	AppContext ctx;
+	glfwSetWindowUserPointer(window, &ctx);
+	ctx.bgColor = { 0.2f, 0.2f, 0.2f, 1.0f }; //¹è°æ»ö ¼³Á¤
+
+	ColliderManager colliderManager(ctx);
+
+	//½Ã°£ ÃÊ±âÈ­
+	ctx.time = glfwGetTime();
+
+	////////////////////////¸ÞÀÎ ·çÇÁ/////////////////////////
+
+	///////////////////°ÔÀÓ ¿ÀºêÁ§Æ® »ý¼º////////////////////
+
+	//////////////////////////////////////////////////////////
+
 	while (!glfwWindowShouldClose(window)) {
-		//ì´ë²¤íŠ¸ ì²˜ë¦¬
+		//½Ã°£ °è»ê
+		double currentTime = glfwGetTime();
+		ctx.deltaTime = currentTime - ctx.time;
+		ctx.time = currentTime;
+
+		//ÀÔ·Â Ã³¸®
+		ctx.inputManager.Update();
+		InputProcess(window);
+
+		//ÀÌº¥Æ® Ã³¸®
 		glfwPollEvents();
 
-		//ìž…ë ¥ ì²˜ë¦¬
-		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-			glfwSetWindowShouldClose(window, true);
+		//Start Ã³¸®
+		for (auto& obj : ctx.Hierarchy) {
+			if (obj->isValid && !obj->isStarted) {
+				obj->isStarted = true;
+				obj->Start();
+			}
+		}
 
-		//í™”ë©´ ì§€ìš°ê¸°
-		glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		//Update Ã³¸®
+		for (auto& obj : ctx.Hierarchy) {
+			if (obj->isValid) obj->Update(ctx.deltaTime);
+		}
 
-		//ë²„í¼ ìŠ¤ì™‘
-		glfwSwapBuffers(window);
+		//Ãæµ¹ °¨Áö
+		colliderManager.Update();
+
+		//Ãß°¡ÇÒ ¿ÀºêÁ§Æ®°¡ ÀÖ´Ù¸é Hierarchy¿¡ Ãß°¡
+		if (!ctx.pendingHierarchy.empty()) {
+			for (auto& newObj : ctx.pendingHierarchy) {
+				ctx.Hierarchy.push_back(move(newObj));
+			}
+			ctx.pendingHierarchy.clear();
+		}
+
+		//Ãß°¡ÇÒ Ãæµ¹ °¨Áö ÄÝ¸®ÀüÀÌ ÀÖ´Ù¸é CollisionObjects¿¡ Ãß°¡
+		if (!ctx.pendingCollisionObjects.empty()) {
+			for (auto& newCol : ctx.pendingCollisionObjects) {
+				ctx.CollisionObjects.push_back(newCol);
+			}
+			ctx.pendingCollisionObjects.clear();
+		}
+
+		//Á¦°ÅÇÒ ¿ÀºêÁ§Æ®°¡ ÀÖ´Ù¸é Hierarchy¿¡¼­ Á¦°Å
+		if (!ctx.pendingDestroyObjects.empty()) {
+			for (auto& targetObj : ctx.pendingDestroyObjects) {
+				//CollisionObjects¿¡¼­µµ Á¦°Å
+				auto& collist = ctx.CollisionObjects;
+				collist.erase(remove_if(collist.begin(), collist.end(),
+					[targetObj](BoxCollider2D* col) {
+						return col->gameObject == targetObj;
+					}),
+					collist.end());
+
+				//ºÎ¸ð ÀÚ½Ä °ü°è Á¤¸®
+				Transform* targetTr = targetObj->GetComponent<Transform>();
+				if (targetTr && targetTr->parent != nullptr) {
+					auto& siblings = targetTr->parent->children;
+					siblings.erase(remove(siblings.begin(), siblings.end(), targetTr), siblings.end());
+				}
+
+				//Hierarchy¿¡¼­ Á¦°Å
+				auto& hierarchy = ctx.Hierarchy;
+				hierarchy.erase(remove_if(hierarchy.begin(), hierarchy.end(),
+					[targetObj](const unique_ptr<Object>& obj) { return obj.get() == targetObj; }),
+					hierarchy.end());
+			}
+			ctx.pendingDestroyObjects.clear();
+		}
+
+		//È­¸é ·»´õ¸µ
+		DrawScene(window);
 	}
 
-	//ë¦¬ì†ŒìŠ¤ í•´ì œ
+	/////////////////////////·çÇÁ Á¾·á/////////////////////////
+	//¸®¼Ò½º ÇØÁ¦
 	glfwDestroyWindow(window);
 	glfwTerminate();
 	return 0;
+}
+
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+	if (!ctx) return;
+	
+	if (action == GLFW_PRESS) ctx->inputManager.SetKey(key, true);
+	else if (action == GLFW_RELEASE) ctx->inputManager.SetKey(key, false);
+}
+
+void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+	if (!ctx) return;
+
+	if (action == GLFW_PRESS) ctx->inputManager.SetKey(button, true);
+	else if (action == GLFW_RELEASE) ctx->inputManager.SetKey(button, false);
+}
+
+void CursorPosCallback(GLFWwindow* window, double xpos, double ypos)
+{
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+	if (!ctx) return;
+
+	//¸¶¿ì½º ÁÂÇ¥¸¦ OpenGL ÁÂÇ¥°è·Î º¯È¯
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+
+	float glX = (xpos / width) * 2.0f - 1.0f;
+	float glY = 1.0f - (ypos / height) * 2.0f; //YÃà ¹ÝÀü
+	ctx->inputManager.SetMousePosition(glX, glY);
+}
+
+void InputProcess(GLFWwindow* window)
+{
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GL_TRUE);
+	}
+	else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GL_TRUE);
+	}
+}
+
+void DrawScene(GLFWwindow* window)
+{
+	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
+
+	//¹öÆÛ ÃÊ±âÈ­
+	glClearColor(ctx->bgColor.r, ctx->bgColor.g, ctx->bgColor.b, ctx->bgColor.a);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	//·»´õ¸µ Å¥ »ý¼º
+	vector<Object*> renderQueue;
+	renderQueue.reserve(ctx->Hierarchy.size());
+	for (auto& obj : ctx->Hierarchy) {
+		renderQueue.push_back(obj.get());
+	}
+
+	//·»´õ¸µ Å¥ Á¤·Ä (Z°ª ±âÁØ. Z°ªÀÌ Å¬ ¼ö·Ï ³ªÁß¿¡ ·»´õ¸µ)
+	stable_sort(renderQueue.begin(), renderQueue.end(),
+		[](Object* a, Object* b) {
+			Transform* trA = a->GetComponent<Transform>();
+			Transform* trB = b->GetComponent<Transform>();
+			if (trA && trB) {
+				return trA->worldPosition.z < trB->worldPosition.z;
+			}
+			return false;
+		});
+
+	//¿ÀºêÁ§Æ® ·»´õ¸µ
+	for (auto& obj : renderQueue) {
+		if(obj->isValid) obj->Render();
+	}
+
+	//¹öÆÛ ½º¿Ò
+	glfwSwapBuffers(window);
+}
+
+Object* Instantiate(AppContext& ctx, string name) {
+	auto newObj = make_unique<Object>(ctx, name);
+	Object* ptr = newObj.get();
+
+	ctx.Hierarchy.push_back(move(newObj));
+	return ptr;
+}
+
+Object* FindObject(AppContext& ctx, string name) {
+	for (auto& obj : ctx.Hierarchy) {
+		if (obj->name == name) {
+			return obj.get();
+		}
+	}
+	return nullptr;
 }
