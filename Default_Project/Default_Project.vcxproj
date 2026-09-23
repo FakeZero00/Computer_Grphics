@@ -32,8 +32,6 @@
     <ClInclude Include="Data_Structure\Object.h" />
     <ClInclude Include="Data_Structure\Position2D.h" />
     <ClInclude Include="Data_Structure\Scene.h" />
-    <ClInclude Include="TestData.h" />
-    <ClInclude Include="TestScene.h" />
     <ClInclude Include="Utility\ColliderManager.h" />
     <ClInclude Include="Utility\InputManager.h" />
     <ClInclude Include="Utility\ShaderManager.h" />
@@ -46,7 +44,6 @@
     <ClCompile Include="Data_Structure\Object.cpp" />
     <ClCompile Include="Data_Structure\Scene.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Utility\ColliderManager.cpp" />
     <ClCompile Include="Utility\ShaderManager.cpp" />
   </ItemGroup>

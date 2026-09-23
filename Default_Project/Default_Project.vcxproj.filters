@@ -81,14 +81,8 @@
     <ClInclude Include="Common.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="TestData.h">
-      <Filter>리소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Data_Structure\Scene.h">
       <Filter>Data_Structure\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="TestScene.h">
-      <Filter>리소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="Data_Structure\Collider.h">
       <Filter>Data_Structure\Header</Filter>
@@ -124,9 +118,6 @@
     </ClCompile>
     <ClCompile Include="Data_Structure\Scene.cpp">
       <Filter>Data_Structure\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="TestScene.cpp">
-      <Filter>리소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Component\BoxCollider.cpp">
       <Filter>Component\Source</Filter>
