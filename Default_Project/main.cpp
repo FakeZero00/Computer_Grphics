@@ -1,9 +1,9 @@
 #include "Common.h"
 using namespace std;
 
-/////////////스크립트 임포트/////////////
+/////////////씬 임포트/////////////
 
-////////////////////////////////////////
+///////////////////////////////////
 
 template <typename T>
 void ChangeParam(T* param, T value) {
@@ -23,7 +23,13 @@ void DrawScene(GLFWwindow* window);
 Object* Instantiate(AppContext& ctx, string name);
 Object* FindObject(AppContext& ctx, string name);
 
-int main() {
+map<string, GLuint> vertexShaders;
+map<string, GLuint> fragmentShaders;
+map<string, GLuint> shaders;
+
+GLuint VAO, VBO, EBO;
+
+int main(int argc, char** argv) {
 	//스크린 사이즈 설정
 	ScreenSize screenSize{800, 800};
 
@@ -36,7 +42,7 @@ int main() {
 	//OpenGL 버전 설정
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//윈도우 생성
 	GLFWwindow* window = glfwCreateWindow(screenSize.width, screenSize.height, "OpenGL Window", nullptr, nullptr);
@@ -56,6 +62,16 @@ int main() {
 		glfwTerminate();
 		return -1;
 	}
+
+	//////////////////////셰이더 초기화/////////////////////
+
+	make_vertexShaders(vertexShaders, "Debug_vertex.glsl");
+	make_fragmentShaders(fragmentShaders, "Debug_fragment.glsl");
+	make_shaderProgram("Debug", shaders, vertexShaders["Debug_vertex.glsl"], fragmentShaders["Debug_fragment.glsl"]);
+
+	make_vertexShaders(vertexShaders, "Test_vertex.glsl");
+	make_fragmentShaders(fragmentShaders, "Test_fragment.glsl");
+	make_shaderProgram("Test", shaders, vertexShaders["Test_vertex.glsl"], fragmentShaders["Test_fragment.glsl"]);
 
 	//////////////////사용자 정의 초기화////////////////////
 
@@ -77,11 +93,11 @@ int main() {
 	//시간 초기화
 	ctx.time = glfwGetTime();
 
+	/////////////////////////씬 로드/////////////////////////
+
+
+
 	////////////////////////메인 루프////////////////////////
-
-	///////////////////게임 오브젝트 생성////////////////////
-
-	/////////////////////////////////////////////////////////
 
 	while (!glfwWindowShouldClose(window)) {
 		//시간 계산
@@ -134,7 +150,7 @@ int main() {
 				//CollisionObjects에서도 제거
 				auto& collist = ctx.CollisionObjects;
 				collist.erase(remove_if(collist.begin(), collist.end(),
-					[targetObj](BoxCollider2D* col) {
+					[targetObj](Collider* col) {
 						return col->gameObject == targetObj;
 					}),
 					collist.end());
@@ -243,21 +259,4 @@ void DrawScene(GLFWwindow* window)
 
 	//버퍼 스왑
 	glfwSwapBuffers(window);
-}
-
-Object* Instantiate(AppContext& ctx, string name) {
-	auto newObj = make_unique<Object>(ctx, name);
-	Object* ptr = newObj.get();
-
-	ctx.Hierarchy.push_back(move(newObj));
-	return ptr;
-}
-
-Object* FindObject(AppContext& ctx, string name) {
-	for (auto& obj : ctx.Hierarchy) {
-		if (obj->name == name) {
-			return obj.get();
-		}
-	}
-	return nullptr;
 }

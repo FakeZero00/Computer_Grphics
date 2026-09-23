@@ -25,7 +25,6 @@ bool BoxCollider2D::Contains(float x, float y) {
 
 void BoxCollider2D::RecalculateCollision() {
 	transform = gameObject->GetComponent<Transform>();
-	transform->CalculateWorldPosition();
 
 	float scaledWidth = width * transform->scale.x;
 	float scaledHeight = height * transform->scale.y;
@@ -43,7 +42,6 @@ void BoxCollider2D::Awake() {
 		std::cerr << "Warning: BoxCollider2D requires a Transform component." << std::endl;
 		return;
 	}
-	transform->CalculateWorldPosition();
 
 	float scaledWidth = width * transform->scale.x;
 	float scaledHeight = height * transform->scale.y;

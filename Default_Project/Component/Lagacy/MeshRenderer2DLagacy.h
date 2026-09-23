@@ -3,7 +3,7 @@
 #include "Color.h"
 #include "Position2D.h"
 
-class MeshRenderer2D : public Component {
+class MeshRenderer2DLagacy : public Component {
 public:
 	Position2D minPos;
 	Position2D maxPos;
@@ -14,8 +14,8 @@ public:
 
 	bool isOutline = false;
 
-	MeshRenderer2D();
-	MeshRenderer2D(float width, float height, Color color);
+	MeshRenderer2DLagacy();
+	MeshRenderer2DLagacy(float width, float height, Color color);
 
 	void SetSize(float width, float height);
 

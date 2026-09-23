@@ -1,9 +1,9 @@
-#include "MeshRenderer2D.h"
+#include "MeshRenderer2DLagacy.h"
 #include "Transform.h"
 #include "Object.h"
 #include <gl/glew.h>
 
-MeshRenderer2D::MeshRenderer2D() {
+MeshRenderer2DLagacy::MeshRenderer2DLagacy() {
 	//초기 위치 설정
 	minPos.x = 0.0f;
 	minPos.y = 0.0f;
@@ -17,25 +17,24 @@ MeshRenderer2D::MeshRenderer2D() {
 	Expose("isOutline", &isOutline);
 }
 
-MeshRenderer2D::MeshRenderer2D(float width, float height, Color color) {
+MeshRenderer2DLagacy::MeshRenderer2DLagacy(float width, float height, Color color) {
 	//크기 설정
 	this->width = width;
 	this->height = height;
 	this->color = color;
 }
 
-void  MeshRenderer2D::SetSize(float width, float height) {
+void  MeshRenderer2DLagacy::SetSize(float width, float height) {
 	this->width = width;
 	this->height = height;
 }
 
-void MeshRenderer2D::Render() {
+void MeshRenderer2DLagacy::Render() {
 	Transform* transform = gameObject->GetComponent<Transform>();
 	if (transform == nullptr) return;
 
 	float scaledWidth = width * transform->scale.x;
 	float scaledHeight = height * transform->scale.y;
-	transform->CalculateWorldPosition();
 
 	//꼭짓점 좌표 계산
 	minPos.x = transform->worldPosition.x - scaledWidth / 2.0f;

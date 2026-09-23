@@ -3,30 +3,54 @@
 #include <algorithm>
 #include "Object.h"
 #include "Component.h"
-#include "Position2D.h"
+#include "Collider.h"
 using namespace std;
 
 ColliderManager::ColliderManager(AppContext& ctx) : ctx(ctx) {}
 
-bool ColliderManager::CheckCollision(BoxCollider2D* colA, BoxCollider2D* colB) {
-	Position2D minA = colA->minPos;
-	Position2D maxA = colA->maxPos;
-	Position2D minB = colB->minPos;
-	Position2D maxB = colB->maxPos;
+bool ColliderManager::CheckCollision(Collider* colA, Collider* colB) {
+	//1. Box vs Box 충돌 체크
+	if (colA->type == ColliderType::Box && colB->type == ColliderType::Box) {
+		return CheckBoxBox(static_cast<BoxCollider*>(colA), static_cast<BoxCollider*>(colB));
+	}
 
-	if (minA.x > maxB.x || maxA.x < minB.x) return false; // X축 충돌 없음
-	if (minA.y > maxB.y || maxA.y < minB.y) return false; // Y축 충돌 없음
+	//2. Sphere vs Sphere 충돌 체크
+	else if (colA->type == ColliderType::Sphere && colB->type == ColliderType::Sphere) {
+		//임시
+		return false;
+	}
+
+	//3. Box vs Sphere 충돌 체크
+	else if ((colA->type == ColliderType::Box && colB->type == ColliderType::Sphere) ||
+		(colA->type == ColliderType::Sphere && colB->type == ColliderType::Box)) {
+		//임시
+		return false;
+	}
+
+	//4. 그 외의 경우
+	else return false;
+}
+
+bool ColliderManager::CheckBoxBox(BoxCollider* colA, BoxCollider* colB) {
+	vec3 minA = colA->minPos;
+	vec3 maxA = colA->maxPos;
+	vec3 minB = colB->minPos;
+	vec3 maxB = colB->maxPos;
+
+	if (minA.x > maxB.x || maxA.x < minB.x) return false;
+	if (minA.y > maxB.y || maxA.y < minB.y) return false;
+	if (minA.z > maxB.z || maxA.z < minB.z) return false;
 
 	return true;
 }
 
 void ColliderManager::Update() {
-	vector<BoxCollider2D*>& CollisionObjects = ctx.CollisionObjects;
+	vector<Collider*>& CollisionObjects = ctx.CollisionObjects;
 
 	for (size_t i = 0; i < CollisionObjects.size(); ++i) {
 		for (size_t j = i + 1; j < CollisionObjects.size(); ++j) {
-			BoxCollider2D* colA = CollisionObjects[i];
-			BoxCollider2D* colB = CollisionObjects[j];
+			Collider* colA = CollisionObjects[i];
+			Collider* colB = CollisionObjects[j];
 
 			if (!colA->gameObject->isValid) continue;
 			if (!colB->gameObject->isValid) continue;

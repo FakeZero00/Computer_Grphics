@@ -18,6 +18,44 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="Component\BoxCollider.h" />
+    <ClInclude Include="Component\MeshRenderer3D.h" />
+    <ClInclude Include="Component\Transform.h" />
+    <ClInclude Include="Data_Structure\AppContext.h" />
+    <ClInclude Include="Data_Structure\Collider.h" />
+    <ClInclude Include="Data_Structure\Color.h" />
+    <ClInclude Include="Data_Structure\Component.h" />
+    <ClInclude Include="Data_Structure\Material.h" />
+    <ClInclude Include="Data_Structure\Mesh.h" />
+    <ClInclude Include="Data_Structure\Object.h" />
+    <ClInclude Include="Data_Structure\Position2D.h" />
+    <ClInclude Include="Data_Structure\Scene.h" />
+    <ClInclude Include="TestData.h" />
+    <ClInclude Include="TestScene.h" />
+    <ClInclude Include="Utility\ColliderManager.h" />
+    <ClInclude Include="Utility\InputManager.h" />
+    <ClInclude Include="Utility\ShaderManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Component\BoxCollider.cpp" />
+    <ClCompile Include="Component\MeshRenderer3D.cpp" />
+    <ClCompile Include="Component\Transform.cpp" />
+    <ClCompile Include="Data_Structure\Mesh.cpp" />
+    <ClCompile Include="Data_Structure\Object.cpp" />
+    <ClCompile Include="Data_Structure\Scene.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="Utility\ColliderManager.cpp" />
+    <ClCompile Include="Utility\ShaderManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\Debug_fragment.glsl" />
+    <None Include="Shader\Debug_vertex.glsl" />
+    <None Include="Shader\Test_fragment.glsl" />
+    <None Include="Shader\Test_vertex.glsl" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -71,7 +109,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>Header;Source;Script;$(IncludePath)</IncludePath>
+    <IncludePath>Component;Data_Structure;Script;Utility;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -142,27 +180,6 @@
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Common.h" />
-    <ClInclude Include="Header\AppContext.h" />
-    <ClInclude Include="Header\BoxCollider2D.h" />
-    <ClInclude Include="Header\ColliderManager.h" />
-    <ClInclude Include="Header\Color.h" />
-    <ClInclude Include="Header\Component.h" />
-    <ClInclude Include="Header\InputManager.h" />
-    <ClInclude Include="Header\MeshRenderer2D.h" />
-    <ClInclude Include="Header\Object.h" />
-    <ClInclude Include="Header\Position2D.h" />
-    <ClInclude Include="Header\Transform.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Source\BoxCollider2D.cpp" />
-    <ClCompile Include="Source\ColliderManager.cpp" />
-    <ClCompile Include="Source\MeshRenderer2D.cpp" />
-    <ClCompile Include="Source\Object.cpp" />
-    <ClCompile Include="Source\Transoform.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
