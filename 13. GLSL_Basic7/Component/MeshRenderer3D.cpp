@@ -7,8 +7,6 @@
 #include <gl/glm/gtc/type_ptr.hpp>
 
 void MeshRenderer3D::Render() {
-	if (not mesh || not material) return;
-
 	//셰이더 사용
 	material->Use();
 

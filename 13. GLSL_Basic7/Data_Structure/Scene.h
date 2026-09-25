@@ -8,5 +8,5 @@ public:
 	Object* Instantiate(AppContext& ctx, string objName);
 	Object* FindObject(AppContext& ctx, string objName);
 
-	virtual void LoadScene(AppContext& ctx, map<string, GLuint>& shaders) {}
+	virtual void LoadScene(AppContext& ctx) {}
 };

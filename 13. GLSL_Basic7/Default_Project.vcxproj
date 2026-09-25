@@ -22,16 +22,19 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Component\BoxCollider.h" />
     <ClInclude Include="Component\MeshRenderer3D.h" />
+    <ClInclude Include="Component\Spline.h" />
     <ClInclude Include="Component\Transform.h" />
+    <ClInclude Include="Component\Vertex.h" />
+    <ClInclude Include="Dataset.h" />
     <ClInclude Include="Data_Structure\AppContext.h" />
     <ClInclude Include="Data_Structure\Collider.h" />
-    <ClInclude Include="Data_Structure\Color.h" />
     <ClInclude Include="Data_Structure\Component.h" />
     <ClInclude Include="Data_Structure\Material.h" />
     <ClInclude Include="Data_Structure\Mesh.h" />
     <ClInclude Include="Data_Structure\Object.h" />
-    <ClInclude Include="Data_Structure\Position2D.h" />
     <ClInclude Include="Data_Structure\Scene.h" />
+    <ClInclude Include="Default_Scene.h" />
+    <ClInclude Include="Script\ShapeGenerator.h" />
     <ClInclude Include="Utility\ColliderManager.h" />
     <ClInclude Include="Utility\InputManager.h" />
     <ClInclude Include="Utility\ShaderManager.h" />
@@ -39,19 +42,25 @@
   <ItemGroup>
     <ClCompile Include="Component\BoxCollider.cpp" />
     <ClCompile Include="Component\MeshRenderer3D.cpp" />
+    <ClCompile Include="Component\Spline.cpp" />
     <ClCompile Include="Component\Transform.cpp" />
+    <ClCompile Include="Data_Structure\Material.cpp" />
     <ClCompile Include="Data_Structure\Mesh.cpp" />
     <ClCompile Include="Data_Structure\Object.cpp" />
     <ClCompile Include="Data_Structure\Scene.cpp" />
+    <ClCompile Include="Default_Scene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Script\ShapeGenerator.cpp" />
     <ClCompile Include="Utility\ColliderManager.cpp" />
     <ClCompile Include="Utility\ShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Debug_fragment.glsl" />
     <None Include="Shader\Debug_vertex.glsl" />
-    <None Include="Shader\Test_fragment.glsl" />
-    <None Include="Shader\Test_vertex.glsl" />
+    <None Include="Shader\Spline_fragment.glsl" />
+    <None Include="Shader\Spline_vertex.glsl" />
+    <None Include="Shader\Standard_fragment.glsl" />
+    <None Include="Shader\Standard_vertex.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
