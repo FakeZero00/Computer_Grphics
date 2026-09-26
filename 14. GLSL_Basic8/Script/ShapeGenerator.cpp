@@ -239,6 +239,15 @@ void ShapeGenerator::Update(float deltaTime) {
 
 		obj1[0]->isValid = true;
 		obj1[1]->isValid = false;
+
+		obj2[0]->isValid = true; 
+		obj2[1]->isValid = false;
+
+		obj3[0]->isValid = true; 
+		obj3[1]->isValid = false;
+
+		obj4[0]->isValid = true; 
+		obj4[1]->isValid = false;
 	}
 
 	else if (inputManager.GetKeyDown(GLFW_KEY_B)) {
@@ -246,5 +255,28 @@ void ShapeGenerator::Update(float deltaTime) {
 
 		obj1[0]->isValid = false;
 		obj1[1]->isValid = true;
+
+		obj2[0]->isValid = false;
+		obj2[1]->isValid = true;
+
+		obj3[0]->isValid = false;
+		obj3[1]->isValid = true;
+
+		obj4[0]->isValid = false;
+		obj4[1]->isValid = true;
+	}
+
+	else if (inputManager.GetKeyDown(GLFW_KEY_C)) {
+		obj1[0]->isValid = false;
+		obj1[1]->isValid = false;
+
+		obj2[0]->isValid = false;
+		obj2[1]->isValid = false;
+
+		obj3[0]->isValid = false;
+		obj3[1]->isValid = false;
+
+		obj4[0]->isValid = false;
+		obj4[1]->isValid = false;
 	}
 }
