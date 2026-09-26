@@ -1,11 +1,11 @@
 #version 330 core
-//out_Color: 버텍스 셰이더에서 전달받은 색상 값
-//FragColor: 출력할 생상 값으로 프레임 버퍼로 전달됨
-
+//버텍스 컬러
 in vec3 out_Color;
 
+//전달받은 색상
 uniform vec4 tColor;
 
+//출력할 색상 값
 out vec4 FragColor;
 
 void main()

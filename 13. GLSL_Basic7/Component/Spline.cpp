@@ -3,23 +3,31 @@
 #include <string>
 #include <gl/glew.h>
 #include <gl/glm/gtc/type_ptr.hpp>
+#include "Object.h"
+#include "Transform.h"
 using namespace std;
 
 //main에서 선언된 shaders 맵을 extern으로 참조
 extern map<string, GLuint> shaders;
 
 Spline::Spline(vector<vec3> controlPoints, vec4 color) : controlPoints(controlPoints), color(color) {
-	InitDebugRender();
+	InitRender();
 }
 
 void Spline::Render() {
 	GLuint splineShader = shaders["Spline"];
 	glUseProgram(splineShader);
 
-	//controlPoints는 이미 월드 좌표이므로 모델 변환 행렬을 단위 행렬(Identity)로 덮어씌움
+	//controlPoints의 월드 좌표 계산을 위해 model 행렬을 셰이더에 전달
 	GLuint modelLoc = glGetUniformLocation(splineShader, "model");
-	mat4 identity = mat4{ 1.0f };
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(identity));
+	Transform* tr = gameObject->GetComponent<Transform>();
+
+	mat4 localMatrix = mat4{ 1.0f };
+	localMatrix = translate(localMatrix, tr->position);
+	localMatrix *= mat4_cast(tr->rotation);
+	localMatrix = glm::scale(localMatrix, tr->scale);
+
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(localMatrix));
 
 	//Color를 셰이더에 전달
 	GLuint colorLoc = glGetUniformLocation(splineShader, "color");
@@ -35,7 +43,7 @@ void Spline::Render() {
 	glBindVertexArray(0);
 }
 
-void Spline::InitDebugRender() {
+void Spline::InitRender() {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 

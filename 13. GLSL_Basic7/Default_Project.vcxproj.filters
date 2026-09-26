@@ -105,6 +105,9 @@
     <ClInclude Include="Script\ShapeGenerator.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="Script\Shape.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -144,6 +147,9 @@
       <Filter>Data_Structure\Source</Filter>
     </ClCompile>
     <ClCompile Include="Script\ShapeGenerator.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Shape.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

@@ -32,6 +32,10 @@ void Material::Use() {
 	}
 }
 
+void Material::SetBool(const string& name, bool value) {
+	boolUniforms[name] = value;
+}
+
 void Material::SetInt(const string& name, int value) {
 	intUniforms[name] = value;
 }
@@ -46,4 +50,24 @@ void Material::SetVec3(const string& name, const vec3& value) {
 
 void Material::SetVec4(const string& name, const vec4& value) {
 	vec4Uniforms[name] = value;
+}
+
+bool Material::GetBool(const string& name) {
+	return boolUniforms[name];
+}
+
+int Material::GetInt(const string& name) {
+	return intUniforms[name];
+}
+
+float Material::GetFloat(const string& name) {
+	return floatUniforms[name];
+}
+
+vec3 Material::GetVec3(const string& name) {
+	return vec3Uniforms[name];
+}
+
+vec4 Material::GetVec4(const string& name) {
+	return vec4Uniforms[name];
 }

@@ -15,6 +15,8 @@ public:
 
 	BoxCollider(vec3 center = vec3{ 0.0 }, vec3 size = vec3{ 1.0 });
 
+	bool MouseCollide(vec2 mousePos);
+
 	void RecalculateCollision() override;
 	void Start() override;
 	void Render() override;

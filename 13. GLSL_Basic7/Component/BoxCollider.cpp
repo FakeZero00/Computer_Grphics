@@ -15,6 +15,15 @@ BoxCollider::BoxCollider(vec3 center, vec3 size) : Collider(ColliderType::Box), 
 	InitDebugRender();
 }
 
+bool BoxCollider::MouseCollide(vec2 mousePos) {
+	//마우스 좌표를 이용해 충돌 여부 판단
+	if (mousePos.x >= minPos.x && mousePos.x <= maxPos.x &&
+		mousePos.y >= minPos.y && mousePos.y <= maxPos.y) {
+		return true;
+	}
+	return false;
+}
+
 void BoxCollider::RecalculateCollision() {
 	if (not gameObject) return;
 

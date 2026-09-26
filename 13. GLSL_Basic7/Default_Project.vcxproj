@@ -34,6 +34,7 @@
     <ClInclude Include="Data_Structure\Object.h" />
     <ClInclude Include="Data_Structure\Scene.h" />
     <ClInclude Include="Default_Scene.h" />
+    <ClInclude Include="Script\Shape.h" />
     <ClInclude Include="Script\ShapeGenerator.h" />
     <ClInclude Include="Utility\ColliderManager.h" />
     <ClInclude Include="Utility\InputManager.h" />
@@ -50,6 +51,7 @@
     <ClCompile Include="Data_Structure\Scene.cpp" />
     <ClCompile Include="Default_Scene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Script\Shape.cpp" />
     <ClCompile Include="Script\ShapeGenerator.cpp" />
     <ClCompile Include="Utility\ColliderManager.cpp" />
     <ClCompile Include="Utility\ShaderManager.cpp" />

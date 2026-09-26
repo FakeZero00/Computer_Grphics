@@ -16,7 +16,7 @@ public:
 
 	Spline(vector<vec3> controlPoints, vec4 color = vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
-	void InitDebugRender();
+	void InitRender();
 	void SetColor(vec4 newColor);
 
 	void Render() override;
