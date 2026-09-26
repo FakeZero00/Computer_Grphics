@@ -105,7 +105,7 @@
     <ClInclude Include="Script\ShapeGenerator.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Shape.h">
+    <ClInclude Include="Script\ShapeMovement.h">
       <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>
@@ -149,7 +149,7 @@
     <ClCompile Include="Script\ShapeGenerator.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Shape.cpp">
+    <ClCompile Include="Script\ShapeMovement.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,12 +6,12 @@ Mesh::Mesh(const vector<Vertex>& vertices, const vector<GLubyte>& indices) {
 	indexCount = indices.size();
 
 	minPos = vec3{ FLT_MAX };
-	max3Pos = vec3{ -FLT_MAX };
+	maxPos = vec3{ -FLT_MAX };
 
 	//버텍스 데이터에서 최소, 최대 좌표 계산
 	for (const auto& vertex : vertices) {
 		minPos = glm::min(minPos, vertex.position);
-		max3Pos = glm::max(max3Pos, vertex.position);
+		maxPos = glm::max(maxPos, vertex.position);
 	}
 
 	//VAO 객체 생성 및 바인딩

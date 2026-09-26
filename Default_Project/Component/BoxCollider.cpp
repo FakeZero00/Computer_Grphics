@@ -4,6 +4,7 @@
 #include "MeshRenderer3D.h"
 #include "Mesh.h"
 #include "Material.h"
+#include <cfloat>
 #include <gl/glm/gtc/type_ptr.hpp>
 #include <gl/glew.h>
 
@@ -37,24 +38,44 @@ void BoxCollider::RecalculateCollision() {
 	MeshRenderer3D* mr = gameObject->GetComponent<MeshRenderer3D>();
 	if (mr && mr->mesh) {
 		meshMin = mr->mesh->minPos;
-		meshMax = mr->mesh->max3Pos;
+		meshMax = mr->mesh->maxPos;
 	}
 
-	//중심점과 크기 계산
+	//Mesh와 Collider의 Center, Size를 고려한 로컬 좌표계에서의 minPos, maxPos 계산
 	vec3 meshCenter = (meshMin + meshMax) / 2.0f;
 	vec3 meshExtent = (meshMax - meshMin) / 2.0f;
 
-	vec3 finalExtent = meshExtent * size * tr->scale;
-	
-	vec3 finalCenter = meshCenter + center;
-	vec3 worldCenter = vec3(tr->worldMatrix * vec4{ finalCenter, 1.0f });
+	vec3 localMin = (meshCenter + center) - (meshExtent * size);
+	vec3 localMax = (meshCenter + center) + (meshExtent * size);
 
-	minPos = worldCenter - finalExtent;
-	maxPos = worldCenter + finalExtent;
+	//로컬 바운딩 박스의 8개 꼭짓점 좌표 배열 생성
+	vec3 corners[8] = {
+		vec3(localMin.x, localMin.y, localMin.z),
+		vec3(localMax.x, localMin.y, localMin.z),
+		vec3(localMax.x, localMax.y, localMin.z),
+		vec3(localMin.x, localMax.y, localMin.z),
+		vec3(localMin.x, localMin.y, localMax.z),
+		vec3(localMax.x, localMin.y, localMax.z),
+		vec3(localMax.x, localMax.y, localMax.z),
+		vec3(localMin.x, localMax.y, localMax.z)
+	};
+
+	//월드 공간의 min/max 좌표 계산
+	minPos = vec3(FLT_MAX);
+	maxPos = vec3(-FLT_MAX);
+
+	for (int i = 0; i < 8; ++i) {
+		vec4 worldPos = tr->worldMatrix * vec4(corners[i], 1.0f);
+
+		minPos = min(minPos, vec3(worldPos));
+		maxPos = max(maxPos, vec3(worldPos));
+	}
 }
 
 void BoxCollider::Start() {
 	RecalculateCollision();
+
+	gameObject->ctx.pendingCollisionObjects.push_back(this);
 }
 
 void BoxCollider::Render() {

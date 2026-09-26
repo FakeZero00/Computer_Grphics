@@ -11,7 +11,7 @@ public:
 	GLsizei indexCount;
 
 	vec3 minPos;
-	vec3 max3Pos;
+	vec3 maxPos;
 
 	Mesh(const vector<Vertex>& vertices, const vector<GLubyte>& indices);
 	void Bind() const;

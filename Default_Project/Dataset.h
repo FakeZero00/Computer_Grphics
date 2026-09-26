@@ -5,13 +5,6 @@
 using namespace std;
 using namespace glm;
 
-vector<vec3> controlPoints = {
-	vec3(-1.0f, 0.0f, 0.0f),
-	vec3(-0.5f, 1.0f, 0.0f),
-	vec3(0.5f, -1.0f, 0.0f),
-	vec3(1.0f, 0.0f, 0.0f)
-};
-
 vector<Vertex> isoPolyvert = {
 	{ vec3(0.0f, 0.1f, 0.0f), vec3(0.0f) },
 	{ vec3(-0.05f, -0.05f, 0.0f), vec3(0.0f) },
@@ -23,10 +16,10 @@ vector<GLubyte> isoPolyidx = {
 };
 
 vector<Vertex> Rectvert = {
-	{ vec3(-0.1f, 0.1f, 0.0f), vec3(0.0f) },
-	{ vec3(-0.1f, -0.1f, 0.0f), vec3(0.0f) },
-	{ vec3(0.1f, -0.1f, 0.0f), vec3(0.0f) },
-	{ vec3(0.1f, 0.1f, 0.0f), vec3(0.0f) }
+	{ vec3(-0.05f, 1.0f, 0.0f), vec3(0.0f) },
+	{ vec3(-0.05f, -1.0f, 0.0f), vec3(0.0f) },
+	{ vec3(0.05f, -1.0f, 0.0f), vec3(0.0f) },
+	{ vec3(0.05f, 1.0f, 0.0f), vec3(0.0f) }
 };
 
 vector<GLubyte> Rectidx = {

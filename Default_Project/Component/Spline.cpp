@@ -36,7 +36,7 @@ void Spline::Render() {
 	//controlPoints를 VBO에 업데이트
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, controlPoints.size() * 3 * sizeof(float), controlPoints.data());
+	glBufferData(GL_ARRAY_BUFFER, controlPoints.size() * 3 * sizeof(float), controlPoints.data(), GL_DYNAMIC_DRAW);
 
 	//Spline 그리기
 	glDrawArrays(GL_LINE_STRIP, 0, controlPoints.size());

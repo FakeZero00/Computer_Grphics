@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Component.h"
 #include "Collider.h"
+#include <iostream>
 using namespace std;
 
 ColliderManager::ColliderManager(AppContext& ctx) : ctx(ctx) {}
