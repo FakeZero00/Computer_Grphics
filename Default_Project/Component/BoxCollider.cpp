@@ -15,6 +15,15 @@ BoxCollider::BoxCollider(vec3 center, vec3 size) : Collider(ColliderType::Box), 
 	InitDebugRender();
 }
 
+bool BoxCollider::MouseCollide(vec2 mousePos) {
+	//마우스 좌표를 이용해 충돌 여부 판단
+	if (mousePos.x >= minPos.x && mousePos.x <= maxPos.x &&
+		mousePos.y >= minPos.y && mousePos.y <= maxPos.y) {
+		return true;
+	}
+	return false;
+}
+
 void BoxCollider::RecalculateCollision() {
 	if (not gameObject) return;
 
@@ -54,6 +63,7 @@ void BoxCollider::Render() {
 	GLuint debugShader = shaders["Debug"];
 	glUseProgram(debugShader);
 
+	// minPos, maxPos는 이미 월드 좌표이므로 모델 변환 행렬을 단위 행렬(Identity)로 덮어씌움
 	GLuint modelLoc = glGetUniformLocation(debugShader, "model");
 	mat4 identity = mat4{ 1.0f };
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(identity));

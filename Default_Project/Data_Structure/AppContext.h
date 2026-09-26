@@ -1,14 +1,15 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "Color.h"
+#include <gl/glm/glm.hpp>
 #include "InputManager.h"
 #include "Collider.h"
+using namespace glm;
 
 class Object;
 
 struct AppContext {
-	Color bgColor = { 0.0f, 0.0f, 0.0f, 0.0f };				//배경색 초기화
+	vec4 bgColor = { 0.0f, 0.0f, 0.0f, 0.0f };				//배경색 초기화
 	double time = 0.0;
 	double deltaTime = 0.0;
 	InputManager inputManager;								//입력 관리 객체

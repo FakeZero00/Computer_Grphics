@@ -2,7 +2,7 @@
 using namespace std;
 
 /////////////씬 임포트/////////////
-
+#include "Default_Scene.h"
 ///////////////////////////////////
 
 template <typename T>
@@ -69,9 +69,13 @@ int main(int argc, char** argv) {
 	make_fragmentShaders(fragmentShaders, "Debug_fragment.glsl");
 	make_shaderProgram("Debug", shaders, vertexShaders["Debug_vertex.glsl"], fragmentShaders["Debug_fragment.glsl"]);
 
-	make_vertexShaders(vertexShaders, "Test_vertex.glsl");
-	make_fragmentShaders(fragmentShaders, "Test_fragment.glsl");
-	make_shaderProgram("Test", shaders, vertexShaders["Test_vertex.glsl"], fragmentShaders["Test_fragment.glsl"]);
+	make_vertexShaders(vertexShaders, "Spline_vertex.glsl");
+	make_fragmentShaders(fragmentShaders, "Spline_fragment.glsl");
+	make_shaderProgram("Spline", shaders, vertexShaders["Spline_vertex.glsl"], fragmentShaders["Spline_fragment.glsl"]);
+
+	make_vertexShaders(vertexShaders, "Standard_vertex.glsl");
+	make_fragmentShaders(fragmentShaders, "Standard_fragment.glsl");
+	make_shaderProgram("Standard", shaders, vertexShaders["Standard_vertex.glsl"], fragmentShaders["Standard_fragment.glsl"]);
 
 	//////////////////사용자 정의 초기화////////////////////
 
@@ -95,7 +99,8 @@ int main(int argc, char** argv) {
 
 	/////////////////////////씬 로드/////////////////////////
 
-
+	Default_Scene defaultScene{};
+	defaultScene.LoadScene(ctx);
 
 	////////////////////////메인 루프////////////////////////
 

@@ -1,6 +1,8 @@
 #pragma once
+#include <vector>
 #include <gl/glew.h>
-#include <gl/glm/glm.hpp>
+#include "Vertex.h"
+using namespace std;
 using namespace glm;
 
 class Mesh {
@@ -11,6 +13,6 @@ public:
 	vec3 minPos;
 	vec3 max3Pos;
 
-	Mesh(const float* vertices, GLsizeiptr vertSize, const GLubyte* indices, GLsizeiptr indexSize);
+	Mesh(const vector<Vertex>& vertices, const vector<GLubyte>& indices);
 	void Bind() const;
 };

@@ -13,3 +13,5 @@
 #include "Object.h"
 #include "Transform.h"
 #include "MeshRenderer3D.h"
+#include "BoxCollider.h"
+#include "Spline.h"

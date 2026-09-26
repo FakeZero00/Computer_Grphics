@@ -43,6 +43,9 @@
     <Filter Include="Utility\Source">
       <UniqueIdentifier>{6329ec3c-95ea-4ded-8ef7-5699dbd5324d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Script">
+      <UniqueIdentifier>{c5e548df-2db7-4b90-b137-fce0d8cd9d25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\MeshRenderer3D.h">
@@ -54,9 +57,6 @@
     <ClInclude Include="Data_Structure\AppContext.h">
       <Filter>Data_Structure\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Data_Structure\Color.h">
-      <Filter>Data_Structure\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Data_Structure\Material.h">
       <Filter>Data_Structure\Header</Filter>
     </ClInclude>
@@ -64,9 +64,6 @@
       <Filter>Data_Structure\Header</Filter>
     </ClInclude>
     <ClInclude Include="Data_Structure\Object.h">
-      <Filter>Data_Structure\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Data_Structure\Position2D.h">
       <Filter>Data_Structure\Header</Filter>
     </ClInclude>
     <ClInclude Include="Utility\ColliderManager.h">
@@ -92,6 +89,24 @@
     </ClInclude>
     <ClInclude Include="Component\BoxCollider.h">
       <Filter>Component\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Spline.h">
+      <Filter>Component\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Default_Scene.h">
+      <Filter>리소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Vertex.h">
+      <Filter>Data_Structure\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Dataset.h">
+      <Filter>리소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\ShapeGenerator.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Shape.h">
+      <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -122,18 +137,39 @@
     <ClCompile Include="Component\BoxCollider.cpp">
       <Filter>Component\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Component\Spline.cpp">
+      <Filter>Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Default_Scene.cpp">
+      <Filter>리소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Data_Structure\Material.cpp">
+      <Filter>Data_Structure\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\ShapeGenerator.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Shape.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shader\Test_fragment.glsl">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\Test_vertex.glsl">
-      <Filter>Shader</Filter>
-    </None>
     <None Include="Shader\Debug_fragment.glsl">
       <Filter>Shader</Filter>
     </None>
     <None Include="Shader\Debug_vertex.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Spline_fragment.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Spline_vertex.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Standard_fragment.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Standard_vertex.glsl">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
