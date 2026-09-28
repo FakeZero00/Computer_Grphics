@@ -127,14 +127,14 @@ void ShapeMovement::Update(float deltaTime) {
 		spline->controlPoints.push_back(tr->worldPosition);
 	}
 
-	if (isCollided && zigTimer > 0.0f) {
+	if (Movemode == 2 && isCollided && zigTimer > 0.0f) {
 		zigTimer -= deltaTime;
 	}
-	else if (isCollided && zigTimer <= 0.0f) {
+	else if (Movemode == 2 &&isCollided && zigTimer <= 0.0f) {
 		isCollided = false;
 		Timerbool = true;
 	}
-	if (Timerbool) {
+	if (Movemode == 2 && Timerbool) {
 		if (isUp && isLeft) {
 			tr->Rotate(0.0f, 0.0f, -90.0f);
 		}
