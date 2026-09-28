@@ -29,6 +29,7 @@ void Object::Awake() {
 
 void Object::Start() {
 	for (auto& comp : components) {
+		comp->hasStarted = true;
 		comp->Start();
 	}
 }
@@ -37,7 +38,6 @@ void Object::Update(double deltaTime) {
 	for (auto& comp : components) {
 		if (!comp->hasStarted) {
 			comp->Start();
-			comp->hasStarted = true;
 		}
 
 		comp->Update(static_cast<float>(deltaTime));
