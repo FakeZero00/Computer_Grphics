@@ -6,7 +6,7 @@
 
 extern map<string, GLuint> shaders;
 
-//ìŠ¤í¬ë¦½íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸°
+//½ºÅ©¸³Æ® ºÒ·¯¿À±â
 #include "ShapeGenerator.h"
 
 Default_Scene::Default_Scene() {
@@ -14,24 +14,45 @@ Default_Scene::Default_Scene() {
 }
 
 void Default_Scene::LoadScene(AppContext& ctx) {
-	//í•¨ìˆ˜ ì‘ì„± ì£¼ì˜ì‚¬í•­:
-	// 1. Instantiate í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ Objectë¥¼ ìƒì„±í•´ì•¼ í•©ë‹ˆë‹¤.
-	// 2. Objectì— ì»´í¬ë„ŒíŠ¸ë¥¼ ì¶”ê°€í•  ë•ŒëŠ” AddComponent í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•´ì•¼ í•©ë‹ˆë‹¤.
-	// 3. Mesh, Material ê°ì²´ ìƒì„± ì‹œ new í‚¤ì›Œë“œë¥¼ ì‚¬ìš©í•´ì•¼ í•©ë‹ˆë‹¤.
+	//ÇÔ¼ö ÀÛ¼º ÁÖÀÇ»çÇ×:
+	// 1. Instantiate ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© Object¸¦ »ı¼ºÇØ¾ß ÇÕ´Ï´Ù.
+	// 2. Object¿¡ ÄÄÆ÷³ÍÆ®¸¦ Ãß°¡ÇÒ ¶§´Â AddComponent ÇÔ¼ö¸¦ »ç¿ëÇØ¾ß ÇÕ´Ï´Ù.
+	// 3. Mesh, Material °´Ã¼ »ı¼º ½Ã new Å°¿öµå¸¦ »ç¿ëÇØ¾ß ÇÕ´Ï´Ù.
 	
-	//Mesh ê°ì²´ ìƒì„±
+	//Mesh °´Ã¼ »ı¼º
 	Mesh* isoPolyMesh = new Mesh(isoPolyvert, isoPolyidx);
 	Mesh* rightPolyMesh = new Mesh(rightPolyvert, rightPolyidx);
 	Mesh* rectMesh = new Mesh(rectvert, Rectidx);
 	Mesh* regularPolyMesh = new Mesh(regularPolyvert, regularPolyidx);
 
+	int horizontal, vertical;
+
+	cout << "°¡·Î Ä­ °³¼ö: ";
+	cin >> horizontal;
+	cout << "¼¼·Î Ä­ °³¼ö: ";
+	cin >> vertical;
+	
+
 	Object* shapeGeneratorObj = Instantiate(ctx, "ShapeGenerator");
-	shapeGeneratorObj->AddComponent<ShapeGenerator>(regularPolyMesh, rightPolyMesh, rectMesh, regularPolyCP, rightPolyCP, rectCP);
+	shapeGeneratorObj->AddComponent<ShapeGenerator>(regularPolyMesh, rectMesh, horizontal, vertical);
 
 	vector<vec3> controlPoints = {
-		vec3(0.55f, 1.0f, 0.0f),
-		vec3(0.55f, -1.0f, 0.0f),
+		vec3(-1.0f, 0.0f, 0.0f),
+		vec3(1.0f, 0.0f, 0.0f),
 	};
-	Object* borderObj = Instantiate(ctx, "Border");
-	borderObj->AddComponent<Spline>(controlPoints, vec4{0.0f, 1.0f, 0.0f, 1.0f});
+	for (int i = 0; i < horizontal; i++) {
+		float y = -1.0f + (2.0f / horizontal) * (i + 1);
+		Object* borderObj = Instantiate(ctx, "Border");
+		borderObj->AddComponent<Spline>(controlPoints, vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+		Transform* borderTr = borderObj->GetComponent<Transform>();
+		borderTr->SetLocalPosition(0.0f, y, 1.0f);
+	}
+	for (int i = 0; i < vertical; i++) {
+		float x = -1.0f + (2.0f / vertical) * (i + 1);
+		Object* borderObj = Instantiate(ctx, "Border");
+		borderObj->AddComponent<Spline>(controlPoints, vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+		Transform* borderTr = borderObj->GetComponent<Transform>();
+		borderTr->SetLocalPosition(x, 0.0f, 1.0f);
+		borderTr->SetLocalRotation(0.0f, 0.0f, 90.0f);
+	}
 }
