@@ -17,6 +17,7 @@ public:
 	vector<vec3> rectCP;
 	
 	vector<Object*> generatedObjects;
+	vector<Object*> generatedColliders;
 
 	random_device rd;
 	default_random_engine dre{ rd() };
@@ -28,6 +29,7 @@ public:
 			vector<vec3> regularPolyCP, vector<vec3> rightPolyCP, vector<vec3> rectCP) : regularPolyMesh(regularPolyMesh), rightPolyMesh(rightPolyMesh), rectMesh(rectMesh), regularPolyCP(regularPolyCP), rightPolyCP(rightPolyCP), rectCP(rectCP) {}
 
 	Object* createShape(string name);
+	void ResetShapes();
 
 	void Start() override;
 	void Update(float deltaTime) override;

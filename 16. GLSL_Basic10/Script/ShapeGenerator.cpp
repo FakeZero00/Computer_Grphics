@@ -6,6 +6,7 @@
 #include "BoxCollider.h"
 #include "Spline.h"
 #include <string>
+#include <ranges>
 using namespace std;
 
 #include "ShapeMovement.h"
@@ -58,15 +59,23 @@ Object* ShapeGenerator::createShape(string name) {
 
 	newCol = newObj->AddComponent<BoxCollider>(vec3{ 0.0f }, vec3{ 1.0f });
 	if (name == "regularPolygonCol" || name == "rightPolygonCol" || name == "rectangleCol") {
-		newCol->isDebug = false;
+		generatedColliders.push_back(newObj);
 	}
-
-	generatedObjects.push_back(newObj);
+	else generatedObjects.push_back(newObj);
+	
 	return newObj;
 }
 
-void ShapeGenerator::Start() {
-	cout << "ShapeGenerator Started" << endl;
+void ShapeGenerator::ResetShapes() {
+	for (auto& obj : generatedObjects) {
+		obj->Destroy();
+	}
+	generatedObjects.clear();
+
+	for (auto& obj : generatedColliders) {
+		obj->Destroy();
+	}
+	generatedColliders.clear();
 
 	Object* obj;
 	Transform* tr;
@@ -155,27 +164,89 @@ void ShapeGenerator::Start() {
 	tr->SetLocalPosition(0.82f, -0.7f, 0.0f);
 
 	//정삼각형 생성
-	for (int i = 0; i < 7; i++) {
+	for (int i = 0; i < 3; i++) {
 		obj = createShape("regularPolygon");
 		tr = obj->GetComponent<Transform>();
 		tr->SetLocalPosition(urdPos(dre), urdPos2(dre), 0.0f);
+		obj->AddComponent<ShapeMovement>(this);
 	}
 
-	//직각삼각형 생성
 	for (int i = 0; i < 2; i++) {
-		obj = createShape("rightPolygon");
+		obj = createShape("regularPolygon");
 		tr = obj->GetComponent<Transform>();
 		tr->SetLocalPosition(urdPos(dre), urdPos2(dre), 0.0f);
+		tr->SetLocalRotation(0.0f, 0.0f, 180.0f);
+		obj->AddComponent<ShapeMovement>(this);
 	}
 
+	obj = createShape("regularPolygon");
+	tr = obj->GetComponent<Transform>();
+	tr->SetLocalPosition(urdPos(dre), urdPos2(dre), 0.0f);
+	tr->SetLocalRotation(0.0f, 0.0f, 90.0f);
+	obj->AddComponent<ShapeMovement>(this);
+
+	obj = createShape("regularPolygon");
+	tr = obj->GetComponent<Transform>();
+	tr->SetLocalPosition(urdPos(dre), urdPos2(dre), 0.0f);
+	tr->SetLocalRotation(0.0f, 0.0f, -90.0f);
+	obj->AddComponent<ShapeMovement>(this);
+
+	//직각삼각형 생성
+	obj = createShape("rightPolygon");
+	tr = obj->GetComponent<Transform>();
+	tr->SetLocalPosition(urdPos(dre), urdPos2(dre), 0.0f);
+	obj->AddComponent<ShapeMovement>(this);
+
+	obj = createShape("rightPolygon");
+	tr = obj->GetComponent<Transform>();
+	tr->SetLocalPosition(urdPos(dre), urdPos2(dre), 0.0f);
+	tr->SetLocalRotation(0.0f, 0.0f, 180.0f);
+	obj->AddComponent<ShapeMovement>(this);
+
 	//사각형 생성
-	for (int i = 0; i < 9; i++){
+	for (int i = 0; i < 9; i++) {
 		obj = createShape("rectangle");
 		tr = obj->GetComponent<Transform>();
 		tr->SetLocalPosition(urdPos(dre), urdPos2(dre), 0.0f);
+		obj->AddComponent<ShapeMovement>(this);
 	}
+}
+
+void ShapeGenerator::Start() {
+	cout << "ShapeGenerator Started" << endl;
+
+	ResetShapes();
 }
 
 void ShapeGenerator::Update(float deltaTime) {
 	InputManager inputManager = gameObject->ctx.inputManager;
+	if (inputManager.GetKeyDown(GLFW_MOUSE_BUTTON_LEFT)) {
+		for (auto& obj : generatedObjects) {
+			ShapeMovement* sm = obj->GetComponent<ShapeMovement>();
+			if (sm) {
+				sm->isMoving = false;
+			}
+		}
+
+		for (auto& obj : generatedObjects | views::reverse) {
+			ShapeMovement* sm = obj->GetComponent<ShapeMovement>();
+			BoxCollider* col = obj->GetComponent<BoxCollider>();
+			if (sm && col->MouseCollide(vec2{inputManager.GetMouseX(), inputManager.GetMouseY()})) {
+				sm->isMoving = true;
+				break;
+			}
+		}
+	}
+	else if (inputManager.GetKeyUp(GLFW_MOUSE_BUTTON_LEFT)) {
+		for (auto& obj : generatedObjects) {
+			ShapeMovement* sm = obj->GetComponent<ShapeMovement>();
+			if (sm) {
+				sm->isMoving = false;
+			}
+		}
+	}
+	
+	if (inputManager.GetKeyUp(GLFW_KEY_R)) {
+		ResetShapes();
+	}
 }
