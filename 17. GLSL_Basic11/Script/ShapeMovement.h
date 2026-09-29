@@ -5,9 +5,9 @@
 using namespace std;
 using namespace glm;
 
-class ShapeGenerator;
-
 class ShapeMovement : public Component {
 public:
+	float speed = 20.0f;
+
 	void Update(float deltaTime) override;
 };

@@ -15,8 +15,18 @@ public:
 	int vertical;
 	float centerOffsetX = 0.0f;
 	float centerOffsetY = 0.0f;
+	int finalPos[2] = { 0, 0 };
 
 	vector<vector<Object*>> board;
+
+	Object* major;
+	int majorPos[2] = { 0, 0 };
+	int direction[2] = { 1, 0 };
+	int currentDirX = 1;
+	float defaultCooltime = 1.0f;
+	float cooltime = 1.0f;
+	bool isStart = false;
+	bool isDown = false;
 
 	random_device rd;
 	default_random_engine dre{ rd() };
@@ -27,7 +37,7 @@ public:
 	ShapeGenerator(Mesh* regularPolyMesh, Mesh* rectMesh, int horizontal, int vertical) : regularPolyMesh(regularPolyMesh), rectMesh(rectMesh), horizontal(horizontal), vertical(vertical) {}
 
 	Object* createShape(string name, int x, int y);
-	void ResetShapes();
+	void Move(int x, int y);
 
 	void Start() override;
 	void Update(float deltaTime) override;

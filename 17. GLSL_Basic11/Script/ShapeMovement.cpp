@@ -10,6 +10,10 @@
 using namespace std;
 
 void ShapeMovement::Update(float deltaTime) {
-	InputManager inputManager = gameObject->ctx.inputManager;
 	Transform* tr = gameObject->GetComponent<Transform>();
+
+	tr->SetLocalScale(tr->scale.x + speed * deltaTime, tr->scale.y + speed * deltaTime, 0.0f);
+	if (tr->scale.x > 15.0f) {
+		gameObject->Destroy();
+	}
 }

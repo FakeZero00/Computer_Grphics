@@ -10,7 +10,7 @@ using namespace std;
 //main에서 선언된 shaders 맵을 extern으로 참조
 extern map<string, GLuint> shaders;
 
-Spline::Spline(vector<vec3> controlPoints, vec4 color) : controlPoints(controlPoints), color(color) {
+Spline::Spline(vector<vec3> controlPoints, vec4 color, float lineWidth) : controlPoints(controlPoints), color(color), lineWidth(lineWidth) {
 	InitRender();
 }
 
@@ -39,7 +39,9 @@ void Spline::Render() {
 	glBufferData(GL_ARRAY_BUFFER, controlPoints.size() * 3 * sizeof(float), controlPoints.data(), GL_DYNAMIC_DRAW);
 
 	//Spline 그리기
+	glLineWidth(lineWidth);
 	glDrawArrays(GL_LINE_STRIP, 0, controlPoints.size());
+	glLineWidth(1.0f); //라인 두께를 기본값으로 되돌림
 	glBindVertexArray(0);
 }
 
