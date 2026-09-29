@@ -9,26 +9,24 @@ using namespace std;
 class ShapeGenerator : public Component {
 public:
 	Mesh* regularPolyMesh;
-	Mesh* rightPolyMesh;
 	Mesh* rectMesh;
 
-	vector<vec3> regularPolyCP;
-	vector<vec3> rightPolyCP;
-	vector<vec3> rectCP;
-	
-	vector<Object*> generatedObjects;
-	vector<Object*> generatedColliders;
+	int horizontal;
+	int vertical;
+	float centerOffsetX = 0.0f;
+	float centerOffsetY = 0.0f;
+
+	vector<vector<Object*>> board;
 
 	random_device rd;
 	default_random_engine dre{ rd() };
 	uniform_real_distribution<float> urdColor{ 0.0f, 1.0f };
-	uniform_real_distribution<float> urdPos{ -0.8f, 0.35f };
-	uniform_real_distribution<float> urdPos2{ -0.8f, 0.8f };
+	uniform_real_distribution<float> urdScale{ 1.0f, 4.0f };
+	uniform_real_distribution<float> urdScaleRect{ 1.0f, 1.3f };
 
-	ShapeGenerator(Mesh* regularPolyMesh, Mesh* rightPolyMesh, Mesh* rectMesh,
-			vector<vec3> regularPolyCP, vector<vec3> rightPolyCP, vector<vec3> rectCP) : regularPolyMesh(regularPolyMesh), rightPolyMesh(rightPolyMesh), rectMesh(rectMesh), regularPolyCP(regularPolyCP), rightPolyCP(rightPolyCP), rectCP(rectCP) {}
+	ShapeGenerator(Mesh* regularPolyMesh, Mesh* rectMesh, int horizontal, int vertical) : regularPolyMesh(regularPolyMesh), rectMesh(rectMesh), horizontal(horizontal), vertical(vertical) {}
 
-	Object* createShape(string name);
+	Object* createShape(string name, int x, int y);
 	void ResetShapes();
 
 	void Start() override;

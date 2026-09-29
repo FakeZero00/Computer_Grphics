@@ -27,9 +27,9 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 
 	int horizontal, vertical;
 
-	cout << "가로 칸 개수: ";
+	cout << "가로 줄 개수: ";
 	cin >> horizontal;
-	cout << "세로 칸 개수: ";
+	cout << "세로 줄 개수: ";
 	cin >> vertical;
 	
 
