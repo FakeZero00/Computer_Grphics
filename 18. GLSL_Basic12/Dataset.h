@@ -51,10 +51,10 @@ vector<vec3> regularPolyCP = {
 };
 
 vector<Vertex> rectvert = {
-	{ vec3(-0.05f, 0.05f, 0.0f), vec3(0.0f) },
-	{ vec3(-0.05f, -0.05f, 0.0f), vec3(0.0f) },
-	{ vec3(0.05f, -0.05f, 0.0f), vec3(0.0f) },
-	{ vec3(0.05f, 0.05f, 0.0f), vec3(0.0f) }
+	{ vec3(-0.15f, 0.9f, 0.0f), vec3(0.0f) },
+	{ vec3(-0.15f, -0.9f, 0.0f), vec3(0.0f) },
+	{ vec3(0.15f, -0.9f, 0.0f), vec3(0.0f) },
+	{ vec3(0.15f, 0.9f, 0.0f), vec3(0.0f) }
 };
 
 vector<GLubyte> Rectidx = {
@@ -63,9 +63,9 @@ vector<GLubyte> Rectidx = {
 };
 
 vector<vec3> rectCP = {
-	vec3(-0.05f, 0.08f, 0.0f),
-	vec3(-0.05f, -0.08f, 0.0f),
-	vec3(0.05f, -0.08f, 0.0f),
-	vec3(0.05f, 0.08f, 0.0f),
-	vec3(-0.05f, 0.08f, 0.0f)
+	vec3(-0.5f, 0.15f, 0.0f),
+	vec3(-0.5f, -0.15f, 0.0f),
+	vec3(0.5f, -0.15f, 0.0f),
+	vec3(0.5f, 0.15f, 0.0f),
+	vec3(-0.5f, 0.15f, 0.0f)
 };

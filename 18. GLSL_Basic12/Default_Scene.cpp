@@ -25,34 +25,27 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	Mesh* rectMesh = new Mesh(rectvert, Rectidx);
 	Mesh* regularPolyMesh = new Mesh(regularPolyvert, regularPolyidx);
 
-	int horizontal, vertical;
+	Material* bgMaterial = new Material(shaders["Standard"]);
+	bgMaterial->SetVec4("tColor", vec4(0.3f, 0.3f, 0.3f, 1.0f));
 
-	cout << "가로 줄 개수: ";
-	cin >> horizontal;
-	cout << "세로 줄 개수: ";
-	cin >> vertical;
-	
+	Object* bgObject = Instantiate(ctx, "Background");
+	bgObject->AddComponent<MeshRenderer3D>(rectMesh, bgMaterial);
+	Transform* bgTr = bgObject->GetComponent<Transform>();
+	bgTr->SetLocalPosition(-0.7f, 0.0f, 0.0f);
+	bgObject->AddComponent<BoxCollider>(vec3{ 0.0f }, vec3{ 1.0f })->isDebug = true;
 
-	Object* shapeGeneratorObj = Instantiate(ctx, "ShapeGenerator");
-	shapeGeneratorObj->AddComponent<ShapeGenerator>(regularPolyMesh, rectMesh, horizontal, vertical);
+	bgObject = Instantiate(ctx, "Background");
+	bgObject->AddComponent<MeshRenderer3D>(rectMesh, bgMaterial);
+	bgTr = bgObject->GetComponent<Transform>();
+	bgTr->SetLocalPosition(-0.2f, 0.0f, 0.0f);
+	bgObject->AddComponent<BoxCollider>(vec3{ 0.0f }, vec3{ 1.0f })->isDebug = true;
 
-	vector<vec3> controlPoints = {
-		vec3(-1.0f, 0.0f, 0.0f),
-		vec3(1.0f, 0.0f, 0.0f),
-	};
-	for (int i = 0; i < horizontal; i++) {
-		float y = -1.0f + (2.0f / horizontal) * (i + 1);
-		Object* borderObj = Instantiate(ctx, "Border");
-		borderObj->AddComponent<Spline>(controlPoints, vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
-		Transform* borderTr = borderObj->GetComponent<Transform>();
-		borderTr->SetLocalPosition(0.0f, y, 1.0f);
-	}
-	for (int i = 0; i < vertical; i++) {
-		float x = -1.0f + (2.0f / vertical) * (i + 1);
-		Object* borderObj = Instantiate(ctx, "Border");
-		borderObj->AddComponent<Spline>(controlPoints, vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
-		Transform* borderTr = borderObj->GetComponent<Transform>();
-		borderTr->SetLocalPosition(x, 0.0f, 1.0f);
-		borderTr->SetLocalRotation(0.0f, 0.0f, 90.0f);
-	}
+	Object* borderObj = Instantiate(ctx, "Border");
+	borderObj->AddComponent<Spline>(rectCP, vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, 3.0f);
+	Transform* borderTr = borderObj->GetComponent<Transform>();
+	borderTr->SetLocalPosition(-0.45f, 0.0f, 0.0f);
+	borderObj->AddComponent<BoxCollider>(vec3{ 0.0f }, vec3{ 1.0f, 0.3f, 1.0f });
+
+	Object* rectGeneratorObj = Instantiate(ctx, "RectGenerator");
+
 }

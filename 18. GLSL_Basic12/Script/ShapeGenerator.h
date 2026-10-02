@@ -8,36 +8,21 @@ using namespace std;
 
 class ShapeGenerator : public Component {
 public:
-	Mesh* regularPolyMesh;
 	Mesh* rectMesh;
 
-	int horizontal;
-	int vertical;
-	float centerOffsetX = 0.0f;
-	float centerOffsetY = 0.0f;
-	int finalPos[2] = { 0, 0 };
+	Object* shapeL;
+	vec3 spawnPosL;
 
-	vector<vector<Object*>> board;
-
-	Object* major;
-	int majorPos[2] = { 0, 0 };
-	int direction[2] = { 1, 0 };
-	int currentDirX = 1;
-	float defaultCooltime = 1.0f;
-	float cooltime = 1.0f;
-	bool isStart = false;
-	bool isDown = false;
+	Object* shapeR;
+	vec3 spawnPosR;
 
 	random_device rd;
 	default_random_engine dre{ rd() };
 	uniform_real_distribution<float> urdColor{ 0.0f, 1.0f };
-	uniform_real_distribution<float> urdScale{ 1.0f, 4.0f };
-	uniform_real_distribution<float> urdScaleRect{ 1.0f, 1.3f };
 
-	ShapeGenerator(Mesh* regularPolyMesh, Mesh* rectMesh, int horizontal, int vertical) : regularPolyMesh(regularPolyMesh), rectMesh(rectMesh), horizontal(horizontal), vertical(vertical) {}
+	ShapeGenerator(Mesh* rectMesh, vec3 spawnPosL, vec3 spawnPosR) : rectMesh(rectMesh), spawnPosL(spawnPosL), spawnPosR(spawnPosR) {}
 
-	Object* createShape(string name, int x, int y);
-	void Move(int x, int y);
+	Object* createShape(string name);
 
 	void Start() override;
 	void Update(float deltaTime) override;

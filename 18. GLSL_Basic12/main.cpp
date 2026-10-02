@@ -31,7 +31,7 @@ GLuint VAO, VBO, EBO;
 
 int main(int argc, char** argv) {
 	//스크린 사이즈 설정
-	ScreenSize screenSize{1300, 1300};
+	ScreenSize screenSize{800, 800};
 
 	//GLFW 초기화
 	if (!glfwInit()) {
