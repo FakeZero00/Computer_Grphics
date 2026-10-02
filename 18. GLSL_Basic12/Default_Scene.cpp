@@ -22,7 +22,8 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	//Mesh °´Ã¼ »ý¼º
 	Mesh* isoPolyMesh = new Mesh(isoPolyvert, isoPolyidx);
 	Mesh* rightPolyMesh = new Mesh(rightPolyvert, rightPolyidx);
-	Mesh* rectMesh = new Mesh(rectvert, Rectidx);
+	Mesh* rectMesh = new Mesh(rectvert, rectidx);
+	Mesh* rectMesh2 = new Mesh(rectvert2, rectidx);
 	Mesh* regularPolyMesh = new Mesh(regularPolyvert, regularPolyidx);
 
 	Material* bgMaterial = new Material(shaders["Standard"]);
@@ -46,6 +47,23 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	borderTr->SetLocalPosition(-0.45f, 0.0f, 0.0f);
 	borderObj->AddComponent<BoxCollider>(vec3{ 0.0f }, vec3{ 1.0f, 0.3f, 1.0f });
 
-	Object* rectGeneratorObj = Instantiate(ctx, "RectGenerator");
+	Material* borderMaterial = new Material(shaders["Standard"]);
+	borderMaterial->SetVec4("tColor", vec4(0.2f, 0.2f, 0.2f, 1.0f));
 
+	borderObj = Instantiate(ctx, "BorderD");
+	borderObj->AddComponent<MeshRenderer3D>(rectMesh2, borderMaterial);
+	borderTr = borderObj->GetComponent<Transform>();
+	borderTr->SetLocalPosition(-0.45f, -0.953f, 0.0f);
+	borderTr->SetLocalScale(4.0f, 0.5f, 1.0f);
+	borderObj->AddComponent<BoxCollider>(vec3{ 0.0f }, vec3{ 1.0f });
+
+	borderObj = Instantiate(ctx, "BorderD");
+	borderObj->AddComponent<MeshRenderer3D>(rectMesh2, borderMaterial);
+	borderTr = borderObj->GetComponent<Transform>();
+	borderTr->SetLocalPosition(-0.45f, 0.95f, 0.0f);
+	borderTr->SetLocalScale(4.0f, 0.5f, 1.0f);
+	borderObj->AddComponent<BoxCollider>(vec3{ 0.0f }, vec3{ 1.0f });
+
+	Object* rectGeneratorObj = Instantiate(ctx, "RectGenerator");
+	rectGeneratorObj->AddComponent<ShapeGenerator>(rectMesh2, -0.7f, -0.2f);
 }

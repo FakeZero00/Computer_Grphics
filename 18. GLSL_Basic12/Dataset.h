@@ -57,7 +57,14 @@ vector<Vertex> rectvert = {
 	{ vec3(0.15f, 0.9f, 0.0f), vec3(0.0f) }
 };
 
-vector<GLubyte> Rectidx = {
+vector<Vertex> rectvert2 = {
+	{ vec3(-0.13f, 0.1f, 0.0f), vec3(0.0f) },
+	{ vec3(-0.13f, -0.1f, 0.0f), vec3(0.0f) },
+	{ vec3(0.13f, -0.1f, 0.0f), vec3(0.0f) },
+	{ vec3(0.13f, 0.1f, 0.0f), vec3(0.0f) }
+};
+
+vector<GLubyte> rectidx = {
 	0, 1, 2,
 	0, 2, 3
 };

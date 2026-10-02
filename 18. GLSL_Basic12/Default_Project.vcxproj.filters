@@ -108,9 +108,6 @@
     <ClInclude Include="Script\ShapeMovement.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Major.h">
-      <Filter>Script</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -153,9 +150,6 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="Script\ShapeMovement.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\Major.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
