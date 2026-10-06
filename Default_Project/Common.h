@@ -14,4 +14,6 @@
 #include "Transform.h"
 #include "MeshRenderer3D.h"
 #include "BoxCollider.h"
+#include "Camera.h"
+#include "SceneCamera.h"
 #include "Spline.h"

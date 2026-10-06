@@ -3,6 +3,7 @@
 #include "Material.h"
 #include "Object.h"
 #include "Transform.h"
+#include "Camera.h"
 #include <gl/glew.h>
 #include <gl/glm/gtc/type_ptr.hpp>
 using namespace std;
@@ -16,14 +17,23 @@ void MeshRenderer3D::Render() {
 	for (auto& material : materials) {
 		//셰이더 사용
 		material->Use();
+		//VAO 바인딩
+		mesh->Bind();
 
 		//Transform의 worldMatrix를 셰이더에 전달
 		Transform* transform = gameObject->GetComponent<Transform>();
 		GLuint modelLoc = glGetUniformLocation(material->shaderProgram, "model");
 		GLuint colorLoc = glGetUniformLocation(material->shaderProgram, "tColor");
 
-		//VAO 바인딩
-		mesh->Bind();
+		// View, Projection 행렬 전달
+		Camera* camera = Camera::mainCamera;
+		if (camera != nullptr) {
+			GLuint viewLoc = glGetUniformLocation(material->shaderProgram, "view");
+			glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(camera->GetViewMatrix()));
+
+			GLuint projLoc = glGetUniformLocation(material->shaderProgram, "proj");
+			glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(camera->GetProjectionMatrix()));
+		}
 
 		//Pass1 : 외곽선 렌더링 처리
 		if (material->isOutline) {

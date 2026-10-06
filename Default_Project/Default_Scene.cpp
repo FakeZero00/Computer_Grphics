@@ -6,32 +6,63 @@
 
 extern map<string, GLuint> shaders;
 
-//ìŠ¤í¬ë¦½íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸°
-#include "ShapeGenerator.h"
+//½ºÅ©¸³Æ® ºÒ·¯¿À±â
 
 Default_Scene::Default_Scene() {
 	name = "Default_Scene";
 }
 
 void Default_Scene::LoadScene(AppContext& ctx) {
-	//í•¨ìˆ˜ ìž‘ì„± ì£¼ì˜ì‚¬í•­:
-	// 1. Instantiate í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ Objectë¥¼ ìƒì„±í•´ì•¼ í•©ë‹ˆë‹¤.
-	// 2. Objectì— ì»´í¬ë„ŒíŠ¸ë¥¼ ì¶”ê°€í•  ë•ŒëŠ” AddComponent í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•´ì•¼ í•©ë‹ˆë‹¤.
-	// 3. Mesh, Material ê°ì²´ ìƒì„± ì‹œ new í‚¤ì›Œë“œë¥¼ ì‚¬ìš©í•´ì•¼ í•©ë‹ˆë‹¤.
+	//ÇÔ¼ö ÀÛ¼º ÁÖÀÇ»çÇ×:
+	// 1. Instantiate ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© Object¸¦ »ý¼ºÇØ¾ß ÇÕ´Ï´Ù.
+	// 2. Object¿¡ ÄÄÆ÷³ÍÆ®¸¦ Ãß°¡ÇÒ ¶§´Â AddComponent ÇÔ¼ö¸¦ »ç¿ëÇØ¾ß ÇÕ´Ï´Ù.
+	// 3. Mesh, Material °´Ã¼ »ý¼º ½Ã new Å°¿öµå¸¦ »ç¿ëÇØ¾ß ÇÕ´Ï´Ù.
 	
-	//Mesh ê°ì²´ ìƒì„±
+	//Mesh °´Ã¼ »ý¼º
 	Mesh* isoPolyMesh = new Mesh(isoPolyvert, isoPolyidx);
 	Mesh* rightPolyMesh = new Mesh(rightPolyvert, rightPolyidx);
-	Mesh* rectMesh = new Mesh(rectvert, Rectidx);
+	Mesh* rectMesh = new Mesh(rectvert, rectidx);
+	Mesh* rectMesh2 = new Mesh(rectvert2, rectidx);
 	Mesh* regularPolyMesh = new Mesh(regularPolyvert, regularPolyidx);
 
-	Object* shapeGeneratorObj = Instantiate(ctx, "ShapeGenerator");
-	shapeGeneratorObj->AddComponent<ShapeGenerator>(regularPolyMesh, rightPolyMesh, rectMesh, regularPolyCP, rightPolyCP, rectCP);
+	Material* material = new Material(shaders["Standard"]);
+	material->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	Material* material2 = new Material(shaders["Standard"]);
+	material2->SetVec4("tColor", vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
-	vector<vec3> controlPoints = {
-		vec3(0.55f, 1.0f, 0.0f),
-		vec3(0.55f, -1.0f, 0.0f),
+	Object* mainCamera = Instantiate(ctx, "MainCamera");
+	mainCamera->AddComponent<Camera>();
+	Transform* camTr = mainCamera->GetComponent<Transform>();
+	camTr->SetLocalPosition(0.0f, 5.0f, -3.0f);
+	camTr->SetLocalRotation(30.0f, 0.0f, 0.0f);
+	mainCamera->AddComponent<SceneCamera>(30.0f, 0.0f);
+
+	Object* testObject = Instantiate(ctx, "Test");
+	testObject->AddComponent<MeshRenderer3D>(rectMesh, material);
+	Transform* testTr = testObject->GetComponent<Transform>();
+	testTr->SetLocalPosition(0.0f, 0.0f, 3.0f);
+	testTr->SetLocalRotation(0.0f, 180.0f, 0.0f);
+
+	Object* testObject2 = Instantiate(ctx, "Test");
+	testObject2->AddComponent<MeshRenderer3D>(rectMesh, material2);
+	Transform* testTr2 = testObject2->GetComponent<Transform>();
+	testTr2->SetLocalPosition(0.0f, 0.0f, 4.0f);
+	testTr2->SetLocalRotation(0.0f, 180.0f, 0.0f);
+
+	vector<vec3> lineVertices = {
+		vec3(-10.0f, 0.0f, 0.0f),
+		vec3(10.0f, 0.0f, 0.0f)
 	};
-	Object* borderObj = Instantiate(ctx, "Border");
-	borderObj->AddComponent<Spline>(controlPoints, vec4{0.0f, 1.0f, 0.0f, 1.0f});
+
+	//XYZ Ãà »ý¼º
+	Object* xAxis = Instantiate(ctx, "X_Axis");
+	xAxis->AddComponent<Spline>(lineVertices, vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	
+	Object* yAxis = Instantiate(ctx, "Y_Axis");
+	yAxis->AddComponent<Spline>(lineVertices, vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	yAxis->GetComponent<Transform>()->SetLocalRotation(0.0f, 0.0f, 90.0f);
+
+	Object* zAxis = Instantiate(ctx, "Z_Axis");
+	zAxis->AddComponent<Spline>(lineVertices, vec4(0.0f, 0.0f, 1.0f, 1.0f));
+	zAxis->GetComponent<Transform>()->SetLocalRotation(0.0f, 90.0f, 0.0f);
 }

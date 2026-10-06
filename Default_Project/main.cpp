@@ -31,7 +31,7 @@ GLuint VAO, VBO, EBO;
 
 int main(int argc, char** argv) {
 	//스크린 사이즈 설정
-	ScreenSize screenSize{1300, 1300};
+	ScreenSize screenSize{1600, 900};
 
 	//GLFW 초기화
 	if (!glfwInit()) {
@@ -62,6 +62,14 @@ int main(int argc, char** argv) {
 		glfwTerminate();
 		return -1;
 	}
+
+	//은면 제거 활성화(Z-Buffer)
+	glEnable(GL_DEPTH_TEST);
+
+	//Back Face Culling 활성화
+	glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
+	//glFrontFace(GL_CW);
 
 	//////////////////////셰이더 초기화/////////////////////
 
@@ -226,9 +234,9 @@ void InputProcess(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
-	else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+	/*else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, GL_TRUE);
-	}
+	}*/
 }
 
 void DrawScene(GLFWwindow* window)
@@ -237,7 +245,7 @@ void DrawScene(GLFWwindow* window)
 
 	//버퍼 초기화
 	glClearColor(ctx->bgColor.r, ctx->bgColor.g, ctx->bgColor.b, ctx->bgColor.a);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//렌더링 큐 생성
 	vector<Object*> renderQueue;

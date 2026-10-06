@@ -102,10 +102,10 @@
     <ClInclude Include="Dataset.h">
       <Filter>리소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Script\ShapeGenerator.h">
-      <Filter>Script</Filter>
+    <ClInclude Include="Component\Camera.h">
+      <Filter>Component\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Script\ShapeMovement.h">
+    <ClInclude Include="Script\SceneCamera.h">
       <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>
@@ -146,10 +146,10 @@
     <ClCompile Include="Data_Structure\Material.cpp">
       <Filter>Data_Structure\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Script\ShapeGenerator.cpp">
-      <Filter>Script</Filter>
+    <ClCompile Include="Component\Camera.cpp">
+      <Filter>Component\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Script\ShapeMovement.cpp">
+    <ClCompile Include="Script\SceneCamera.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

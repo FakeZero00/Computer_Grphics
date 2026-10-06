@@ -5,6 +5,7 @@
 #include <gl/glm/gtc/type_ptr.hpp>
 #include "Object.h"
 #include "Transform.h"
+#include "Camera.h"
 using namespace std;
 
 //main에서 선언된 shaders 맵을 extern으로 참조
@@ -21,6 +22,16 @@ void Spline::Render() {
 	//controlPoints의 월드 좌표 계산을 위해 model 행렬을 셰이더에 전달
 	GLuint modelLoc = glGetUniformLocation(splineShader, "model");
 	Transform* tr = gameObject->GetComponent<Transform>();
+
+	// View, Projection 행렬 전달
+	Camera* camera = Camera::mainCamera;
+	if (camera != nullptr) {
+		GLuint viewLoc = glGetUniformLocation(splineShader, "view");
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(camera->GetViewMatrix()));
+
+		GLuint projLoc = glGetUniformLocation(splineShader, "proj");
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(camera->GetProjectionMatrix()));
+	}
 
 	mat4 localMatrix = mat4{ 1.0f };
 	localMatrix = translate(localMatrix, tr->position);
