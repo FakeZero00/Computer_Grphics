@@ -5,10 +5,12 @@
 
 Camera* Camera::mainCamera = nullptr;
 
-Camera::Camera() {
+Camera::Camera(float width, float height) {
 	if (mainCamera == nullptr) {
 		mainCamera = this;
 	}
+
+	aspectRatio = width / height;
 
 	Expose("fov", &fov);
 	Expose("aspectRatio", &aspectRatio);

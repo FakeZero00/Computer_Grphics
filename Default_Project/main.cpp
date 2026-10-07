@@ -5,16 +5,6 @@ using namespace std;
 #include "Default_Scene.h"
 ///////////////////////////////////
 
-template <typename T>
-void ChangeParam(T* param, T value) {
-	*param = value;
-}
-
-struct ScreenSize {
-	int width;
-	int height;
-};
-
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 void CursorPosCallback(GLFWwindow* window, double xpos, double ypos);
@@ -31,7 +21,7 @@ GLuint VAO, VBO, EBO;
 
 int main(int argc, char** argv) {
 	//스크린 사이즈 설정
-	ScreenSize screenSize{1600, 900};
+	ScreenSize screenSize{1920, 1080};
 
 	//GLFW 초기화
 	if (!glfwInit()) {
@@ -67,7 +57,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST);
 
 	//Back Face Culling 활성화
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
 	//glFrontFace(GL_CW);
 
@@ -107,7 +97,7 @@ int main(int argc, char** argv) {
 
 	/////////////////////////씬 로드/////////////////////////
 
-	Default_Scene defaultScene{};
+	Default_Scene defaultScene{screenSize};
 	defaultScene.LoadScene(ctx);
 
 	////////////////////////메인 루프////////////////////////

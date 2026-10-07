@@ -7,9 +7,11 @@
 extern map<string, GLuint> shaders;
 
 //스크립트 불러오기
+#include "ObjectRotate.h"
 
-Default_Scene::Default_Scene() {
+Default_Scene::Default_Scene(ScreenSize screenSize) {
 	name = "Default_Scene";
+	this->screenSize = screenSize;
 }
 
 void Default_Scene::LoadScene(AppContext& ctx) {
@@ -31,7 +33,7 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	material2->SetVec4("tColor", vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
 	Object* mainCamera = Instantiate(ctx, "MainCamera");
-	mainCamera->AddComponent<Camera>();
+	mainCamera->AddComponent<Camera>(screenSize.width, screenSize.height);
 	Transform* camTr = mainCamera->GetComponent<Transform>();
 	camTr->SetLocalPosition(0.0f, 5.0f, -3.0f);
 	camTr->SetLocalRotation(30.0f, 0.0f, 0.0f);
@@ -48,6 +50,7 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	Transform* testTr2 = testObject2->GetComponent<Transform>();
 	testTr2->SetLocalPosition(0.0f, 0.0f, 4.0f);
 	testTr2->SetLocalRotation(0.0f, 180.0f, 0.0f);
+	testObject2->AddComponent<ObjectRotate>();
 
 	vector<vec3> lineVertices = {
 		vec3(-10.0f, 0.0f, 0.0f),

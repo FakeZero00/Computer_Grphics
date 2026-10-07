@@ -34,7 +34,9 @@
     <ClInclude Include="Data_Structure\Mesh.h" />
     <ClInclude Include="Data_Structure\Object.h" />
     <ClInclude Include="Data_Structure\Scene.h" />
+    <ClInclude Include="Data_Structure\ScreenSize.h" />
     <ClInclude Include="Default_Scene.h" />
+    <ClInclude Include="Script\ObjectRotate.h" />
     <ClInclude Include="Script\SceneCamera.h" />
     <ClInclude Include="Utility\ColliderManager.h" />
     <ClInclude Include="Utility\InputManager.h" />
@@ -52,6 +54,7 @@
     <ClCompile Include="Data_Structure\Scene.cpp" />
     <ClCompile Include="Default_Scene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Script\ObjectRotate.cpp" />
     <ClCompile Include="Script\SceneCamera.cpp" />
     <ClCompile Include="Utility\ColliderManager.cpp" />
     <ClCompile Include="Utility\ShaderManager.cpp" />

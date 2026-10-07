@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <iostream>
 #include "AppContext.h"
+#include "ScreenSize.h"
 #include "ColliderManager.h"
 #include "ShaderManager.h"
 #include "Object.h"

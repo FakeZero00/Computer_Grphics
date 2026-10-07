@@ -108,6 +108,12 @@
     <ClInclude Include="Script\SceneCamera.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="Data_Structure\ScreenSize.h">
+      <Filter>Data_Structure\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\ObjectRotate.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -150,6 +156,9 @@
       <Filter>Component\Source</Filter>
     </ClCompile>
     <ClCompile Include="Script\SceneCamera.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\ObjectRotate.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

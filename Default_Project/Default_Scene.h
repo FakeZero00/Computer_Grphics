@@ -3,7 +3,7 @@
 
 class Default_Scene : public Scene {
 public:
-	Default_Scene();
+	Default_Scene(ScreenSize screenSize);
 
 	void LoadScene(AppContext& ctx) override;
 };

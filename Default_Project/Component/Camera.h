@@ -12,7 +12,7 @@ public:
 	float nearPlane = 0.1f;
 	float farPlane = 100.0f;
 
-	Camera();
+	Camera(float width, float height);
 	~Camera();
 
 	mat4 GetViewMatrix();
