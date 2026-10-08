@@ -51,7 +51,7 @@ Mesh::Mesh(const vector<Vertex>& vertices, const vector<GLubyte>& indices) {
 Mesh::Mesh(const string& objFile) {
 	string path = "Assets/" + objFile;
 
-	ifstream in{ objFile };
+	ifstream in{ path };
 	if (not in) {
 		cout << "파일을 열 수 없습니다." << endl;
 		system("pause");
