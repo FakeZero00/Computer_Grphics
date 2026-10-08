@@ -31,7 +31,7 @@ public:
 	void Translate(float x, float y, float z, bool isWorld = false);
 
 	void SetLocalRotation(float x, float y, float z);
-	void Rotate(float x, float y, float z);
+	void Rotate(float x, float y, float z, bool isWorld = false);
 
 	void SetLocalScale(float x, float y, float z);
 

@@ -7,6 +7,9 @@ class Material;
 
 class MeshRenderer3D : public Component {
 public:
+	bool isValid = true;
+	bool isWireframe = false;
+
 	Mesh* mesh;
 	vector<Material*> materials;
 
