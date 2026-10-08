@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <gl/glew.h>
+#include <string>
 #include "Vertex.h"
 using namespace std;
 using namespace glm;
@@ -14,5 +15,6 @@ public:
 	vec3 maxPos;
 
 	Mesh(const vector<Vertex>& vertices, const vector<GLubyte>& indices);
+	Mesh(const string& objFile);
 	void Bind() const;
 };

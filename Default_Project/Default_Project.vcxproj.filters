@@ -114,6 +114,9 @@
     <ClInclude Include="Script\ObjectRotate.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\ObjImporter.h">
+      <Filter>Utility\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -161,6 +164,9 @@
     <ClCompile Include="Script\ObjectRotate.cpp">
       <Filter>Script</Filter>
     </ClCompile>
+    <ClCompile Include="Utility\ObjImporter.cpp">
+      <Filter>Utility\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Debug_fragment.glsl">
@@ -179,6 +185,12 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Shader\Standard_vertex.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\LocalPosColor_fragment.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\LocalPosColor_vertex.glsl">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>

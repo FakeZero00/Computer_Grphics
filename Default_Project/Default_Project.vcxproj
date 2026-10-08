@@ -40,6 +40,7 @@
     <ClInclude Include="Script\SceneCamera.h" />
     <ClInclude Include="Utility\ColliderManager.h" />
     <ClInclude Include="Utility\InputManager.h" />
+    <ClInclude Include="Utility\ObjImporter.h" />
     <ClInclude Include="Utility\ShaderManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -57,11 +58,14 @@
     <ClCompile Include="Script\ObjectRotate.cpp" />
     <ClCompile Include="Script\SceneCamera.cpp" />
     <ClCompile Include="Utility\ColliderManager.cpp" />
+    <ClCompile Include="Utility\ObjImporter.cpp" />
     <ClCompile Include="Utility\ShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Debug_fragment.glsl" />
     <None Include="Shader\Debug_vertex.glsl" />
+    <None Include="Shader\LocalPosColor_fragment.glsl" />
+    <None Include="Shader\LocalPosColor_vertex.glsl" />
     <None Include="Shader\Spline_fragment.glsl" />
     <None Include="Shader\Spline_vertex.glsl" />
     <None Include="Shader\Standard_fragment.glsl" />

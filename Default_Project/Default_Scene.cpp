@@ -21,46 +21,36 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	// 3. Mesh, Material 按眉 积己 矫 new 虐况靛甫 荤侩秦具 钦聪促.
 	
 	//Mesh 按眉 积己
-	Mesh* isoPolyMesh = new Mesh(isoPolyvert, isoPolyidx);
-	Mesh* rightPolyMesh = new Mesh(rightPolyvert, rightPolyidx);
-	Mesh* rectMesh = new Mesh(rectvert, rectidx);
-	Mesh* rectMesh2 = new Mesh(rectvert2, rectidx);
-	Mesh* regularPolyMesh = new Mesh(regularPolyvert, regularPolyidx);
+	Mesh* CubeMesh = new Mesh("Default_Cube.obj");
 
-	Material* material = new Material(shaders["Standard"]);
-	material->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	Material* material2 = new Material(shaders["Standard"]);
-	material2->SetVec4("tColor", vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	Material* redMat = new Material(shaders["Standard"]);
+	redMat->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	Material* localPosColorMat = new Material(shaders["LocalPosColor"]);
 
 	Object* mainCamera = Instantiate(ctx, "MainCamera");
 	mainCamera->AddComponent<Camera>(screenSize.width, screenSize.height);
 	Transform* camTr = mainCamera->GetComponent<Transform>();
-	camTr->SetLocalPosition(0.0f, 5.0f, -3.0f);
-	camTr->SetLocalRotation(30.0f, 0.0f, 0.0f);
-	mainCamera->AddComponent<SceneCamera>(30.0f, 0.0f);
+	camTr->SetLocalPosition(0.0f, 5.0f, -5.0f);
+	camTr->SetLocalRotation(45.0f, 0.0f, 0.0f);
+	mainCamera->AddComponent<SceneCamera>(45.0f, 0.0f);
 
 	Object* testObject = Instantiate(ctx, "Test");
-	testObject->AddComponent<MeshRenderer3D>(rectMesh, material);
-	Transform* testTr = testObject->GetComponent<Transform>();
-	testTr->SetLocalPosition(0.0f, 0.0f, 3.0f);
-	testTr->SetLocalRotation(0.0f, 180.0f, 0.0f);
+	testObject->AddComponent<MeshRenderer3D>(CubeMesh, localPosColorMat);
 
-	Object* testObject2 = Instantiate(ctx, "Test");
-	testObject2->AddComponent<MeshRenderer3D>(rectMesh, material2);
-	Transform* testTr2 = testObject2->GetComponent<Transform>();
-	testTr2->SetLocalPosition(0.0f, 0.0f, 4.0f);
-	testTr2->SetLocalRotation(0.0f, 180.0f, 0.0f);
-	testObject2->AddComponent<ObjectRotate>();
+	//XYZ 绵 积己
+	DrawAxis(ctx);
+}
 
+void Default_Scene::DrawAxis(AppContext& ctx) {
+	//XYZ 绵 积己
 	vector<vec3> lineVertices = {
 		vec3(-10.0f, 0.0f, 0.0f),
 		vec3(10.0f, 0.0f, 0.0f)
 	};
 
-	//XYZ 绵 积己
 	Object* xAxis = Instantiate(ctx, "X_Axis");
 	xAxis->AddComponent<Spline>(lineVertices, vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	
+
 	Object* yAxis = Instantiate(ctx, "Y_Axis");
 	yAxis->AddComponent<Spline>(lineVertices, vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	yAxis->GetComponent<Transform>()->SetLocalRotation(0.0f, 0.0f, 90.0f);

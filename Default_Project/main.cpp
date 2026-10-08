@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST);
 
 	//Back Face Culling 활성화
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
 	//glFrontFace(GL_CW);
 
@@ -74,6 +74,10 @@ int main(int argc, char** argv) {
 	make_vertexShaders(vertexShaders, "Standard_vertex.glsl");
 	make_fragmentShaders(fragmentShaders, "Standard_fragment.glsl");
 	make_shaderProgram("Standard", shaders, vertexShaders["Standard_vertex.glsl"], fragmentShaders["Standard_fragment.glsl"]);
+
+	make_vertexShaders(vertexShaders, "LocalPosColor_vertex.glsl");
+	make_fragmentShaders(fragmentShaders, "LocalPosColor_fragment.glsl");
+	make_shaderProgram("LocalPosColor", shaders, vertexShaders["LocalPosColor_vertex.glsl"], fragmentShaders["LocalPosColor_fragment.glsl"]);
 
 	//////////////////사용자 정의 초기화////////////////////
 

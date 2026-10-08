@@ -1,5 +1,11 @@
 #include "Mesh.h"
+#include "ObjImporter.h"
 #include <cfloat>
+#include <iostream>
+
+//ÆÄÀÏ ÀĞ´Âµ¥ ÇÊ¿äÇÑ Çì´õ
+#include <sstream>
+#include <fstream>
 using namespace std;
 
 Mesh::Mesh(const vector<Vertex>& vertices, const vector<GLubyte>& indices) {
@@ -8,37 +14,100 @@ Mesh::Mesh(const vector<Vertex>& vertices, const vector<GLubyte>& indices) {
 	minPos = vec3{ FLT_MAX };
 	maxPos = vec3{ -FLT_MAX };
 
-	//ë²„í…ìŠ¤ ë°ì´í„°ì—ì„œ ìµœì†Œ, ìµœëŒ€ ì¢Œí‘œ ê³„ì‚°
+	//¹öÅØ½º µ¥ÀÌÅÍ¿¡¼­ ÃÖ¼Ò, ÃÖ´ë ÁÂÇ¥ °è»ê
 	for (const auto& vertex : vertices) {
 		minPos = glm::min(minPos, vertex.position);
 		maxPos = glm::max(maxPos, vertex.position);
 	}
 
-	//VAO ê°ì²´ ìƒì„± ë° ë°”ì¸ë”©
+	//VAO °´Ã¼ »ı¼º ¹× ¹ÙÀÎµù
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-	//VBO ê°ì²´ ìƒì„± ë° ë°”ì¸ë”©
+	//VBO °´Ã¼ »ı¼º ¹× ¹ÙÀÎµù
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-	//EBO ê°ì²´ ìƒì„± ë° ë°”ì¸ë”© ë° ë°ì´í„° ì„¤ì •
+	//EBO °´Ã¼ »ı¼º ¹× ¹ÙÀÎµù ¹× µ¥ÀÌÅÍ ¼³Á¤
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 
-	//ë²„í…ìŠ¤ ë°ì´í„° ì„¤ì •
+	//¹öÅØ½º µ¥ÀÌÅÍ ¼³Á¤
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
 
-	//ë²„í…ìŠ¤ ì¢Œí‘œ: ì†ì„± 0
+	//¹öÅØ½º ÁÂÇ¥: ¼Ó¼º 0
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 	glEnableVertexAttribArray(0);
 
-	//ë²„í…ìŠ¤ ìƒ‰ìƒ: ì†ì„± 1
+	//¹öÅØ½º »ö»ó: ¼Ó¼º 1
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
 	glEnableVertexAttribArray(1);
 
-	// VAO ë°”ì¸ë”© í•´ì œ
+	// VAO ¹ÙÀÎµù ÇØÁ¦
+	glBindVertexArray(0);
+}
+
+Mesh::Mesh(const string& objFile) {
+	string path = "Assets/" + objFile;
+
+	ifstream in{ objFile };
+	if (not in) {
+		cout << "ÆÄÀÏÀ» ¿­ ¼ö ¾ø½À´Ï´Ù." << endl;
+		system("pause");
+		exit(1);
+	}
+
+	vector<vector<string>> data;
+	string line;
+	while (getline(in, line)) {
+		stringstream ss{ line };
+		string word;
+		vector<string> words;
+
+		while (ss >> word) words.push_back(word);
+		if (!words.empty()) data.push_back(words);
+	}
+
+	vector<Vertex> vertices = GetVerticesFromObj(data);
+	vector<GLubyte> indices = GetIndicesFromObj(data);
+
+	indexCount = indices.size();
+
+	minPos = vec3{ FLT_MAX };
+	maxPos = vec3{ -FLT_MAX };
+
+	//¹öÅØ½º µ¥ÀÌÅÍ¿¡¼­ ÃÖ¼Ò, ÃÖ´ë ÁÂÇ¥ °è»ê
+	for (const auto& vertex : vertices) {
+		minPos = glm::min(minPos, vertex.position);
+		maxPos = glm::max(maxPos, vertex.position);
+	}
+
+	//VAO °´Ã¼ »ı¼º ¹× ¹ÙÀÎµù
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	//VBO °´Ã¼ »ı¼º ¹× ¹ÙÀÎµù
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	//EBO °´Ã¼ »ı¼º ¹× ¹ÙÀÎµù ¹× µ¥ÀÌÅÍ ¼³Á¤
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
+
+	//¹öÅØ½º µ¥ÀÌÅÍ ¼³Á¤
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
+
+	//¹öÅØ½º ÁÂÇ¥: ¼Ó¼º 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+	glEnableVertexAttribArray(0);
+
+	//¹öÅØ½º »ö»ó: ¼Ó¼º 1
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+	glEnableVertexAttribArray(1);
+
+	// VAO ¹ÙÀÎµù ÇØÁ¦
 	glBindVertexArray(0);
 }
 
