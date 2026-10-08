@@ -7,18 +7,21 @@
 using namespace std;
 
 class ObjectManagement : public Component {
+private:
+	float speed = 100.0f;
+	float moveSpeed = 5.0f;
+
+	int isXRotation = 0;	//0: 회전 없음, 1: 양의 방향 회전, -1: 음의 방향 회전
+	int isYRotation = 0;	//0: 회전 없음, 1: 양의 방향 회전, -1: 음의 방향 회전
+
+
 public:
-	vector <Mesh*> meshes;
-	vector <Object*> objects;
+	Object* cube;
+	Object* pyramid;
 
-	random_device rd;
-	default_random_engine dre{ rd() };
-	uniform_int_distribution<int> randCube{ 0, 5 };
-	uniform_int_distribution<int> randTri{ 6, 9 };
+	bool isDepthTest = true;
 
-	ObjectManagement(vector<Mesh*> meshes) : meshes(meshes) {}
-
-	void AllDisable();
+	ObjectManagement(Object* cube, Object* pyramid) : cube(cube), pyramid(pyramid) {}
 
 	void Start() override;
 	void Update(float deltaTime) override;

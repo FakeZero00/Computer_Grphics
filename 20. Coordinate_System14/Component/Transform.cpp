@@ -36,10 +36,12 @@ void Transform::SetLocalRotation(float x, float y, float z) {
 	CalculateWorldMatrix();
 }
 
-void Transform::Rotate(float x, float y, float z) {
+void Transform::Rotate(float x, float y, float z, bool isWorld) {
 	vec3 eulerRadians = vec3{ radians(x), radians(y), radians(z) };
 	quat deltaRotation = quat(eulerRadians);
-	rotation = normalize(rotation * deltaRotation); //현재 회전에 델타 회전을 곱함
+
+	if (isWorld) rotation = normalize(deltaRotation * rotation); //델타 회전을 현재 회전에 곱함
+	else rotation = normalize(rotation * deltaRotation); //현재 회전에 델타 회전을 곱함
 
 	CalculateWorldMatrix();
 }

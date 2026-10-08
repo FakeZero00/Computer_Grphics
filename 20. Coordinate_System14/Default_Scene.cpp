@@ -21,18 +21,8 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	// 3. Mesh, Material 객체 생성 시 new 키워드를 사용해야 합니다.
 	
 	//Mesh 객체 생성
-	Mesh* PlanePX = new Mesh("Plane+X.obj");
-	Mesh* PlanePY = new Mesh("Plane+Y.obj");
-	Mesh* PlanePZ = new Mesh("Plane+Z.obj");
-	Mesh* PlaneMX = new Mesh("Plane-X.obj");
-	Mesh* PlaneMY = new Mesh("Plane-Y.obj");
-	Mesh* PlaneMZ = new Mesh("Plane-Z.obj");
-	Mesh* TriPX = new Mesh("Triangle+X.obj");
-	Mesh* TriPZ = new Mesh("Triangle+Z.obj");
-	Mesh* TriMX = new Mesh("Triangle-X.obj");
-	Mesh* TriMZ = new Mesh("Triangle-Z.obj");
-
-	vector<Mesh*> meshes = { PlanePX, PlanePY, PlanePZ, PlaneMX, PlaneMY, PlaneMZ, TriPX, TriPZ, TriMX, TriMZ };
+	Mesh* cubeMesh = new Mesh("Default_Cube.obj");
+	Mesh* pyramidMesh = new Mesh("Default_Pyramid.obj");
 
 	Material* redMat = new Material(shaders["Standard"]);
 	redMat->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
@@ -45,8 +35,14 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	camTr->SetLocalRotation(45.0f, 0.0f, 0.0f);
 	mainCamera->AddComponent<SceneCamera>(45.0f, 0.0f);
 
-	Object* testObject = Instantiate(ctx, "Test");
-	testObject->AddComponent<ObjectManagement>(meshes);
+	Object* cube = Instantiate(ctx, "Cube");
+	cube->AddComponent<MeshRenderer3D>(cubeMesh, localPosColorMat);
+
+	Object* pyramid = Instantiate(ctx, "Pyramid");
+	pyramid->AddComponent<MeshRenderer3D>(pyramidMesh, localPosColorMat);
+
+	Object* testObject = Instantiate(ctx, "Descriptor");
+	testObject->AddComponent<ObjectManagement>(cube, pyramid);
 
 	//XYZ 축 생성
 	DrawAxis(ctx);
