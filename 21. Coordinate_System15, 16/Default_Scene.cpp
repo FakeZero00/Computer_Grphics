@@ -8,6 +8,7 @@ extern map<string, GLuint> shaders;
 
 //스크립트 불러오기
 #include "ObjectManagement.h"
+#include "PyramidController.h"
 
 Default_Scene::Default_Scene(ScreenSize screenSize) {
 	name = "Default_Scene";
@@ -22,9 +23,11 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	
 	//Mesh 객체 생성
 	Mesh* plane = new Mesh("Plane.obj");
+	Mesh* triangle = new Mesh("Triangle.obj");
 
 	map<string, Mesh*> meshes = {
-		{"Plane", plane}
+		{"Plane", plane},
+		{"Triangle", triangle}
 	};
 
 	Material* redMat = new Material(shaders["Standard"]);
@@ -38,8 +41,11 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	camTr->SetLocalRotation(45.0f, 0.0f, 0.0f);
 	mainCamera->AddComponent<SceneCamera>(45.0f, 0.0f);
 
-	Object* testObject = Instantiate(ctx, "Manager");
-	testObject->AddComponent<ObjectManagement>(0, meshes);
+	/*Object* testObject = Instantiate(ctx, "Manager");
+	testObject->AddComponent<ObjectManagement>(0, meshes);*/
+
+	Object* testObject2 = Instantiate(ctx, "PyramidManager");
+	testObject2->AddComponent<PyramidController>(meshes);
 
 	//XYZ 축 생성
 	DrawAxis(ctx);

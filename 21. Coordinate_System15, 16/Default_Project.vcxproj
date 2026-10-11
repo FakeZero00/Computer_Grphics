@@ -37,6 +37,7 @@
     <ClInclude Include="Data_Structure\ScreenSize.h" />
     <ClInclude Include="Default_Scene.h" />
     <ClInclude Include="Script\ObjectManagement.h" />
+    <ClInclude Include="Script\PyramidController.h" />
     <ClInclude Include="Script\SceneCamera.h" />
     <ClInclude Include="Utility\ColliderManager.h" />
     <ClInclude Include="Utility\InputManager.h" />
@@ -56,6 +57,7 @@
     <ClCompile Include="Default_Scene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Script\ObjectManagement.cpp" />
+    <ClCompile Include="Script\PyramidController.cpp" />
     <ClCompile Include="Script\SceneCamera.cpp" />
     <ClCompile Include="Utility\ColliderManager.cpp" />
     <ClCompile Include="Utility\ObjImporter.cpp" />

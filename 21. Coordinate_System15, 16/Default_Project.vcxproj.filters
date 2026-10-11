@@ -117,6 +117,9 @@
     <ClInclude Include="Utility\ObjImporter.h">
       <Filter>Utility\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Script\PyramidController.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -166,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="Utility\ObjImporter.cpp">
       <Filter>Utility\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\PyramidController.cpp">
+      <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
