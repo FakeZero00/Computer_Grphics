@@ -14,8 +14,13 @@ public:
 
 	Object* floorObject;
 
+	bool is6Move = false;
 	bool is6Rotating = false;
 	float weight6 = 0.0f;
+
+	bool is7Move = false;
+	bool is7Rotating = false;
+	float weight7[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	random_device rd;
 	default_random_engine dre{ rd() };
