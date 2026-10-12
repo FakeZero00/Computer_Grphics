@@ -41,8 +41,8 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	camTr->SetLocalRotation(45.0f, 0.0f, 0.0f);
 	mainCamera->AddComponent<SceneCamera>(45.0f, 0.0f);
 
-	/*Object* testObject = Instantiate(ctx, "Manager");
-	testObject->AddComponent<ObjectManagement>(0, meshes);*/
+	Object* testObject = Instantiate(ctx, "Manager");
+	testObject->AddComponent<ObjectManagement>(0, meshes);
 
 	Object* testObject2 = Instantiate(ctx, "PyramidManager");
 	testObject2->AddComponent<PyramidController>(meshes);

@@ -9,6 +9,8 @@ using namespace std;
 
 class ObjectManagement : public Component {
 public:
+	bool isValid = true;
+
 	map<string, Mesh*> meshes;
 	map<string, Object*> objects;
 
