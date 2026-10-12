@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "MeshRenderer3D.h"
 #include "Material.h"
+#include "InputManager.h"
 
 extern map<string, GLuint> shaders;
 
@@ -33,5 +34,37 @@ void PyramidController::Start() {
 }
 
 void PyramidController::Update(float deltaTime) {
-	// Update logic for the pyramid controller can be added here
+	InputManager inputManager = gameObject->ctx.inputManager;
+	
+	if (inputManager.GetKeyDown(GLFW_KEY_6)) {
+		is6Rotating = !is6Rotating;
+	}
+
+	if (is6Rotating) {
+		weight6 += deltaTime * 0.5f;
+		if (weight6 >= 1.0f) weight6 = 1.0f;
+	}
+	else {
+		weight6 -= deltaTime * 0.5f;
+		if (weight6 < 0.0f) weight6 = 0.0f;
+	}
+
+	quat startRotation = quat(vec3(radians(-63.5f), 0.0f, radians(180.0f)));
+	quat deltaRotation = quat(vec3(radians(-233.0f), 0.0f, 0.0f));
+	quat endRotation = normalize(startRotation * deltaRotation);
+
+	for (int i = 0; i < 4; ++i) {
+		Transform* parentTr = objects[i]->GetComponent<Transform>();
+		Transform* childTr = parentTr->children[0]; // LineCenter
+
+		//0도부터 -233도까지, 원하는 각도 자체를 weight6에 따라 직접 보간
+		float currentAngle = glm::mix(0.0f, glm::radians(-233.0f), weight6);
+
+		//보간된 각도로 매 프레임 현재의 delta 회전값을 생성
+		quat currentDeltaRotation = quat(vec3(currentAngle, 0.0f, 0.0f));
+
+		//시작 회전값에 현재의 델타 회전값을 곱해 로컬 기준(start * delta)으로 적용
+		childTr->rotation = normalize(startRotation * currentDeltaRotation);
+		childTr->CalculateWorldMatrix();
+	}
 }

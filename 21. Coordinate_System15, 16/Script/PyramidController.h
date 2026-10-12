@@ -14,6 +14,9 @@ public:
 
 	Object* floorObject;
 
+	bool is6Rotating = false;
+	float weight6 = 0.0f;
+
 	random_device rd;
 	default_random_engine dre{ rd() };
 	uniform_int_distribution<int> rand1{ 0, 3 };
