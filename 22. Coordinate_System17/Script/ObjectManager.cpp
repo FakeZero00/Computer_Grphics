@@ -8,6 +8,41 @@
 
 extern map<string, GLuint> shaders;
 
+void ObjectManager::ResetAll() {
+	if (childL != nullptr) {
+		childL->Destroy();
+		childL = nullptr;
+	}
+	if (childR != nullptr) {
+		childR->Destroy();
+		childR = nullptr;
+	}
+	childLPos = vec3(0.0f, 0.0f, 0.0f);
+	targetPosL = vec3(0.0f, 0.0f, 0.0f);
+	childRPos = vec3(0.0f, 0.0f, 0.0f);
+	targetPosR = vec3(0.0f, 0.0f, 0.0f);
+	commandMode = 0;
+	isXRotatingL = 0;
+	isXRotatingR = 0;
+	isYRotatingL = 0;
+	isYRotatingR = 0;
+	isRRotatingL = 0;
+	isRRotatingR = 0;
+	isAScalingL = 0;
+	isAScalingR = 0;
+	isBScalingL = 0;
+	isBScalingR = 0;
+	isDMovingL = 0;
+	isDMovingR = 0;
+	isEMovingL = 0;
+	isEMovingR = 0;
+	istMovingL = 0;
+	tMovingL = 0.0f;
+	istMovingR = 0;
+	tMovingR = 0.0f;
+	isVMoving = false;
+}
+
 void ObjectManager::Update(float deltaTime) {
 	InputManager inputManager = gameObject->ctx.inputManager;
 
@@ -52,6 +87,7 @@ void ObjectManager::Update(float deltaTime) {
 	else if (inputManager.GetKeyDown(GLFW_KEY_1)) commandMode = 1;
 	else if (inputManager.GetKeyDown(GLFW_KEY_2)) commandMode = 2;
 	else if (inputManager.GetKeyDown(GLFW_KEY_3)) commandMode = 3;
+	else if (inputManager.GetKeyDown(GLFW_KEY_S)) ResetAll();
 
 	if (childL != nullptr) {
 		if (inputManager.GetKeyDown(GLFW_KEY_C)) {
@@ -343,6 +379,9 @@ void ObjectManager::Update(float deltaTime) {
 				targetPosR = childLPos;
 			}
 		}
+		else if (inputManager.GetKeyDown(GLFW_KEY_V)) {
+			isVMoving = !isVMoving;
+		}
 
 		if (istMovingL == 1 || istMovingL == 2) {
 			tMovingL += deltaTime;
@@ -382,6 +421,25 @@ void ObjectManager::Update(float deltaTime) {
 				vec3 newPos = mix(startPos, targetPosR, tMovingR);
 				childRTr->SetLocalPosition(newPos.x, newPos.y, newPos.z);
 			}
+		}
+
+		if (isVMoving) {
+			float rotSpeed = 90.0f;
+			float scaleSpeed = 0.5f;
+			
+			Transform* childLTr = childL->GetComponent<Transform>();
+			Transform* childRTr = childR->GetComponent<Transform>();
+
+			childLTr->Rotate(0.0f, rotSpeed* deltaTime, 0.0f, true);
+			childRTr->Rotate(0.0f, rotSpeed * deltaTime, 0.0f, true);
+			childLTr->SetLocalScale(childLTr->scale.x + scaleSpeed * deltaTime, childLTr->scale.y + scaleSpeed * deltaTime, childLTr->scale.z + scaleSpeed * deltaTime);
+			childRTr->SetLocalScale(childRTr->scale.x - scaleSpeed * deltaTime, childRTr->scale.y - scaleSpeed * deltaTime, childRTr->scale.z - scaleSpeed * deltaTime);
+
+			childLTr = childLTr->parent;
+			childRTr = childRTr->parent;
+
+			childLTr->Rotate(0.0f, rotSpeed* deltaTime, 0.0f, true);
+			childRTr->Rotate(0.0f, rotSpeed* deltaTime, 0.0f, true);
 		}
 	}
 }

@@ -44,11 +44,15 @@ public:
 	int istMovingR = 0;
 	float tMovingR = 0.0f;
 
+	bool isVMoving = false;
+
 	random_device rd;
 	default_random_engine dre{ rd() };
 	uniform_int_distribution<int> uid{ 0, 3 };
-	uniform_real_distribution<float> ufdL{ 8.0f, 10.0f };
-	uniform_real_distribution<float> ufdR{ -10.0f, -8.0f };
+	uniform_real_distribution<float> ufdL{ 7.0f, 9.0f };
+	uniform_real_distribution<float> ufdR{ -9.0f, -7.0f };
+
+	void ResetAll();
 
 	void Update(float deltaTime) override;
 };
