@@ -96,9 +96,6 @@
     <ClInclude Include="Default_Scene.h">
       <Filter>리소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Dataset.h">
-      <Filter>리소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Component\Camera.h">
       <Filter>Component\Header</Filter>
     </ClInclude>
@@ -201,6 +198,9 @@
     </None>
     <None Include="Shader\LocalPosColor_vertex.glsl">
       <Filter>Shader</Filter>
+    </None>
+    <None Include="Default_Scene.json">
+      <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>
 </Project>

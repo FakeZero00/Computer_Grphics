@@ -1,13 +1,12 @@
 #include "Default_Scene.h"
-#include "Dataset.h"
 #include "Common.h"
-#include "Mesh.h"
-#include "Material.h"
+#include "SceneLoader.h"
 
 extern map<string, GLuint> shaders;
 
-//스크립트 불러오기
-#include "ObjectManager.h"
+//스크립트 불러오기//
+
+/////////////////////
 
 Default_Scene::Default_Scene(ScreenSize screenSize) {
 	name = "Default_Scene";
@@ -21,23 +20,26 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	// 3. Mesh, Material 객체 생성 시 new 키워드를 사용해야 합니다.
 	
 	//Mesh 객체 생성
-	Mesh* Cube = new Mesh("Default_Cube.obj");
-	Mesh* Pyramid = new Mesh("Default_Pyramid.obj");
-	Mesh* Sphere = new Mesh("Default_Sphere.obj");
-	Mesh* Torus = new Mesh("Default_Torus.obj");
+	map<string, Mesh*> meshChache = {
+		{"Cube", new Mesh("Default_Cube.obj")},
+		{"Pyramid", new Mesh("Default_Pyramid.obj")},
+		{"Sphere", new Mesh("Default_Sphere.obj")},
+		{"Torus", new Mesh("Default_Torus.obj")}
+	};
 
-	vector<Mesh*> meshes = { Cube, Pyramid, Sphere, Torus };
+	map<string, Material*> materialChache = {
+		{"LocalPosColor", new Material(shaders["LocalPosColor"])}
+	};
 
-	/*Material* redMat = new Material(shaders["Standard"]);
-	redMat->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));*/
-	Material* localPosColorMat = new Material(shaders["LocalPosColor"]);
+	SceneLoader sceneLoader{screenSize, meshChache, materialChache };
+	sceneLoader.LoadScene(ctx, "Default_Scene.json");
 
-	Object* mainCamera = Instantiate(ctx, "MainCamera");
+	/*Object* mainCamera = Instantiate(ctx, "MainCamera");
 	mainCamera->AddComponent<Camera>(screenSize.width, screenSize.height);
 	Transform* camTr = mainCamera->GetComponent<Transform>();
 	camTr->SetLocalPosition(0.0f, 10.0f, -10.0f);
 	camTr->SetLocalRotation(40.0f, 0.0f, 0.0f);
-	mainCamera->AddComponent<SceneCamera>();
+	mainCamera->AddComponent<SceneCamera>();*/
 
 
 	//XYZ 축 생성
