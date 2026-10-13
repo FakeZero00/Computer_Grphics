@@ -39,6 +39,9 @@ public:
 	int isEMovingL = 0;
 	int isEMovingR = 0;
 
+	bool isUMoving = false;
+	float uWeight = 0.0f;
+
 	int istMovingL = 0;
 	float tMovingL = 0.0f;
 	int istMovingR = 0;

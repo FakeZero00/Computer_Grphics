@@ -40,7 +40,9 @@ void ObjectManager::ResetAll() {
 	tMovingL = 0.0f;
 	istMovingR = 0;
 	tMovingR = 0.0f;
+	isUMoving = false;
 	isVMoving = false;
+	uWeight = 0.0f;
 }
 
 void ObjectManager::Update(float deltaTime) {
@@ -366,6 +368,18 @@ void ObjectManager::Update(float deltaTime) {
 		Transform* childRTr = childR->GetComponent<Transform>();
 		
 		if (inputManager.GetKeyDown(GLFW_KEY_T)) {
+			if (!isUMoving) {
+				isUMoving = true;
+				uWeight = 0.0f;
+
+				childLPos = childLTr->position;
+				childRPos = childRTr->position;
+
+				targetPosL = childRPos;
+				targetPosR = childLPos;
+			}
+		}
+		else if (inputManager.GetKeyDown(GLFW_KEY_U)) {
 			if (istMovingL == 0 && istMovingR == 0) {
 				istMovingL = 1;
 				istMovingR = 1;
@@ -392,12 +406,12 @@ void ObjectManager::Update(float deltaTime) {
 			}
 
 			if (istMovingL == 1) {
-				vec3 endPos{ 0.0f, 0.0f, 0.0f };
+				vec3 endPos{ 0.0f, 5.0f, 0.0f };
 				vec3 newPos = mix(childLPos, endPos, tMovingL);
 				childLTr->SetLocalPosition(newPos.x, newPos.y, newPos.z);
 			}
 			else if (istMovingL == 2) {
-				vec3 startPos{ 0.0f, 0.0f, 0.0f };
+				vec3 startPos{ 0.0f, 5.0f, 0.0f };
 				vec3 newPos = mix(startPos, targetPosL, tMovingL);
 				childLTr->SetLocalPosition(newPos.x, newPos.y, newPos.z);
 			}
@@ -412,15 +426,28 @@ void ObjectManager::Update(float deltaTime) {
 			}
 
 			if (istMovingR == 1) {
-				vec3 endPos{ 0.0f, 0.0f, 0.0f };
+				vec3 endPos{ 0.0f, -5.0f, 0.0f };
 				vec3 newPos = mix(childRPos, endPos, tMovingR);
 				childRTr->SetLocalPosition(newPos.x, newPos.y, newPos.z);
 			}
 			else if (istMovingR == 2) {
-				vec3 startPos{ 0.0f, 0.0f, 0.0f };
+				vec3 startPos{ 0.0f, -5.0f, 0.0f };
 				vec3 newPos = mix(startPos, targetPosR, tMovingR);
 				childRTr->SetLocalPosition(newPos.x, newPos.y, newPos.z);
 			}
+		}
+
+		if (isUMoving) {
+			uWeight += deltaTime;
+			if (uWeight >= 1.0f) {
+				isUMoving = false;
+			}
+			
+			vec3 newPosL = mix(childLPos, targetPosL, uWeight);
+			vec3 newPosR = mix(childRPos, targetPosR, uWeight);
+
+			childLTr->SetLocalPosition(newPosL.x, newPosL.y, newPosL.z);
+			childRTr->SetLocalPosition(newPosR.x, newPosR.y, newPosR.z);
 		}
 
 		if (isVMoving) {

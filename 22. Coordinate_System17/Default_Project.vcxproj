@@ -25,7 +25,6 @@
     <ClInclude Include="Component\MeshRenderer3D.h" />
     <ClInclude Include="Component\Spline.h" />
     <ClInclude Include="Component\Transform.h" />
-    <ClInclude Include="Component\Vertex.h" />
     <ClInclude Include="Dataset.h" />
     <ClInclude Include="Data_Structure\AppContext.h" />
     <ClInclude Include="Data_Structure\Collider.h" />
@@ -35,6 +34,7 @@
     <ClInclude Include="Data_Structure\Object.h" />
     <ClInclude Include="Data_Structure\Scene.h" />
     <ClInclude Include="Data_Structure\ScreenSize.h" />
+    <ClInclude Include="Data_Structure\Vertex.h" />
     <ClInclude Include="Default_Scene.h" />
     <ClInclude Include="Script\ObjectManager.h" />
     <ClInclude Include="Script\SceneCamera.h" />

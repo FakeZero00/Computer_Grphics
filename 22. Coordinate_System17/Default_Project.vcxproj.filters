@@ -96,9 +96,6 @@
     <ClInclude Include="Default_Scene.h">
       <Filter>리소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Vertex.h">
-      <Filter>Data_Structure\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Dataset.h">
       <Filter>리소스 파일</Filter>
     </ClInclude>
@@ -116,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="Utility\ObjImporter.h">
       <Filter>Utility\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Structure\Vertex.h">
+      <Filter>Data_Structure\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
