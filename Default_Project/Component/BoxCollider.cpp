@@ -109,7 +109,7 @@ void BoxCollider::Render() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 
-	glDrawElements(GL_LINES, 24, GL_UNSIGNED_BYTE, 0);
+	glDrawElements(GL_LINES, 24, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
 

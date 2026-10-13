@@ -47,7 +47,7 @@ void ObjectManager::ResetAll() {
 
 void ObjectManager::Update(float deltaTime) {
 	InputManager inputManager = gameObject->ctx.inputManager;
-
+	cout << commandMode << endl;
 	if (inputManager.GetKeyDown(GLFW_MOUSE_BUTTON_LEFT)) {
 		if (childL == nullptr) {
 			Material* localPosColorMat = new Material(shaders["LocalPosColor"]);
@@ -300,66 +300,66 @@ void ObjectManager::Update(float deltaTime) {
 		}
 
 		if (isXRotatingR == 1) {
-			Transform* childLTr = childL->GetComponent<Transform>();
-			childLTr->Rotate(90.0f * deltaTime, 0.0f, 0.0f, true);
+			Transform* childRTr = childR->GetComponent<Transform>();
+			childRTr->Rotate(90.0f * deltaTime, 0.0f, 0.0f, true);
 		}
 		else if (isXRotatingR == 2) {
-			Transform* childLTr = childL->GetComponent<Transform>();
-			childLTr->Rotate(-90.0f * deltaTime, 0.0f, 0.0f, true);
+			Transform* childRTr = childR->GetComponent<Transform>();
+			childRTr->Rotate(-90.0f * deltaTime, 0.0f, 0.0f, true);
 		}
 
 		if (isYRotatingR == 1) {
-			Transform* childLTr = childL->GetComponent<Transform>();
-			childLTr->Rotate(0.0f, 90.0f * deltaTime, 0.0f, true);
+			Transform* childRTr = childR->GetComponent<Transform>();
+			childRTr->Rotate(0.0f, 90.0f * deltaTime, 0.0f, true);
 		}
 		else if (isYRotatingR == 2) {
-			Transform* childLTr = childL->GetComponent<Transform>();
-			childLTr->Rotate(0.0f, -90.0f * deltaTime, 0.0f, true);
+			Transform* childRTr = childR->GetComponent<Transform>();
+			childRTr->Rotate(0.0f, -90.0f * deltaTime, 0.0f, true);
 		}
 
 		if (isRRotatingR == 1) {
-			Transform* childLTr = childL->GetComponent<Transform>()->parent;
-			childLTr->Rotate(0.0f, 90.0f * deltaTime, 0.0f, true);
+			Transform* childRTr = childR->GetComponent<Transform>()->parent;
+			childRTr->Rotate(0.0f, 90.0f * deltaTime, 0.0f, true);
 		}
 		else if (isRRotatingR == 2) {
-			Transform* childLTr = childL->GetComponent<Transform>()->parent;
-			childLTr->Rotate(0.0f, -90.0f * deltaTime, 0.0f, true);
+			Transform* childRTr = childR->GetComponent<Transform>()->parent;
+			childRTr->Rotate(0.0f, -90.0f * deltaTime, 0.0f, true);
 		}
 
 		if (isAScalingR == 1) {
-			Transform* childLTr = childL->GetComponent<Transform>();
-			childLTr->SetLocalScale(childLTr->scale.x + deltaTime, childLTr->scale.y + deltaTime, childLTr->scale.z + deltaTime);
+			Transform* childRTr = childR->GetComponent<Transform>();
+			childRTr->SetLocalScale(childRTr->scale.x + deltaTime, childRTr->scale.y + deltaTime, childRTr->scale.z + deltaTime);
 		}
 		else if (isAScalingR == 2) {
-			Transform* childLTr = childL->GetComponent<Transform>();
-			childLTr->SetLocalScale(childLTr->scale.x - deltaTime, childLTr->scale.y - deltaTime, childLTr->scale.z - deltaTime);
+			Transform* childRTr = childR->GetComponent<Transform>();
+			childRTr->SetLocalScale(childRTr->scale.x - deltaTime, childRTr->scale.y - deltaTime, childRTr->scale.z - deltaTime);
 		}
 
 		if (isBScalingR == 1) {
-			Transform* childLTr = childL->GetComponent<Transform>()->parent;
-			childLTr->SetLocalScale(childLTr->scale.x + deltaTime, childLTr->scale.y + deltaTime, childLTr->scale.z + deltaTime);
+			Transform* childRTr = childR->GetComponent<Transform>()->parent;
+			childRTr->SetLocalScale(childRTr->scale.x + deltaTime, childRTr->scale.y + deltaTime, childRTr->scale.z + deltaTime);
 		}
 		else if (isBScalingR == 2) {
-			Transform* childLTr = childL->GetComponent<Transform>()->parent;
-			childLTr->SetLocalScale(childLTr->scale.x - deltaTime, childLTr->scale.y - deltaTime, childLTr->scale.z - deltaTime);
+			Transform* childRTr = childR->GetComponent<Transform>()->parent;
+			childRTr->SetLocalScale(childRTr->scale.x - deltaTime, childRTr->scale.y - deltaTime, childRTr->scale.z - deltaTime);
 		}
 
 		if (isDMovingR == 1) {
-			Transform* childLTr = childL->GetComponent<Transform>();
-			childLTr->Translate(5.0f * deltaTime, 0.0f, 0.0f, true);
+			Transform* childRTr = childR->GetComponent<Transform>();
+			childRTr->Translate(5.0f * deltaTime, 0.0f, 0.0f, true);
 		}
 		else if (isDMovingR == 2) {
-			Transform* childLTr = childL->GetComponent<Transform>();
-			childLTr->Translate(-5.0f * deltaTime, 0.0f, 0.0f, true);
+			Transform* childRTr = childR->GetComponent<Transform>();
+			childRTr->Translate(-5.0f * deltaTime, 0.0f, 0.0f, true);
 		}
 
 		if (isEMovingR == 1) {
-			Transform* childLTr = childL->GetComponent<Transform>();
-			childLTr->Translate(0.0f, 5.0f * deltaTime, 0.0f, true);
+			Transform* childRTr = childR->GetComponent<Transform>();
+			childRTr->Translate(0.0f, 5.0f * deltaTime, 0.0f, true);
 		}
 		else if (isEMovingR == 2) {
-			Transform* childLTr = childL->GetComponent<Transform>();
-			childLTr->Translate(0.0f, -5.0f * deltaTime, 0.0f, true);
+			Transform* childRTr = childR->GetComponent<Transform>();
+			childRTr->Translate(0.0f, -5.0f * deltaTime, 0.0f, true);
 		}
 	}
 

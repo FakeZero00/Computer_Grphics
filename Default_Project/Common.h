@@ -7,14 +7,11 @@
 #include <memory>
 #include <algorithm>
 #include <iostream>
-#include "AppContext.h"
-#include "ScreenSize.h"
 #include "ColliderManager.h"
 #include "ShaderManager.h"
-#include "Object.h"
-#include "Transform.h"
-#include "MeshRenderer3D.h"
-#include "BoxCollider.h"
-#include "Camera.h"
-#include "SceneCamera.h"
-#include "Spline.h"
+
+//데이터 구조 임포트
+#include "AllDataStructure.h"
+
+//컴포넌트 임포트
+#include "AllComponent.h"

@@ -46,6 +46,11 @@ void Transform::Rotate(float x, float y, float z, bool isWorld) {
 	CalculateWorldMatrix();
 }
 
+vec3 Transform::LocalEulerAngles() const {
+	vec3 eulerRadians = eulerAngles(rotation);
+	return vec3{ degrees(eulerRadians.x), degrees(eulerRadians.y), degrees(eulerRadians.z) };
+}
+
 void Transform::SetLocalScale(float x, float y, float z) {
 	scale = vec3{ x, y, z };
 

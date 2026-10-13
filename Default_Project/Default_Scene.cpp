@@ -7,7 +7,7 @@
 extern map<string, GLuint> shaders;
 
 //스크립트 불러오기
-#include "ObjectRotate.h"
+#include "ObjectManager.h"
 
 Default_Scene::Default_Scene(ScreenSize screenSize) {
 	name = "Default_Scene";
@@ -21,21 +21,26 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	// 3. Mesh, Material 객체 생성 시 new 키워드를 사용해야 합니다.
 	
 	//Mesh 객체 생성
-	Mesh* CubeMesh = new Mesh("Default_Cube.obj");
+	Mesh* Cube = new Mesh("Default_Cube.obj");
+	Mesh* Pyramid = new Mesh("Default_Pyramid.obj");
+	Mesh* Sphere = new Mesh("Default_Sphere.obj");
+	Mesh* Torus = new Mesh("Default_Torus.obj");
 
-	Material* redMat = new Material(shaders["Standard"]);
-	redMat->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	vector<Mesh*> meshes = { Cube, Pyramid, Sphere, Torus };
+
+	/*Material* redMat = new Material(shaders["Standard"]);
+	redMat->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));*/
 	Material* localPosColorMat = new Material(shaders["LocalPosColor"]);
 
 	Object* mainCamera = Instantiate(ctx, "MainCamera");
 	mainCamera->AddComponent<Camera>(screenSize.width, screenSize.height);
 	Transform* camTr = mainCamera->GetComponent<Transform>();
-	camTr->SetLocalPosition(0.0f, 5.0f, -5.0f);
-	camTr->SetLocalRotation(45.0f, 0.0f, 0.0f);
-	mainCamera->AddComponent<SceneCamera>(45.0f, 0.0f);
+	camTr->SetLocalPosition(0.0f, 10.0f, -10.0f);
+	camTr->SetLocalRotation(40.0f, 0.0f, 0.0f);
+	mainCamera->AddComponent<SceneCamera>();
 
 	Object* testObject = Instantiate(ctx, "Test");
-	testObject->AddComponent<MeshRenderer3D>(CubeMesh, localPosColorMat);
+	testObject->AddComponent<ObjectManager>(meshes);
 
 	//XYZ 축 생성
 	DrawAxis(ctx);

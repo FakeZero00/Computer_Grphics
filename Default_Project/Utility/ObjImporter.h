@@ -6,4 +6,4 @@
 using namespace std;
 
 vector<Vertex> GetVerticesFromObj(vector<vector<string>>& objData);
-vector<GLubyte> GetIndicesFromObj(vector<vector<string>>& objData);
+vector<GLuint> GetIndicesFromObj(vector<vector<string>>& objData);

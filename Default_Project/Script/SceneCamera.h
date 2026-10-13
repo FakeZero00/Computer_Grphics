@@ -3,8 +3,6 @@
 
 class SceneCamera : public Component {
 public:
-	SceneCamera(float rotX, float rotY);
-
 	float walkSpeed = 5.0f;
 	float dashSpeed = 15.0f;
 	float sensitivity = 100.0f;
@@ -15,5 +13,6 @@ public:
 	float yaw;
 	float pitch;
 
+	void Awake() override;
 	void Update(float deltaTime) override;
 };

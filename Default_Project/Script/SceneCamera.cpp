@@ -4,7 +4,11 @@
 #include "Transform.h"
 #include "InputManager.h"
 
-SceneCamera::SceneCamera(float rotX, float rotY) : pitch(rotX), yaw(rotY) {}
+void SceneCamera::Awake() {
+	Transform* tr = gameObject->GetComponent<Transform>();
+	pitch = tr->LocalEulerAngles().x;
+	yaw = tr->LocalEulerAngles().y;
+}
 
 void SceneCamera::Update(float deltaTime) {
 	InputManager inputManager = gameObject->ctx.inputManager;

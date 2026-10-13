@@ -96,9 +96,6 @@
     <ClInclude Include="Default_Scene.h">
       <Filter>리소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Vertex.h">
-      <Filter>Data_Structure\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Dataset.h">
       <Filter>리소스 파일</Filter>
     </ClInclude>
@@ -111,11 +108,14 @@
     <ClInclude Include="Data_Structure\ScreenSize.h">
       <Filter>Data_Structure\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Script\ObjectRotate.h">
+    <ClInclude Include="Script\ObjectManager.h">
       <Filter>Script</Filter>
     </ClInclude>
     <ClInclude Include="Utility\ObjImporter.h">
       <Filter>Utility\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Structure\Vertex.h">
+      <Filter>Data_Structure\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,7 +161,7 @@
     <ClCompile Include="Script\SceneCamera.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="Script\ObjectRotate.cpp">
+    <ClCompile Include="Script\ObjectManager.cpp">
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="Utility\ObjImporter.cpp">

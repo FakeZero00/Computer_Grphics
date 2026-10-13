@@ -8,7 +8,7 @@
 #include <fstream>
 using namespace std;
 
-Mesh::Mesh(const vector<Vertex>& vertices, const vector<GLubyte>& indices) {
+Mesh::Mesh(const vector<Vertex>& vertices, const vector<GLuint>& indices) {
 	indexCount = indices.size();
 
 	minPos = vec3{ FLT_MAX };
@@ -70,7 +70,7 @@ Mesh::Mesh(const string& objFile) {
 	}
 
 	vector<Vertex> vertices = GetVerticesFromObj(data);
-	vector<GLubyte> indices = GetIndicesFromObj(data);
+	vector<GLuint> indices = GetIndicesFromObj(data);
 
 	indexCount = indices.size();
 

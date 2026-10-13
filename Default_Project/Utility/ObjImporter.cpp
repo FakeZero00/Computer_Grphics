@@ -24,8 +24,8 @@ vector<Vertex> GetVerticesFromObj(vector<vector<string>>& objData) {
 	return vertices;
 }
 
-vector<GLubyte> GetIndicesFromObj(vector<vector<string>>& objData) {
-	vector<GLubyte> indices;
+vector<GLuint> GetIndicesFromObj(vector<vector<string>>& objData) {
+	vector<GLuint> indices;
 
 	for (auto& line : objData) {
 		if (line.empty()) continue;
@@ -36,9 +36,9 @@ vector<GLubyte> GetIndicesFromObj(vector<vector<string>>& objData) {
 				int idx2 = line[2].find('/') != string::npos ? stoi(line[2].substr(0, line[2].find('/'))) - 1 : stoi(line[2]) - 1;
 				int idx3 = line[3].find('/') != string::npos ? stoi(line[3].substr(0, line[3].find('/'))) - 1 : stoi(line[3]) - 1;
 
-				indices.push_back(static_cast<GLubyte>(idx1));
-				indices.push_back(static_cast<GLubyte>(idx2));
-				indices.push_back(static_cast<GLubyte>(idx3));
+				indices.push_back(static_cast<GLuint>(idx1));
+				indices.push_back(static_cast<GLuint>(idx2));
+				indices.push_back(static_cast<GLuint>(idx3));
 			}
 			//사각형 페이스
 			else if (line.size() == 4 + 1) {
@@ -47,13 +47,13 @@ vector<GLubyte> GetIndicesFromObj(vector<vector<string>>& objData) {
 				int idx3 = line[3].find('/') != string::npos ? stoi(line[3].substr(0, line[3].find('/'))) - 1 : stoi(line[3]) - 1;
 				int idx4 = line[4].find('/') != string::npos ? stoi(line[4].substr(0, line[4].find('/'))) - 1 : stoi(line[4]) - 1;
 
-				indices.push_back(static_cast<GLubyte>(idx1));
-				indices.push_back(static_cast<GLubyte>(idx2));
-				indices.push_back(static_cast<GLubyte>(idx3));
+				indices.push_back(static_cast<GLuint>(idx1));
+				indices.push_back(static_cast<GLuint>(idx2));
+				indices.push_back(static_cast<GLuint>(idx3));
 				
-				indices.push_back(static_cast<GLubyte>(idx1));
-				indices.push_back(static_cast<GLubyte>(idx3));
-				indices.push_back(static_cast<GLubyte>(idx4));
+				indices.push_back(static_cast<GLuint>(idx1));
+				indices.push_back(static_cast<GLuint>(idx3));
+				indices.push_back(static_cast<GLuint>(idx4));
 			}
 		}
 	}

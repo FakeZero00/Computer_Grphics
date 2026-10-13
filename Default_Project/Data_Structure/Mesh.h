@@ -14,7 +14,7 @@ public:
 	vec3 minPos;
 	vec3 maxPos;
 
-	Mesh(const vector<Vertex>& vertices, const vector<GLubyte>& indices);
+	Mesh(const vector<Vertex>& vertices, const vector<GLuint>& indices);
 	Mesh(const string& objFile);
 	void Bind() const;
 };
