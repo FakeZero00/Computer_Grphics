@@ -108,14 +108,23 @@
     <ClInclude Include="Data_Structure\ScreenSize.h">
       <Filter>Data_Structure\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Script\ObjectManager.h">
-      <Filter>Script</Filter>
-    </ClInclude>
     <ClInclude Include="Utility\ObjImporter.h">
       <Filter>Utility\Header</Filter>
     </ClInclude>
     <ClInclude Include="Data_Structure\Vertex.h">
       <Filter>Data_Structure\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\SceneLoader.h">
+      <Filter>Utility\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Structure\json.hpp">
+      <Filter>Data_Structure\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="AllComponent.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AllDataStructure.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,10 +170,10 @@
     <ClCompile Include="Script\SceneCamera.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="Script\ObjectManager.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
     <ClCompile Include="Utility\ObjImporter.cpp">
+      <Filter>Utility\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\SceneLoader.cpp">
       <Filter>Utility\Source</Filter>
     </ClCompile>
   </ItemGroup>

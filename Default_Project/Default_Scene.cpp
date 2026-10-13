@@ -39,8 +39,6 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	camTr->SetLocalRotation(40.0f, 0.0f, 0.0f);
 	mainCamera->AddComponent<SceneCamera>();
 
-	Object* testObject = Instantiate(ctx, "Test");
-	testObject->AddComponent<ObjectManager>(meshes);
 
 	//XYZ รเ ปýผบ
 	DrawAxis(ctx);

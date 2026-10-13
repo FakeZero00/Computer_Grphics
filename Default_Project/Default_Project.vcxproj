@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllComponent.h" />
+    <ClInclude Include="AllDataStructure.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Component\BoxCollider.h" />
     <ClInclude Include="Component\Camera.h" />
@@ -29,6 +31,7 @@
     <ClInclude Include="Data_Structure\AppContext.h" />
     <ClInclude Include="Data_Structure\Collider.h" />
     <ClInclude Include="Data_Structure\Component.h" />
+    <ClInclude Include="Data_Structure\json.hpp" />
     <ClInclude Include="Data_Structure\Material.h" />
     <ClInclude Include="Data_Structure\Mesh.h" />
     <ClInclude Include="Data_Structure\Object.h" />
@@ -36,11 +39,11 @@
     <ClInclude Include="Data_Structure\ScreenSize.h" />
     <ClInclude Include="Data_Structure\Vertex.h" />
     <ClInclude Include="Default_Scene.h" />
-    <ClInclude Include="Script\ObjectManager.h" />
     <ClInclude Include="Script\SceneCamera.h" />
     <ClInclude Include="Utility\ColliderManager.h" />
     <ClInclude Include="Utility\InputManager.h" />
     <ClInclude Include="Utility\ObjImporter.h" />
+    <ClInclude Include="Utility\SceneLoader.h" />
     <ClInclude Include="Utility\ShaderManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -55,10 +58,10 @@
     <ClCompile Include="Data_Structure\Scene.cpp" />
     <ClCompile Include="Default_Scene.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Script\ObjectManager.cpp" />
     <ClCompile Include="Script\SceneCamera.cpp" />
     <ClCompile Include="Utility\ColliderManager.cpp" />
     <ClCompile Include="Utility\ObjImporter.cpp" />
+    <ClCompile Include="Utility\SceneLoader.cpp" />
     <ClCompile Include="Utility\ShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>

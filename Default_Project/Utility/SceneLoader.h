@@ -10,7 +10,6 @@ class SceneLoader {
 public:
 	map<string, Mesh*> meshChache;
 	map<string, Material*> materialChache;
-	map<string, GLuint> shaderChache;
 
 	//생성자에서 mesh, material, shader 캐시를 받아와서 초기화
 	SceneLoader(map<string, Mesh*> meshCache, map<string, Material*> materialCache, map<string, GLuint> shaderCache)
