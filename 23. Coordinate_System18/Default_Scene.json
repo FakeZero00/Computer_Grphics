@@ -1,0 +1,282 @@
+{
+  "SceneName": "Default_Scene",
+  "Objects": [
+    {
+      "name": "MainCamera",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 10.0, -10.0 ],
+        "rotation": [ 40.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "Camera",
+          "properties": {
+            "fov": 60.0,
+            "nearPlane": 0.1,
+            "farPlane": 1000.0
+          }
+        },
+        {
+          "type": "SceneCamera"
+        }
+      ]
+    },
+    {
+      "name": "CenterSphere",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials": [ "Blue" ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orbit1",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshSpline",
+          "properties": {
+            "pointObj": "Orbit1.obj",
+            "color": [ 0.0, 1.0, 0.0, 1.0 ],
+            "lineWidth": 2.0
+          }
+        },
+        {
+          "type": "Orbit"
+        }
+      ]
+    },
+    {
+      "name": "Planet1",
+      "parent": "Orbit1",
+      "transform": {
+        "position": [ 5.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.7, 0.7, 0.7 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials": [ "Green" ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "MoonOrbit1",
+      "parent": "Planet1",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshSpline",
+          "properties": {
+            "pointObj": "Orbit2.obj",
+            "color": [ 1.0, 0.0, 0.0, 1.0 ],
+            "lineWidth": 2.0
+          }
+        },
+        {
+          "type": "Orbit"
+        }
+      ]
+    },
+    {
+      "name": "Moon1",
+      "parent": "MoonOrbit1",
+      "transform": {
+        "position": [ 3.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials": [ "Red" ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orbit2",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 45.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshSpline",
+          "properties": {
+            "pointObj": "Orbit1.obj",
+            "color": [ 0.0, 1.0, 0.0, 1.0 ],
+            "lineWidth": 2.0
+          }
+        },
+        {
+          "type": "Orbit"
+        }
+      ]
+    },
+    {
+      "name": "Planet2",
+      "parent": "Orbit2",
+      "transform": {
+        "position": [ -5.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.7, 0.7, 0.7 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials": [ "Green" ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "MoonOrbit2",
+      "parent": "Orbit2",
+      "transform": {
+        "position": [ -5.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.7, 0.7, 0.7 ]
+      },
+      "components": [
+        {
+          "type": "MeshSpline",
+          "properties": {
+            "pointObj": "Orbit2.obj",
+            "color": [ 1.0, 0.0, 0.0, 1.0 ],
+            "lineWidth": 2.0
+          }
+        },
+        {
+          "type": "Orbit"
+        }
+      ]
+    },
+    {
+      "name": "Moon2",
+      "parent": "MoonOrbit2",
+      "transform": {
+        "position": [ 3.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials": [ "Red" ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orbit3",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, -45.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshSpline",
+          "properties": {
+            "pointObj": "Orbit1.obj",
+            "color": [ 0.0, 1.0, 0.0, 1.0 ],
+            "lineWidth": 2.0
+          }
+        },
+        {
+          "type": "Orbit"
+        }
+      ]
+    },
+    {
+      "name": "Planet3",
+      "parent": "Orbit3",
+      "transform": {
+        "position": [ -5.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.7, 0.7, 0.7 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials": [ "Green" ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "MoonOrbit3",
+      "parent": "Planet3",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 45.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshSpline",
+          "properties": {
+            "pointObj": "Orbit2.obj",
+            "color": [ 1.0, 0.0, 0.0, 1.0 ],
+            "lineWidth": 2.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "Moon3",
+      "parent": "MoonOrbit3",
+      "transform": {
+        "position": [ 3.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials": [ "Red" ]
+          }
+        }
+      ]
+    }
+  ]
+}
