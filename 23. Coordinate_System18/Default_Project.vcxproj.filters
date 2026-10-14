@@ -135,6 +135,9 @@
     <ClInclude Include="Script\Planet.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="Script\PlanetManager.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -195,6 +198,9 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="Script\Planet.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\PlanetManager.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

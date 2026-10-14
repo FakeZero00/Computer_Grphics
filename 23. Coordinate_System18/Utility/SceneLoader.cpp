@@ -4,6 +4,7 @@
 #include "Orbit.h"
 #include "MoonOrbit.h"
 #include "Planet.h"
+#include "PlanetManager.h"
 
 void SceneLoader::LoadScene(AppContext& ctx, const string& sceneFile) {
 	ifstream in{ sceneFile };
@@ -67,13 +68,13 @@ void SceneLoader::LoadScene(AppContext& ctx, const string& sceneFile) {
 
 		if (objData.contains("components")) {
 			for (const auto& compData : objData["components"]) {
-				AttachComponent(obj, compData);
+				AttachComponent(obj, compData, spawnedObjects);
 			}
 		}
 	}
 }
 
-void SceneLoader::AttachComponent(Object* obj, const json& compData) {
+void SceneLoader::AttachComponent(Object* obj, const json& compData, map<string, Object*> spawnedObjects) {
 	string type = compData["type"];
 	const json& props = compData.contains("properties") ? compData["properties"] : compData;
 
@@ -171,10 +172,20 @@ void SceneLoader::AttachComponent(Object* obj, const json& compData) {
 		obj->AddComponent<Orbit>();
 	}
 	else if (type == "MoonOrbit") {
-		obj->AddComponent<MoonOrbit>();
+		Object* parentPlanet = spawnedObjects[props["parentPlanet"]];
+		obj->AddComponent<MoonOrbit>(parentPlanet);
 	}
 	else if (type == "Planet") {
 		obj->AddComponent<Planet>();
+
+		if (props.contains("isCenter")) {
+			Planet* planetComp = obj->GetComponent<Planet>();
+			planetComp->isCenter = props["isCenter"];
+		}
+	}
+	else if (type == "PlanetManager") {
+		Camera* cam = spawnedObjects[props["camera"]]->GetComponent<Camera>();
+		obj->AddComponent<PlanetManager>(cam);
 	}
 	else {
 		cout << "알 수 없는 컴포넌트 타입: " << type << endl;

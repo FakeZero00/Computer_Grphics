@@ -24,6 +24,23 @@
       ]
     },
     {
+      "name": "Manager",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "PlanetManager",
+          "properties": {
+            "camera": "MainCamera"
+          }
+        }
+      ]
+    },
+    {
       "name": "CenterSphere",
       "parent": "",
       "transform": {
@@ -38,12 +55,18 @@
             "mesh": "Sphere",
             "materials": [ "Blue" ]
           }
+        },
+        {
+          "type": "Planet",
+          "properties": {
+            "isCenter": true
+          }
         }
       ]
     },
     {
       "name": "Orbit1",
-      "parent": "",
+      "parent": "CenterSphere",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
@@ -78,12 +101,15 @@
             "mesh": "Sphere",
             "materials": [ "Green" ]
           }
+        },
+        {
+          "type": "Planet"
         }
       ]
     },
     {
       "name": "MoonOrbit1",
-      "parent": "Planet1",
+      "parent": "",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
@@ -99,7 +125,10 @@
           }
         },
         {
-          "type": "Orbit"
+          "type": "MoonOrbit",
+          "properties": {
+            "parentPlanet": "Planet1"
+          }
         }
       ]
     },
@@ -118,12 +147,15 @@
             "mesh": "Sphere",
             "materials": [ "Red" ]
           }
+        },
+        {
+          "type": "Planet"
         }
       ]
     },
     {
       "name": "Orbit2",
-      "parent": "",
+      "parent": "CenterSphere",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 45.0 ],
@@ -158,12 +190,15 @@
             "mesh": "Sphere",
             "materials": [ "Green" ]
           }
+        },
+        {
+          "type": "Planet"
         }
       ]
     },
     {
       "name": "MoonOrbit2",
-      "parent": "Orbit2",
+      "parent": "",
       "transform": {
         "position": [ -5.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
@@ -179,7 +214,10 @@
           }
         },
         {
-          "type": "Orbit"
+          "type": "MoonOrbit",
+          "properties": {
+            "parentPlanet": "Planet2"
+          }
         }
       ]
     },
@@ -198,12 +236,15 @@
             "mesh": "Sphere",
             "materials": [ "Red" ]
           }
+        },
+        {
+          "type": "Planet"
         }
       ]
     },
     {
       "name": "Orbit3",
-      "parent": "",
+      "parent": "CenterSphere",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, -45.0 ],
@@ -238,15 +279,18 @@
             "mesh": "Sphere",
             "materials": [ "Green" ]
           }
+        },
+        {
+          "type": "Planet"
         }
       ]
     },
     {
       "name": "MoonOrbit3",
-      "parent": "Planet3",
+      "parent": "",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
-        "rotation": [ 0.0, 0.0, 45.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
       "components": [
@@ -256,6 +300,12 @@
             "pointObj": "Orbit2.obj",
             "color": [ 1.0, 0.0, 0.0, 1.0 ],
             "lineWidth": 2.0
+          }
+        },
+        {
+          "type": "MoonOrbit",
+          "properties": {
+            "parentPlanet": "Planet3"
           }
         }
       ]
@@ -275,6 +325,9 @@
             "mesh": "Sphere",
             "materials": [ "Red" ]
           }
+        },
+        {
+          "type": "Planet"
         }
       ]
     }

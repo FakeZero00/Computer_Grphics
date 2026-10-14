@@ -3,9 +3,11 @@
 
 void MoonOrbit::Start() {
 	tr = gameObject->GetComponent<Transform>();
+	parentTr = parentPlanet->GetComponent<Transform>();
 }
 
 void MoonOrbit::Update(float deltaTime) {
 	float rotationSpeed = 20.0f; //회전 속도
+	tr->SetLocalPosition(parentTr->worldPosition.x, parentTr->worldPosition.y, parentTr->worldPosition.z);
 	tr->Rotate(0.0f, rotationSpeed * deltaTime, 0.0f);
 }

@@ -5,7 +5,7 @@
 
 Camera* Camera::mainCamera = nullptr;
 
-Camera::Camera(float width, float height) {
+Camera::Camera(float width, float height) : width(width), height(height) {
 	if (mainCamera == nullptr) {
 		mainCamera = this;
 	}
@@ -31,5 +31,10 @@ mat4 Camera::GetViewMatrix() {
 }
 
 mat4 Camera::GetProjectionMatrix() {
-	return perspective(radians(fov), aspectRatio, nearPlane, farPlane);
+	if (isOrthographic) {
+		float halfWidth = width / 2.0f / 100.0f;
+		float halfHeight = height / 2.0f / 100.0f;
+		return ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, nearPlane, farPlane);
+	}
+	else return perspective(radians(fov), aspectRatio, nearPlane, farPlane);
 }
