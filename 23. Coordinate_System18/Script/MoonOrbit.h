@@ -7,6 +7,11 @@ private:
 	Transform* tr;
 	Transform* parentTr;
 
+	bool isScaling = false;
+	float scaleWeight = 0.0f;
+
+	bool isRotating = false;
+
 public:
 	Object* parentPlanet;
 

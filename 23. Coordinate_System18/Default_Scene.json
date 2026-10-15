@@ -35,14 +35,25 @@
         {
           "type": "PlanetManager",
           "properties": {
-            "camera": "MainCamera"
+            "camera": "MainCamera",
+			"centerTr": "Root"
           }
         }
       ]
     },
     {
-      "name": "CenterSphere",
+      "name": "Root",
       "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": []
+    },
+    {
+      "name": "CenterSphere",
+      "parent": "Root",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
@@ -58,15 +69,13 @@
         },
         {
           "type": "Planet",
-          "properties": {
-            "isCenter": true
-          }
+		  "isCenter": true
         }
       ]
     },
     {
       "name": "Orbit1",
-      "parent": "CenterSphere",
+      "parent": "Root",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
@@ -87,10 +96,20 @@
       ]
     },
     {
-      "name": "Planet1",
+      "name": "Planet1_Anchor",
       "parent": "Orbit1",
       "transform": {
         "position": [ 5.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": []
+    },
+    {
+      "name": "Planet1",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 0.7, 0.7, 0.7 ]
       },
@@ -103,7 +122,10 @@
           }
         },
         {
-          "type": "Planet"
+          "type": "Planet",
+          "properties": {
+            "centerAnchor": "Planet1_Anchor"
+          }
         }
       ]
     },
@@ -133,10 +155,20 @@
       ]
     },
     {
-      "name": "Moon1",
+      "name": "Moon1_Anchor",
       "parent": "MoonOrbit1",
       "transform": {
         "position": [ 3.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": []
+    },
+    {
+      "name": "Moon1",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 0.5, 0.5, 0.5 ]
       },
@@ -149,13 +181,16 @@
           }
         },
         {
-          "type": "Planet"
+          "type": "Planet",
+          "properties": {
+            "centerAnchor": "Moon1_Anchor"
+          }
         }
       ]
     },
     {
       "name": "Orbit2",
-      "parent": "CenterSphere",
+      "parent": "Root",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 45.0 ],
@@ -176,10 +211,20 @@
       ]
     },
     {
-      "name": "Planet2",
+      "name": "Planet2_Anchor",
       "parent": "Orbit2",
       "transform": {
         "position": [ -5.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": []
+    },
+    {
+      "name": "Planet2",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 0.7, 0.7, 0.7 ]
       },
@@ -192,7 +237,10 @@
           }
         },
         {
-          "type": "Planet"
+          "type": "Planet",
+          "properties": {
+            "centerAnchor": "Planet2_Anchor"
+          }
         }
       ]
     },
@@ -200,9 +248,9 @@
       "name": "MoonOrbit2",
       "parent": "",
       "transform": {
-        "position": [ -5.0, 0.0, 0.0 ],
+        "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
-        "scale": [ 0.7, 0.7, 0.7 ]
+        "scale": [ 1.0, 1.0, 1.0 ]
       },
       "components": [
         {
@@ -222,10 +270,20 @@
       ]
     },
     {
-      "name": "Moon2",
+      "name": "Moon2_Anchor",
       "parent": "MoonOrbit2",
       "transform": {
         "position": [ 3.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": []
+    },
+    {
+      "name": "Moon2",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 0.5, 0.5, 0.5 ]
       },
@@ -238,13 +296,16 @@
           }
         },
         {
-          "type": "Planet"
+          "type": "Planet",
+          "properties": {
+            "centerAnchor": "Moon2_Anchor"
+          }
         }
       ]
     },
     {
       "name": "Orbit3",
-      "parent": "CenterSphere",
+      "parent": "Root",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, -45.0 ],
@@ -265,10 +326,20 @@
       ]
     },
     {
-      "name": "Planet3",
+      "name": "Planet3_Anchor",
       "parent": "Orbit3",
       "transform": {
-        "position": [ -5.0, 0.0, 0.0 ],
+        "position": [ 5.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": []
+    },
+    {
+      "name": "Planet3",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 0.7, 0.7, 0.7 ]
       },
@@ -281,7 +352,10 @@
           }
         },
         {
-          "type": "Planet"
+          "type": "Planet",
+          "properties": {
+            "centerAnchor": "Planet3_Anchor"
+          }
         }
       ]
     },
@@ -311,10 +385,20 @@
       ]
     },
     {
-      "name": "Moon3",
+      "name": "Moon3_Anchor",
       "parent": "MoonOrbit3",
       "transform": {
         "position": [ 3.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": []
+    },
+    {
+      "name": "Moon3",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 0.5, 0.5, 0.5 ]
       },
@@ -327,7 +411,10 @@
           }
         },
         {
-          "type": "Planet"
+          "type": "Planet",
+          "properties": {
+            "centerAnchor": "Moon3_Anchor"
+          }
         }
       ]
     }

@@ -176,16 +176,20 @@ void SceneLoader::AttachComponent(Object* obj, const json& compData, map<string,
 		obj->AddComponent<MoonOrbit>(parentPlanet);
 	}
 	else if (type == "Planet") {
-		obj->AddComponent<Planet>();
+		Planet* planetComp = obj->AddComponent<Planet>();
 
+		if (props.contains("centerAnchor")) {
+			Object* centerAnchor = spawnedObjects[props["centerAnchor"]];
+			planetComp->centerAnchor = centerAnchor;
+		}
 		if (props.contains("isCenter")) {
-			Planet* planetComp = obj->GetComponent<Planet>();
 			planetComp->isCenter = props["isCenter"];
 		}
 	}
 	else if (type == "PlanetManager") {
 		Camera* cam = spawnedObjects[props["camera"]]->GetComponent<Camera>();
-		obj->AddComponent<PlanetManager>(cam);
+		Transform* centerTr = spawnedObjects[props["centerTr"]]->GetComponent<Transform>();
+		obj->AddComponent<PlanetManager>(cam, centerTr);
 	}
 	else {
 		cout << "알 수 없는 컴포넌트 타입: " << type << endl;
