@@ -21,6 +21,7 @@ public:
 	vec3 right;
 	vec3 up;
 	vec3 forward;
+	vec3 EulerAngles = vec3{ 0.0f };
 
 	Transform* parent = nullptr;
 	vector<Transform*> children = vector<Transform*>{}; //빈 자식 벡터 생성
@@ -32,7 +33,6 @@ public:
 
 	void SetLocalRotation(float x, float y, float z);
 	void Rotate(float x, float y, float z, bool isWorld = false);
-	vec3 LocalEulerAngles() const;
 
 	void SetLocalScale(float x, float y, float z);
 

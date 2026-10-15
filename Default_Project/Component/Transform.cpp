@@ -32,6 +32,7 @@ void Transform::Translate(float x, float y, float z, bool isWorld) {
 void Transform::SetLocalRotation(float x, float y, float z) {
 	vec3 eulerRadians = vec3{ radians(x), radians(y), radians(z) };
 	rotation = quat(eulerRadians);
+	EulerAngles = vec3{ x, y, z };
 
 	CalculateWorldMatrix();
 }
@@ -39,16 +40,12 @@ void Transform::SetLocalRotation(float x, float y, float z) {
 void Transform::Rotate(float x, float y, float z, bool isWorld) {
 	vec3 eulerRadians = vec3{ radians(x), radians(y), radians(z) };
 	quat deltaRotation = quat(eulerRadians);
+	EulerAngles += vec3{ x, y, z };
 
 	if (isWorld) rotation = normalize(deltaRotation * rotation); //델타 회전을 현재 회전에 곱함
 	else rotation = normalize(rotation * deltaRotation); //현재 회전에 델타 회전을 곱함
 
 	CalculateWorldMatrix();
-}
-
-vec3 Transform::LocalEulerAngles() const {
-	vec3 eulerRadians = eulerAngles(rotation);
-	return vec3{ degrees(eulerRadians.x), degrees(eulerRadians.y), degrees(eulerRadians.z) };
 }
 
 void Transform::SetLocalScale(float x, float y, float z) {
