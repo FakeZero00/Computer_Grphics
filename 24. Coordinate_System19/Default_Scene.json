@@ -1,0 +1,233 @@
+{
+  "SceneName": "Default_Scene",
+  "Objects": [
+    {
+      "name": "MainCamera",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 10.0, 10.0 ],
+        "rotation": [ 45.0, 180.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "Camera",
+          "properties": {
+            "fov": 60.0,
+            "nearPlane": 0.1,
+            "farPlane": 1000.0
+          }
+        },
+        {
+          "type": "SceneCamera"
+        }
+      ]
+    },
+	{
+      "name": "Ground",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Ground",
+            "materials": [ "LightBlue" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Body_Root",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+		{
+			"type": "TankController",
+			"properties": {
+            "camTr": "MainCamera",
+            "BottomTr_L": "Bottom_Body.L",
+			"BottomTr_R": "Bottom_Body.R",
+			"MiddleTr": "Middle_Body",
+			"TopTr_L": "Top_Body.L",
+			"TopTr_R": "Top_Body.R",
+			"BarrelTr_L": "Barrel.L",
+			"BarrelTr_R": "Barrel.R",
+			"FlagTr_L": "Flag.L",
+			"FlagTr_R": "Flag.R"
+          }
+		}
+	  ]
+    },
+	{
+      "name": "Bottom_Body.L",
+      "parent": "Body_Root",
+      "transform": {
+        "position": [ 0.88, 0.28, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Bottom_Body",
+            "materials": [ "Gray" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Bottom_Body.R",
+      "parent": "Body_Root",
+      "transform": {
+        "position": [ -0.88, 0.28, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Bottom_Body",
+            "materials": [ "Gray" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Middle_Body",
+      "parent": "Bottom_Body.L",
+      "transform": {
+        "position": [ -0.88, 0.48, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Middle_Body",
+            "materials": [ "LightGray" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Top_Body.L",
+      "parent": "Middle_Body",
+      "transform": {
+        "position": [ 0.88, 0.41, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Top_Body",
+            "materials": [ "LightGreen" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Barrel.L",
+      "parent": "Top_Body.L",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.19 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Barrel",
+            "materials": [ "LightYellow" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Flag.L",
+      "parent": "Top_Body.L",
+      "transform": {
+        "position": [ 0.0, 0.2, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Flag",
+            "materials": [ "Orange" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Top_Body.R",
+      "parent": "Middle_Body",
+      "transform": {
+        "position": [ -0.88, 0.41, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Top_Body",
+            "materials": [ "LightGreen" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Barrel.R",
+      "parent": "Top_Body.R",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.19 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Barrel",
+            "materials": [ "LightYellow" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Flag.R",
+      "parent": "Top_Body.R",
+      "transform": {
+        "position": [ 0.0, 0.2, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Flag",
+            "materials": [ "Orange" ]
+          }
+        }
+      ]
+    }
+  ]
+}
