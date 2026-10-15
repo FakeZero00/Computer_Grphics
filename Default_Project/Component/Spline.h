@@ -21,4 +21,6 @@ public:
 	void SetColor(vec4 newColor);
 
 	void Render() override;
+
+	static Component* CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects);
 };

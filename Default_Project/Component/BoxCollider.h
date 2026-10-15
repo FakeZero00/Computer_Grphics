@@ -21,6 +21,8 @@ public:
 	void Start() override;
 	void Render() override;
 
+	static Component* CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects);
+
 private:
 	void InitDebugRender() override;
 };

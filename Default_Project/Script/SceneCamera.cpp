@@ -67,3 +67,10 @@ void SceneCamera::Update(float deltaTime) {
 		tr->Translate(0.0f, speed * deltaTime, 0.0f, true);
 	}
 }
+
+Component* SceneCamera::CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects) {
+	SceneCamera* sceneCamera = obj->AddComponent<SceneCamera>();
+	return sceneCamera;
+}
+
+REGISTER_COMPONENT(SceneCamera);

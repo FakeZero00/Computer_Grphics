@@ -18,29 +18,9 @@ void Default_Scene::LoadScene(AppContext& ctx) {
 	// 1. Instantiate 함수를 사용하여 Object를 생성해야 합니다.
 	// 2. Object에 컴포넌트를 추가할 때는 AddComponent 함수를 사용해야 합니다.
 	// 3. Mesh, Material 객체 생성 시 new 키워드를 사용해야 합니다.
-	
-	//Mesh 객체 생성
-	map<string, Mesh*> meshChache = {
-		{"Cube", new Mesh("Default_Cube.obj")},
-		{"Pyramid", new Mesh("Default_Pyramid.obj")},
-		{"Sphere", new Mesh("Default_Sphere.obj")},
-		{"Torus", new Mesh("Default_Torus.obj")}
-	};
 
-	map<string, Material*> materialChache = {
-		{"LocalPosColor", new Material(shaders["LocalPosColor"])}
-	};
-
-	SceneLoader sceneLoader{screenSize, meshChache, materialChache };
+	SceneLoader sceneLoader{};
 	sceneLoader.LoadScene(ctx, "Default_Scene.json");
-
-	/*Object* mainCamera = Instantiate(ctx, "MainCamera");
-	mainCamera->AddComponent<Camera>(screenSize.width, screenSize.height);
-	Transform* camTr = mainCamera->GetComponent<Transform>();
-	camTr->SetLocalPosition(0.0f, 10.0f, -10.0f);
-	camTr->SetLocalRotation(40.0f, 0.0f, 0.0f);
-	mainCamera->AddComponent<SceneCamera>();*/
-
 
 	//XYZ 축 생성
 	DrawAxis(ctx);

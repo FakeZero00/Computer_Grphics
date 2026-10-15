@@ -17,12 +17,14 @@ map<string, GLuint> vertexShaders;
 map<string, GLuint> fragmentShaders;
 map<string, GLuint> shaders;
 
-GLuint VAO, VBO, EBO;
+//스크린 사이즈 설정
+ScreenSize screenSize{ 1920, 1080 };
+
+//Mesh, Material 객체 캐시
+map<string, Mesh*> meshChache;
+map<string, Material*> materialChache;
 
 int main(int argc, char** argv) {
-	//스크린 사이즈 설정
-	ScreenSize screenSize{1920, 1080};
-
 	//GLFW 초기화
 	if (!glfwInit()) {
 		cerr << "GLFW 초기화 실패" << endl;
@@ -78,6 +80,25 @@ int main(int argc, char** argv) {
 	make_vertexShaders(vertexShaders, "LocalPosColor_vertex.glsl");
 	make_fragmentShaders(fragmentShaders, "LocalPosColor_fragment.glsl");
 	make_shaderProgram("LocalPosColor", shaders, vertexShaders["LocalPosColor_vertex.glsl"], fragmentShaders["LocalPosColor_fragment.glsl"]);
+
+	//////////////////Mesh, Material 캐시 초기화//////////////////
+
+	meshChache["Cube"] = new Mesh("Default_Cube.obj");
+	meshChache["Pyramid"] = new Mesh("Default_Pyramid.obj");
+	meshChache["Sphere"] = new Mesh("Default_Sphere.obj");
+	meshChache["Torus"] = new Mesh("Default_Torus.obj");
+
+	Material* redMat = new Material(shaders["Standard"]);
+	redMat->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	Material* greenMat = new Material(shaders["Standard"]);
+	greenMat->SetVec4("tColor", vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	Material* blueMat = new Material(shaders["Standard"]);
+	blueMat->SetVec4("tColor", vec4(0.0f, 0.0f, 1.0f, 1.0f));
+
+	materialChache["LocalPosColor"] = new Material(shaders["LocalPosColor"]);
+	materialChache["Red"] = redMat;
+	materialChache["Green"] = greenMat;
+	materialChache["Blue"] = blueMat;
 
 	//////////////////사용자 정의 초기화////////////////////
 

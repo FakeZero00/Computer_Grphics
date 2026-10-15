@@ -33,12 +33,7 @@ void Spline::Render() {
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(camera->GetProjectionMatrix()));
 	}
 
-	mat4 localMatrix = mat4{ 1.0f };
-	localMatrix = translate(localMatrix, tr->position);
-	localMatrix *= mat4_cast(tr->rotation);
-	localMatrix = glm::scale(localMatrix, tr->scale);
-
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(localMatrix));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(tr->worldMatrix));
 
 	//Color를 셰이더에 전달
 	GLuint colorLoc = glGetUniformLocation(splineShader, "color");
@@ -74,3 +69,24 @@ void Spline::InitRender() {
 void Spline::SetColor(vec4 newColor) {
 	color = newColor;
 }
+
+Component* Spline::CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects) {
+	if (props.contains("controlPoints") == false || props.contains("color") == false) {
+		cout << obj->name << " 오브젝트의 Spline 컴포넌트에 controlPoints와 color 속성이 필요합니다." << endl;
+		return nullptr;
+	}
+
+	vector<vec3> controlPoints;
+	for (int i = 0; i < props["controlPoints"].size(); i = i + 3) {
+		vec3 point{ props["controlPoints"][i], props["controlPoints"][i + 1], props["controlPoints"][i + 2] };
+		controlPoints.push_back(point);
+	}
+	vec4 colorVec{ props["color"][0], props["color"][1], props["color"][2], props["color"][3] };
+
+	Spline* spline = obj->AddComponent<Spline>(controlPoints, colorVec);
+	if (props.contains("lineWidth")) spline->lineWidth = props["lineWidth"];
+
+	return spline;
+}
+
+REGISTER_COMPONENT(Spline);

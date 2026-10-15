@@ -9,6 +9,9 @@
 using namespace std;
 using namespace glm;
 
+extern map<string, Mesh*> meshChache;
+extern map<string, Material*> materialChache;
+
 MeshRenderer3D::MeshRenderer3D(Mesh* mesh, Material* material) : mesh(mesh) {
 	this->materials.push_back(material);
 }
@@ -62,3 +65,49 @@ void MeshRenderer3D::Render() {
 		glBindVertexArray(0);
 	}
 }
+
+Component* MeshRenderer3D::CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects) {
+	if (props.contains("mesh") == false || props.contains("materials") == false) {
+		cout << obj->name << " 오브젝트의 MeshRenderer3D 컴포넌트에 mesh와 materials 속성이 필요합니다." << endl;
+		return nullptr;
+	}
+
+	auto matData = props["materials"][0];
+	Material* material = materialChache[matData];
+
+	if (matData.contains("boolUniforms")) {
+		for (auto& [key, val] : matData["boolUniforms"].items()) {
+			material->SetBool(key, val);
+		}
+	}
+	if (matData.contains("intUniforms")) {
+		for (auto& [key, val] : matData["intUniforms"].items()) {
+			material->SetInt(key, val);
+		}
+	}
+	if (matData.contains("floatUniforms")) {
+		for (auto& [key, val] : matData["floatUniforms"].items()) {
+			material->SetFloat(key, val);
+		}
+	}
+	if (matData.contains("vec2Uniforms")) {
+		for (auto& [key, val] : matData["vec2Uniforms"].items()) {
+			material->SetVec2(key, vec2(val[0], val[1]));
+		}
+	}
+	if (matData.contains("vec3Uniforms")) {
+		for (auto& [key, val] : matData["vec3Uniforms"].items()) {
+			material->SetVec3(key, vec3(val[0], val[1], val[2]));
+		}
+	}
+	if (matData.contains("vec4Uniforms")) {
+		for (auto& [key, val] : matData["vec4Uniforms"].items()) {
+			material->SetVec4(key, vec4(val[0], val[1], val[2], val[3]));
+		}
+	}
+
+	MeshRenderer3D* meshRenderer = obj->AddComponent<MeshRenderer3D>(meshChache[props["mesh"]], material);
+	return meshRenderer;
+}
+
+REGISTER_COMPONENT(MeshRenderer3D)

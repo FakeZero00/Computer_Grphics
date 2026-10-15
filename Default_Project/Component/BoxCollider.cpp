@@ -140,3 +140,20 @@ void BoxCollider::InitDebugRender() {
 
 	glBindVertexArray(0);
 }
+
+Component* BoxCollider::CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects) {
+	BoxCollider* boxCollider = obj->AddComponent<BoxCollider>();
+
+	if (props.contains("center") && props.contains("size")) {
+		cout << obj->name << " 오브젝트의 BoxCollider 컴포넌트에 center와 size 속성이 필요합니다." << endl;
+	}
+	auto center = props["center"];
+	auto size = props["size"];
+	BoxCollider* boxCol = obj->AddComponent<BoxCollider>(vec3{ center[0], center[1], center[2] },
+		vec3(size[0], size[1], size[2]));
+	if (props.contains("isDebug")) boxCol->isDebug = props["isDebug"];
+
+	return boxCollider;
+}
+
+REGISTER_COMPONENT(BoxCollider);

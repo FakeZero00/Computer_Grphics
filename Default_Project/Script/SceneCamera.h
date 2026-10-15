@@ -15,4 +15,6 @@ public:
 
 	void Awake() override;
 	void Update(float deltaTime) override;
+
+	static Component* CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects);
 };
