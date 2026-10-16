@@ -5,7 +5,7 @@
       "name": "MainCamera",
       "parent": "",
       "transform": {
-        "position": [ 0.0, 10.0, 10.0 ],
+        "position": [ 0.0, 5.0, 5.0 ],
         "rotation": [ 45.0, 180.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
@@ -105,9 +105,9 @@
     },
 	{
       "name": "Middle_Body",
-      "parent": "Bottom_Body.L",
+      "parent": "Body_Root",
       "transform": {
-        "position": [ -0.88, 0.48, 0.0 ],
+        "position": [ 0.0, 0.76, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },

@@ -7,6 +7,10 @@ class TankController : public Component {
 private:
 	Transform* tr;
 	InputManager inputManager;
+	float moveSpeed = 5.0f;
+
+	bool isDScaling = false;
+	float dWeight = 0.0f;
 
 public:
 	Transform* camTr;
