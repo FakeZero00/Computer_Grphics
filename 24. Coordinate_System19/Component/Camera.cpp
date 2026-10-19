@@ -30,7 +30,14 @@ Camera::~Camera() {
 mat4 Camera::GetViewMatrix() {
 	Transform* tr = gameObject->GetComponent<Transform>();
 
-	return lookAt(tr->worldPosition, tr->worldPosition + tr->forward, tr->up);
+	vec3 eye = tr->worldPosition;
+
+	//월드 회전이 적용된 forward와 up 벡터를 계산
+	mat3 worldRot = mat3(tr->worldMatrix);
+	vec3 worldForward = glm::normalize(worldRot * vec3(0.0f, 0.0f, 1.0f));
+	vec3 worldUp = glm::normalize(worldRot * vec3(0.0f, 1.0f, 0.0f));
+
+	return lookAt(eye, eye + worldForward, worldUp);
 }
 
 mat4 Camera::GetProjectionMatrix() {

@@ -18,6 +18,11 @@ void Transform::SetLocalPosition(float x, float y, float z) {
 	CalculateWorldMatrix();
 }
 
+void  Transform::SetLocalPosition(vec3 newPos) {
+	position = newPos;
+	CalculateWorldMatrix();
+}
+
 void Transform::Translate(float x, float y, float z, bool isWorld) {
 	if (isWorld) position += vec3{ x, y, z };
 	else {
@@ -33,6 +38,15 @@ void Transform::SetLocalRotation(float x, float y, float z) {
 	vec3 eulerRadians = vec3{ radians(x), radians(y), radians(z) };
 	rotation = quat(eulerRadians);
 	EulerAngles = vec3{ x, y, z };
+
+	CalculateWorldMatrix();
+}
+
+void Transform::SetLocalRotation(quat newRot) {
+	rotation = newRot;
+	//쿼터니언을 오일러 각도로 변환
+	vec3 eulerRadians = eulerAngles(rotation);
+	EulerAngles = vec3{ degrees(eulerRadians.x), degrees(eulerRadians.y), degrees(eulerRadians.z) };
 
 	CalculateWorldMatrix();
 }
