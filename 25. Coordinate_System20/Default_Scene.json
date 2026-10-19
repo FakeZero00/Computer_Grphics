@@ -36,7 +36,61 @@
           "type": "MeshRenderer3D",
           "properties": {
             "mesh": "Ground",
-            "materials": [ "LightBlue" ]
+            "materials": [ "DarkGreen" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Rail_Leg",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Rail_Leg",
+            "materials": [ "DarkGray" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Rail_Ground",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Rail_Ground",
+            "materials": [ "LightGray" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Rail_Guard",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Rail_Guard",
+            "materials": [ "DarkYellow" ]
           }
         }
       ]

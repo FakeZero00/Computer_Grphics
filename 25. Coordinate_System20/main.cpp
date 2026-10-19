@@ -87,34 +87,26 @@ int main(int argc, char** argv) {
 	meshChache["Pyramid"] = new Mesh("Default_Pyramid.obj");
 	meshChache["Sphere"] = new Mesh("Default_Sphere.obj");
 	meshChache["Torus"] = new Mesh("Default_Torus.obj");
-	meshChache["Barrel"] = new Mesh("Barrel.obj");
-	meshChache["Bottom_Body"] = new Mesh("Bottom_Body.obj");
-	meshChache["Flag"] = new Mesh("Flag.obj");
 	meshChache["Ground"] = new Mesh("Ground.obj");
-	meshChache["Middle_Body"] = new Mesh("Middle_Body.obj");
-	meshChache["Top_Body"] = new Mesh("Top_Body.obj");
+	meshChache["Rail"] = new Mesh("Rail.obj");
+	meshChache["Rail_Ground"] = new Mesh("Rail_Ground.obj");
+	meshChache["Rail_Guard"] = new Mesh("Rail_Guard.obj");
+	meshChache["Rail_Leg"] = new Mesh("Rail_Leg.obj");
 
-	Material* lightBlueMat = new Material(shaders["Standard"]);
-	lightBlueMat->SetVec4("tColor", vec4(0.87f, 0.92f, 0.96f, 1.0f));
-	Material* grayMat = new Material(shaders["Standard"]);
-	grayMat->SetVec4("tColor", vec4(0.46f, 0.46f, 0.46f, 1.0f));
-	Material* lightGrayMat = new Material(shaders["Standard"]);
-	lightGrayMat->SetVec4("tColor", vec4(0.85f, 0.85f, 0.85f, 1.0f));
-	Material* lightGreenMat = new Material(shaders["Standard"]);
-	lightGreenMat->SetVec4("tColor", vec4(0.57f, 0.81f, 0.31f, 1.0f));
-	Material* lightYellowMat = new Material(shaders["Standard"]);
-	lightYellowMat->SetVec4("tColor", vec4(1.0f, 1.0f, 0.19f, 1.0f));
-	Material* orangeMat = new Material(shaders["Standard"]);
-	orangeMat->SetVec4("tColor", vec4(1.0f, 0.75f, 0.0f, 1.0f));
-
+	Material* darkGreen = new Material(shaders["Standard"]);
+	darkGreen->SetVec4("tColor", vec4(0.29f, 0.31f, 0.29f, 1.0f));
+	Material* darkGray = new Material(shaders["Standard"]);
+	darkGray->SetVec4("tColor", vec4(0.1f, 0.1f, 0.1f, 1.0f));
+	Material* lightGray = new Material(shaders["Standard"]);
+	lightGray->SetVec4("tColor", vec4(0.34f, 0.34f, 0.39f, 1.0f));
+	Material* darkYellow = new Material(shaders["Standard"]);
+	darkYellow->SetVec4("tColor", vec4(0.72f, 0.66f, 0.24f, 1.0f));
 
 	materialChache["LocalPosColor"] = new Material(shaders["LocalPosColor"]);
-	materialChache["LightBlue"] = lightBlueMat;
-	materialChache["Gray"] = grayMat;
-	materialChache["LightGray"] = lightGrayMat;
-	materialChache["LightGreen"] = lightGreenMat;
-	materialChache["LightYellow"] = lightYellowMat;
-	materialChache["Orange"] = orangeMat;
+	materialChache["DarkGreen"] = darkGreen;
+	materialChache["DarkGray"] = darkGray;
+	materialChache["LightGray"] = lightGray;
+	materialChache["DarkYellow"] = darkYellow;
 
 	//////////////////사용자 정의 초기화////////////////////
 
@@ -129,7 +121,7 @@ int main(int argc, char** argv) {
 	//컨텍스트 변수 생성, 윈도우 객체에 연결
 	AppContext ctx;
 	glfwSetWindowUserPointer(window, &ctx);
-	ctx.bgColor = { 0.2f, 0.2f, 0.2f, 1.0f }; //배경색 설정
+	ctx.bgColor = { 0.59f, 0.74f, 0.9f, 1.0f }; //배경색 설정
 
 	ColliderManager colliderManager(ctx);
 

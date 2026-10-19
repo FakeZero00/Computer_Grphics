@@ -40,7 +40,6 @@
     <ClInclude Include="Data_Structure\Vertex.h" />
     <ClInclude Include="Default_Scene.h" />
     <ClInclude Include="Script\SceneCamera.h" />
-    <ClInclude Include="Script\TankController.h" />
     <ClInclude Include="Utility\ColliderManager.h" />
     <ClInclude Include="Utility\InputManager.h" />
     <ClInclude Include="Utility\ObjImporter.h" />
@@ -61,7 +60,6 @@
     <ClCompile Include="Default_Scene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Script\SceneCamera.cpp" />
-    <ClCompile Include="Script\TankController.cpp" />
     <ClCompile Include="Utility\ColliderManager.cpp" />
     <ClCompile Include="Utility\ObjImporter.cpp" />
     <ClCompile Include="Utility\SceneLoader.cpp" />
