@@ -1,5 +1,6 @@
 #include "TankController.h"
 #include "Object.h"
+#include "Material.h"
 #include <gl/glm/glm.hpp>
 
 void TankController::Start() {
@@ -71,6 +72,76 @@ void TankController::Update(float deltaTime) {
 	}
 	else if (inputManager.GetKeyDown(GLFW_KEY_P)) {
 		isPRotating = !isPRotating;
+	}
+	else if (inputManager.GetKeyDown(GLFW_KEY_O)) {
+		MeshRenderer3D* mr = BottomTr_L->gameObject->GetComponent<MeshRenderer3D>();
+		mr->materials[0]->SetVec4("tColor", vec4{ colorUrd(dre), colorUrd(dre), colorUrd(dre), 1.0f });
+		mr = MiddleTr->gameObject->GetComponent<MeshRenderer3D>();
+		mr->materials[0]->SetVec4("tColor", vec4{ colorUrd(dre), colorUrd(dre), colorUrd(dre), 1.0f });
+		mr = TopTr_L->gameObject->GetComponent<MeshRenderer3D>();
+		mr->materials[0]->SetVec4("tColor", vec4{ colorUrd(dre), colorUrd(dre), colorUrd(dre), 1.0f });
+		mr = BarrelTr_L->gameObject->GetComponent<MeshRenderer3D>();
+		mr->materials[0]->SetVec4("tColor", vec4{ colorUrd(dre), colorUrd(dre), colorUrd(dre), 1.0f });
+		mr = FlagTr_L->gameObject->GetComponent<MeshRenderer3D>();
+		mr->materials[0]->SetVec4("tColor", vec4{ colorUrd(dre), colorUrd(dre), colorUrd(dre), 1.0f });
+	}
+	else if (inputManager.GetKeyDown(GLFW_KEY_C)) {
+		camArmTr->SetLocalRotation(0.0f, 0.0f, 0.0f);
+		camTr->SetLocalPosition(0.0f, 5.0f, 5.0f);
+		camTr->SetLocalRotation(45.0f, 180.0f, 0.0f);
+		
+		tr->SetLocalPosition(0.0f, 0.0f, 0.0f);
+		BottomTr_L->SetLocalPosition(0.88f, 0.28f, 0.0f);
+		BottomTr_L->SetLocalScale(1.0f, 1.0f, 1.0f);
+		BottomTr_R->SetLocalPosition(-0.88f, 0.28f, 0.0f);
+		BottomTr_R->SetLocalScale(1.0f, 1.0f, 1.0f);
+		MiddleTr->SetLocalPosition(0.0f, 0.76f, 0.0f);
+		MiddleTr->SetLocalRotation(0.0f, 0.0f, 0.0f);
+		TopTr_L->SetLocalPosition(0.88f, 0.41f, 0.0f);
+		TopTr_R->SetLocalPosition(-0.88f, 0.41f, 0.0f);
+		BarrelTr_L->SetLocalRotation(0.0f, 0.0f, 0.0f);
+		BarrelTr_R->SetLocalRotation(0.0f, 0.0f, 0.0f);
+		FlagTr_L->SetLocalRotation(0.0f, 0.0f, 0.0f);
+		FlagTr_R->SetLocalRotation(0.0f, 0.0f, 0.0f);
+
+		isDScaling = false;
+		dWeight = 0.0f;
+
+		isTRotating = false;
+
+		isLMoving = false;
+		lWeight = 0.0f;
+		lStartPos_L = vec3{ 0.0f };
+		lEndPos_L = vec3{ 0.0f };
+		lStartPos_R = vec3{ 0.0f };
+		lEndPos_R = vec3{ 0.0f };
+
+		isGRotating = false;
+		gRotL = vec3{ radians(0.0f), radians(90.0f), radians(0.0f) };
+		gRotLQuat = quat{ gRotL };
+		gRotR = vec3{ radians(0.0f), radians(-90.0f), radians(0.0f) };
+		gRotRQuat = quat{ gRotR };
+		gWeight = 0.5f;
+		gRotFlag = true;
+
+		isPRotating = false;
+		pRotL = vec3{ 90.0f, 0.0f, 0.0f };
+		pRotLQuat = quat{ radians(pRotL) };
+		pRotR = vec3{ -90.0f, 0.0f, 0.0f };
+		pRotRQuat = quat{ radians(pRotR) };
+		pWeight = 0.5f;
+		pRotFlag = true;
+
+		MeshRenderer3D* mr = BottomTr_L->gameObject->GetComponent<MeshRenderer3D>();
+		mr->materials[0]->SetVec4("tColor", vec4(0.46f, 0.46f, 0.46f, 1.0f));
+		mr = MiddleTr->gameObject->GetComponent<MeshRenderer3D>();
+		mr->materials[0]->SetVec4("tColor", vec4(0.85f, 0.85f, 0.85f, 1.0f));
+		mr = TopTr_L->gameObject->GetComponent<MeshRenderer3D>();
+		mr->materials[0]->SetVec4("tColor", vec4(0.57f, 0.81f, 0.31f, 1.0f));
+		mr = BarrelTr_L->gameObject->GetComponent<MeshRenderer3D>();
+		mr->materials[0]->SetVec4("tColor", vec4(1.0f, 1.0f, 0.19f, 1.0f));
+		mr = FlagTr_L->gameObject->GetComponent<MeshRenderer3D>();
+		mr->materials[0]->SetVec4("tColor", vec4(1.0f, 0.75f, 0.0f, 1.0f));
 	}
 
 	if (isDScaling) {
