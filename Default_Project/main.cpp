@@ -83,7 +83,7 @@ int main(int argc, char** argv) {
 
 	//////////////////Mesh, Material 캐시 초기화//////////////////
 
-	meshChache["Cube1"] = new Mesh("Default_Cube.obj");
+	meshChache["Cube"] = new Mesh("Default_Cube.obj");
 	meshChache["Pyramid"] = new Mesh("Default_Pyramid.obj");
 	meshChache["Sphere"] = new Mesh("Default_Sphere.obj");
 	meshChache["Torus"] = new Mesh("Default_Torus.obj");
