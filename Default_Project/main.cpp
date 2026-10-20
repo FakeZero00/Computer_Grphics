@@ -83,22 +83,43 @@ int main(int argc, char** argv) {
 
 	//////////////////Mesh, Material 캐시 초기화//////////////////
 
-	meshChache["Cube"] = new Mesh("Default_Cube.obj");
+	meshChache["Cube1"] = new Mesh("Default_Cube.obj");
 	meshChache["Pyramid"] = new Mesh("Default_Pyramid.obj");
 	meshChache["Sphere"] = new Mesh("Default_Sphere.obj");
 	meshChache["Torus"] = new Mesh("Default_Torus.obj");
 
-	Material* redMat = new Material(shaders["Standard"]);
-	redMat->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	Material* greenMat = new Material(shaders["Standard"]);
-	greenMat->SetVec4("tColor", vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	Material* blueMat = new Material(shaders["Standard"]);
-	blueMat->SetVec4("tColor", vec4(0.0f, 0.0f, 1.0f, 1.0f));
+	Material* darkGreen = new Material(shaders["Standard"]);
+	darkGreen->SetVec4("tColor", vec4(0.29f, 0.31f, 0.29f, 1.0f));
+	Material* darkGray = new Material(shaders["Standard"]);
+	darkGray->SetVec4("tColor", vec4(0.1f, 0.1f, 0.1f, 1.0f));
+	Material* lightGray = new Material(shaders["Standard"]);
+	lightGray->SetVec4("tColor", vec4(0.34f, 0.34f, 0.39f, 1.0f));
+	Material* darkYellow = new Material(shaders["Standard"]);
+	darkYellow->SetVec4("tColor", vec4(0.72f, 0.66f, 0.24f, 1.0f));
+	Material* black = new Material(shaders["Standard"]);
+	black->SetVec4("tColor", vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	Material* red = new Material(shaders["Standard"]);
+	red->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	Material* green = new Material(shaders["Standard"]);
+	green->SetVec4("tColor", vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	Material* blue = new Material(shaders["Standard"]);
+	blue->SetVec4("tColor", vec4(0.0f, 0.0f, 1.0f, 1.0f));
+	Material* orange = new Material(shaders["Standard"]);
+	orange->SetVec4("tColor", vec4(1.0f, 0.5f, 0.0f, 1.0f));
+	Material* purple = new Material(shaders["Standard"]);
+	purple->SetVec4("tColor", vec4(0.5f, 0.0f, 1.0f, 1.0f));
 
 	materialChache["LocalPosColor"] = new Material(shaders["LocalPosColor"]);
-	materialChache["Red"] = redMat;
-	materialChache["Green"] = greenMat;
-	materialChache["Blue"] = blueMat;
+	materialChache["DarkGreen"] = darkGreen;
+	materialChache["DarkGray"] = darkGray;
+	materialChache["LightGray"] = lightGray;
+	materialChache["DarkYellow"] = darkYellow;
+	materialChache["Black"] = black;
+	materialChache["Red"] = red;
+	materialChache["Green"] = green;
+	materialChache["Blue"] = blue;
+	materialChache["Orange"] = orange;
+	materialChache["Purple"] = purple;
 
 	//////////////////사용자 정의 초기화////////////////////
 
@@ -113,7 +134,7 @@ int main(int argc, char** argv) {
 	//컨텍스트 변수 생성, 윈도우 객체에 연결
 	AppContext ctx;
 	glfwSetWindowUserPointer(window, &ctx);
-	ctx.bgColor = { 0.2f, 0.2f, 0.2f, 1.0f }; //배경색 설정
+	ctx.bgColor = { 0.59f, 0.74f, 0.9f, 1.0f }; //배경색 설정
 
 	ColliderManager colliderManager(ctx);
 

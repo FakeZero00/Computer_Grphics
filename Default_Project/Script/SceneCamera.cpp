@@ -6,8 +6,8 @@
 
 void SceneCamera::Awake() {
 	Transform* tr = gameObject->GetComponent<Transform>();
-	pitch = tr->LocalEulerAngles().x;
-	yaw = tr->LocalEulerAngles().y;
+	pitch = tr->EulerAngles.x;
+	yaw = tr->EulerAngles.y;
 }
 
 void SceneCamera::Update(float deltaTime) {
