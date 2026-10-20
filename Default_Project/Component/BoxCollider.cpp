@@ -4,11 +4,12 @@
 #include "MeshRenderer3D.h"
 #include "Mesh.h"
 #include "Material.h"
+#include "Camera.h"
 #include <cfloat>
 #include <gl/glm/gtc/type_ptr.hpp>
 #include <gl/glew.h>
 
-//mainì—ì„œ ì„ ì–¸ëœ shaders ë§µì„ externìœ¼ë¡œ ì°¸ì¡°
+//main¿¡¼­ ¼±¾ğµÈ shaders ¸ÊÀ» externÀ¸·Î ÂüÁ¶
 extern map<string, GLuint> shaders;
 
 BoxCollider::BoxCollider(vec3 center, vec3 size) : Collider(ColliderType::Box), center(center), size(size) {
@@ -17,7 +18,7 @@ BoxCollider::BoxCollider(vec3 center, vec3 size) : Collider(ColliderType::Box), 
 }
 
 bool BoxCollider::MouseCollide(vec2 mousePos) {
-	//ë§ˆìš°ìŠ¤ ì¢Œí‘œë¥¼ ì´ìš©í•´ ì¶©ëŒ ì—¬ë¶€ íŒë‹¨
+	//¸¶¿ì½º ÁÂÇ¥¸¦ ÀÌ¿ëÇØ Ãæµ¹ ¿©ºÎ ÆÇ´Ü
 	if (mousePos.x >= minPos.x && mousePos.x <= maxPos.x &&
 		mousePos.y >= minPos.y && mousePos.y <= maxPos.y) {
 		return true;
@@ -31,7 +32,7 @@ void BoxCollider::RecalculateCollision() {
 	Transform* tr = gameObject->GetComponent<Transform>();
 	if (not tr) return;
 
-	//ë©”ì‹œ ë°ì´í„°ê°€ ì—†ì„ ë•Œì˜ ê¸°ë³¸ ë°•ìŠ¤ ë²”ìœ„ ì„¤ì •
+	//¸Ş½Ã µ¥ÀÌÅÍ°¡ ¾øÀ» ¶§ÀÇ ±âº» ¹Ú½º ¹üÀ§ ¼³Á¤
 	vec3 meshMin{ -0.5f };
 	vec3 meshMax{ 0.5f };
 
@@ -41,14 +42,14 @@ void BoxCollider::RecalculateCollision() {
 		meshMax = mr->mesh->maxPos;
 	}
 
-	//Meshì™€ Colliderì˜ Center, Sizeë¥¼ ê³ ë ¤í•œ ë¡œì»¬ ì¢Œí‘œê³„ì—ì„œì˜ minPos, maxPos ê³„ì‚°
+	//Mesh¿Í ColliderÀÇ Center, Size¸¦ °í·ÁÇÑ ·ÎÄÃ ÁÂÇ¥°è¿¡¼­ÀÇ minPos, maxPos °è»ê
 	vec3 meshCenter = (meshMin + meshMax) / 2.0f;
 	vec3 meshExtent = (meshMax - meshMin) / 2.0f;
 
 	vec3 localMin = (meshCenter + center) - (meshExtent * size);
 	vec3 localMax = (meshCenter + center) + (meshExtent * size);
 
-	//ë¡œì»¬ ë°”ìš´ë”© ë°•ìŠ¤ì˜ 8ê°œ ê¼­ì§“ì  ì¢Œí‘œ ë°°ì—´ ìƒì„±
+	//·ÎÄÃ ¹Ù¿îµù ¹Ú½ºÀÇ 8°³ ²ÀÁşÁ¡ ÁÂÇ¥ ¹è¿­ »ı¼º
 	vec3 corners[8] = {
 		vec3(localMin.x, localMin.y, localMin.z),
 		vec3(localMax.x, localMin.y, localMin.z),
@@ -60,7 +61,7 @@ void BoxCollider::RecalculateCollision() {
 		vec3(localMin.x, localMax.y, localMax.z)
 	};
 
-	//ì›”ë“œ ê³µê°„ì˜ min/max ì¢Œí‘œ ê³„ì‚°
+	//¿ùµå °ø°£ÀÇ min/max ÁÂÇ¥ °è»ê
 	minPos = vec3(FLT_MAX);
 	maxPos = vec3(-FLT_MAX);
 
@@ -84,12 +85,21 @@ void BoxCollider::Render() {
 	GLuint debugShader = shaders["Debug"];
 	glUseProgram(debugShader);
 
-	// minPos, maxPosëŠ” ì´ë¯¸ ì›”ë“œ ì¢Œí‘œì´ë¯€ë¡œ ëª¨ë¸ ë³€í™˜ í–‰ë ¬ì„ ë‹¨ìœ„ í–‰ë ¬(Identity)ë¡œ ë®ì–´ì”Œì›€
+	//view, projection Çà·Ä ¼³Á¤
+	Camera* cam = Camera::mainCamera;
+	if (cam != nullptr) {
+		GLuint viewLoc = glGetUniformLocation(debugShader, "view");
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(cam->GetViewMatrix()));
+		GLuint projLoc = glGetUniformLocation(debugShader, "proj");
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(cam->GetProjectionMatrix()));
+	}
+
+	// minPos, maxPos´Â ÀÌ¹Ì ¿ùµå ÁÂÇ¥ÀÌ¹Ç·Î ¸ğµ¨ º¯È¯ Çà·ÄÀ» ´ÜÀ§ Çà·Ä(Identity)·Î µ¤¾î¾º¿ò
 	GLuint modelLoc = glGetUniformLocation(debugShader, "model");
 	mat4 identity = mat4{ 1.0f };
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(identity));
 
-	//minPosì™€ maxPosë¥¼ ì´ìš©í•´ 8ê°œì˜ ê¼­ì§“ì  ê³„ì‚°
+	//minPos¿Í maxPos¸¦ ÀÌ¿ëÇØ 8°³ÀÇ ²ÀÁşÁ¡ °è»ê
 	float x1 = minPos.x, y1 = minPos.y, z1 = minPos.z;
 	float x2 = maxPos.x, y2 = maxPos.y, z2 = maxPos.z;
 	float g = 1.0f;
@@ -120,7 +130,7 @@ void BoxCollider::InitDebugRender() {
 
 	glBindVertexArray(VAO);
 
-	//VBO ì´ˆê¸°í™”
+	//VBO ÃÊ±âÈ­
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, 8 * 6 * sizeof(float), nullptr, GL_DYNAMIC_DRAW);
 
@@ -129,8 +139,8 @@ void BoxCollider::InitDebugRender() {
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	//EBO ì´ˆê¸°í™”
-	GLubyte indices[] = {
+	//EBO ÃÊ±âÈ­
+	GLuint indices[] = {
 		0,1, 1,2, 2,3, 3,0,
 		4,5, 5,6, 6,7, 7,4,
 		0,4, 1,5, 2,6, 3,7
@@ -142,16 +152,14 @@ void BoxCollider::InitDebugRender() {
 }
 
 Component* BoxCollider::CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects) {
-	BoxCollider* boxCollider = obj->AddComponent<BoxCollider>();
-
-	if (props.contains("center") && props.contains("size")) {
-		cout << obj->name << " ì˜¤ë¸Œì íŠ¸ì˜ BoxCollider ì»´í¬ë„ŒíŠ¸ì— centerì™€ size ì†ì„±ì´ í•„ìš”í•©ë‹ˆë‹¤." << endl;
+	if (!props.contains("center") || !props.contains("size")) {
+		cout << obj->name << " ¿ÀºêÁ§Æ®ÀÇ BoxCollider ÄÄÆ÷³ÍÆ®¿¡ center¿Í size ¼Ó¼ºÀÌ ÇÊ¿äÇÕ´Ï´Ù." << endl;
 	}
 	auto center = props["center"];
 	auto size = props["size"];
-	BoxCollider* boxCol = obj->AddComponent<BoxCollider>(vec3{ center[0], center[1], center[2] },
+	BoxCollider* boxCollider = obj->AddComponent<BoxCollider>(vec3{ center[0], center[1], center[2] },
 		vec3(size[0], size[1], size[2]));
-	if (props.contains("isDebug")) boxCol->isDebug = props["isDebug"];
+	if (props.contains("isDebug")) boxCollider->isDebug = props["isDebug"];
 
 	return boxCollider;
 }

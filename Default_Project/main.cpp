@@ -134,7 +134,7 @@ int main(int argc, char** argv) {
 	//컨텍스트 변수 생성, 윈도우 객체에 연결
 	AppContext ctx;
 	glfwSetWindowUserPointer(window, &ctx);
-	ctx.bgColor = { 0.59f, 0.74f, 0.9f, 1.0f }; //배경색 설정
+	ctx.bgColor = { 0.2f, 0.2f, 0.2f, 1.0f }; //배경색 설정
 
 	ColliderManager colliderManager(ctx);
 

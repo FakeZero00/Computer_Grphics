@@ -3,7 +3,7 @@
   "Objects": [
     {
       "name": "MainCamera",
-      "parent": "CameraArm",
+      "parent": "",
       "transform": {
         "position": [ 0.0, 5.0, 5.0 ],
         "rotation": [ 45.0, 180.0, 0.0 ],
@@ -20,6 +20,37 @@
         },
         {
           "type": "SceneCamera"
+        }
+      ]
+    },
+	{
+      "name": "Test",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Cube",
+            "materials":[
+				"Red"
+			]
+          }
+        },
+        {
+          "type": "BoxCollider",
+		  "properties": {
+			  "center": [ 0.0, 0.0, 0.0 ],
+			  "size": [ 1.0, 1.0, 1.0 ],
+			  "isDebug": true
+		  }
+        },
+		{
+          "type": "TestScript"
         }
       ]
     }

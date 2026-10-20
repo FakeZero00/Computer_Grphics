@@ -126,13 +126,7 @@
     <ClInclude Include="Component\MeshSpline.h">
       <Filter>Component\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Script\RailGenerator.h">
-      <Filter>Script</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\RailMovement.h">
-      <Filter>Script</Filter>
-    </ClInclude>
-    <ClInclude Include="Script\CameraControl.h">
+    <ClInclude Include="Script\TestScript.h">
       <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>
@@ -188,13 +182,7 @@
     <ClCompile Include="Component\MeshSpline.cpp">
       <Filter>Component\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Script\RailGenerator.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\RailMovement.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="Script\CameraControl.cpp">
+    <ClCompile Include="Script\TestScript.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
