@@ -6,6 +6,8 @@ class RailMovement : public Component {
 private:
 	Transform* tr;
 
+	bool isMoving = false;
+
 public:
 	vec3 startPos1;
 	vec3 endPos1;
@@ -16,6 +18,7 @@ public:
 	vec3 endRot = vec3(0.0f, -90.0f, 0.0f);
 	quat endQuat = quat(radians(endRot));
 
+	float startWeight = 0.0f;
 	float speed = 1.0f;
 	float weight = 0.0f;
 

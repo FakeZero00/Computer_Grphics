@@ -3,11 +3,24 @@
 
 void RailMovement::Start() {
 	tr = gameObject->GetComponent<Transform>();
+	startWeight = weight;
 }
 
 void RailMovement::Update(float deltaTime) {
-	// 매 프레임 일정 속도(m/s)로 weight 증가
-	weight += speed * deltaTime;
+	InputManager inputManager = gameObject->ctx.inputManager;
+
+	if (inputManager.GetKeyDown(GLFW_KEY_B)) {
+		isMoving = !isMoving;
+	}
+	else if (inputManager.GetKeyDown(GLFW_KEY_R)) {
+		isMoving = false;
+		weight = startWeight;
+	}
+
+	if (isMoving) {
+		// 매 프레임 일정 속도(m/s)로 weight 증가
+		weight += speed * deltaTime;
+	}
 
 	// 각 구간의 실제 거리 계산
 	float len1 = glm::distance(startPos1, endPos1);

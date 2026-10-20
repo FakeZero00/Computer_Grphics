@@ -83,7 +83,7 @@ int main(int argc, char** argv) {
 
 	//////////////////Mesh, Material 캐시 초기화//////////////////
 
-	meshChache["Cube"] = new Mesh("Default_Cube.obj");
+	meshChache["Cube1"] = new Mesh("Default_Cube.obj");
 	meshChache["Pyramid"] = new Mesh("Default_Pyramid.obj");
 	meshChache["Sphere"] = new Mesh("Default_Sphere.obj");
 	meshChache["Torus"] = new Mesh("Default_Torus.obj");
@@ -92,6 +92,9 @@ int main(int argc, char** argv) {
 	meshChache["Rail_Ground"] = new Mesh("Rail_Ground.obj");
 	meshChache["Rail_Guard"] = new Mesh("Rail_Guard.obj");
 	meshChache["Rail_Leg"] = new Mesh("Rail_Leg.obj");
+	meshChache["Cube"] = new Mesh("Cube.obj");
+	meshChache["Cube_Number"] = new Mesh("Cube_Number.obj");
+
 
 	Material* darkGreen = new Material(shaders["Standard"]);
 	darkGreen->SetVec4("tColor", vec4(0.29f, 0.31f, 0.29f, 1.0f));
@@ -101,12 +104,30 @@ int main(int argc, char** argv) {
 	lightGray->SetVec4("tColor", vec4(0.34f, 0.34f, 0.39f, 1.0f));
 	Material* darkYellow = new Material(shaders["Standard"]);
 	darkYellow->SetVec4("tColor", vec4(0.72f, 0.66f, 0.24f, 1.0f));
+	Material* black = new Material(shaders["Standard"]);
+	black->SetVec4("tColor", vec4(0.0f, 0.0f, 0.0f, 1.0f));
+	Material* red = new Material(shaders["Standard"]);
+	red->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	Material* green = new Material(shaders["Standard"]);
+	green->SetVec4("tColor", vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	Material* blue = new Material(shaders["Standard"]);
+	blue->SetVec4("tColor", vec4(0.0f, 0.0f, 1.0f, 1.0f));
+	Material* orange = new Material(shaders["Standard"]);
+	orange->SetVec4("tColor", vec4(1.0f, 0.5f, 0.0f, 1.0f));
+	Material* purple = new Material(shaders["Standard"]);
+	purple->SetVec4("tColor", vec4(0.5f, 0.0f, 1.0f, 1.0f));
 
 	materialChache["LocalPosColor"] = new Material(shaders["LocalPosColor"]);
 	materialChache["DarkGreen"] = darkGreen;
 	materialChache["DarkGray"] = darkGray;
 	materialChache["LightGray"] = lightGray;
 	materialChache["DarkYellow"] = darkYellow;
+	materialChache["Black"] = black;
+	materialChache["Red"] = red;
+	materialChache["Green"] = green;
+	materialChache["Blue"] = blue;
+	materialChache["Orange"] = orange;
+	materialChache["Purple"] = purple;
 
 	//////////////////사용자 정의 초기화////////////////////
 

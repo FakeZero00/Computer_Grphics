@@ -1,9 +1,18 @@
 {
   "SceneName": "Default_Scene",
   "Objects": [
+	{
+      "name": "CameraArm",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
     {
       "name": "MainCamera",
-      "parent": "",
+      "parent": "CameraArm",
       "transform": {
         "position": [ 0.0, 5.0, 5.0 ],
         "rotation": [ 45.0, 180.0, 0.0 ],
@@ -20,7 +29,13 @@
         },
         {
           "type": "SceneCamera"
-        }
+        },
+		{
+			"type": "CameraControl",
+			"properties": {
+				"camArmTr": "CameraArm"
+			}
+		}
       ]
     },
 	{

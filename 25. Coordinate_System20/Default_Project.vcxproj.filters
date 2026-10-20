@@ -132,6 +132,9 @@
     <ClInclude Include="Script\RailMovement.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="Script\CameraControl.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -189,6 +192,9 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="Script\RailMovement.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\CameraControl.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

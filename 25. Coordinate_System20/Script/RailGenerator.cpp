@@ -21,6 +21,82 @@ void RailGenerator::Start() {
 		MeshRenderer3D* mr = rail->AddComponent<MeshRenderer3D>(meshChache["Rail"], materialChache["DarkGray"]);
 		rail->AddComponent<RailMovement>(offset * i, startPos1, endPos1, startPos2, endPos2);
 	}
+
+	float cubeOffset = totalLen / 5.0f;
+
+	Object* cube = gameObject->Instantiate("Cube1");
+	cube->AddComponent<MeshRenderer3D>(meshChache["Cube"], materialChache["Red"]);
+	Object* cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cube->AddComponent<RailMovement>(0.0f, startPos1, endPos1, startPos2, endPos2);
+
+	cube = gameObject->Instantiate("Cube2");
+	cube->AddComponent<MeshRenderer3D>(meshChache["Cube"], materialChache["Green"]);
+	cube->AddComponent<RailMovement>(cubeOffset, startPos1, endPos1, startPos2, endPos2);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	Transform* cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(0.05f, 0.0f, 0.0f);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(-0.05f, 0.0f, 0.0f);
+
+	cube = gameObject->Instantiate("Cube3");
+	cube->AddComponent<MeshRenderer3D>(meshChache["Cube"], materialChache["Blue"]);
+	cube->AddComponent<RailMovement>(cubeOffset * 2.0f, startPos1, endPos1, startPos2, endPos2);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(0.1f, 0.0f, 0.0f);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(-0.1f, 0.0f, 0.0f);
+
+	cube = gameObject->Instantiate("Cube4");
+	cube->AddComponent<MeshRenderer3D>(meshChache["Cube"], materialChache["Orange"]);
+	cube->AddComponent<RailMovement>(cubeOffset * 3.0f, startPos1, endPos1, startPos2, endPos2);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(0.05f, 0.0f, 0.0f);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(0.15f, 0.0f, 0.0f);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(-0.05f, 0.0f, 0.0f);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(-0.15f, 0.0f, 0.0f);
+
+	cube = gameObject->Instantiate("Cube5");
+	cube->AddComponent<MeshRenderer3D>(meshChache["Cube"], materialChache["Purple"]);
+	cube->AddComponent<RailMovement>(cubeOffset * 4.0f, startPos1, endPos1, startPos2, endPos2);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(0.1f, 0.0f, 0.0f);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(0.2f, 0.0f, 0.0f);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(-0.1f, 0.0f, 0.0f);
+	cubeNumber = cube->Instantiate("Cube_Number");
+	cubeNumber->AddComponent<MeshRenderer3D>(meshChache["Cube_Number"], materialChache["Black"]);
+	cubeNumberTr = cubeNumber->GetComponent<Transform>();
+	cubeNumberTr->SetLocalPosition(-0.2f, 0.0f, 0.0f);
 }
 
 Component* RailGenerator::CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects) {

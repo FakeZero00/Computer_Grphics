@@ -39,6 +39,7 @@
     <ClInclude Include="Data_Structure\ScreenSize.h" />
     <ClInclude Include="Data_Structure\Vertex.h" />
     <ClInclude Include="Default_Scene.h" />
+    <ClInclude Include="Script\CameraControl.h" />
     <ClInclude Include="Script\RailGenerator.h" />
     <ClInclude Include="Script\RailMovement.h" />
     <ClInclude Include="Script\SceneCamera.h" />
@@ -61,6 +62,7 @@
     <ClCompile Include="Data_Structure\Scene.cpp" />
     <ClCompile Include="Default_Scene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Script\CameraControl.cpp" />
     <ClCompile Include="Script\RailGenerator.cpp" />
     <ClCompile Include="Script\RailMovement.cpp" />
     <ClCompile Include="Script\SceneCamera.cpp" />
