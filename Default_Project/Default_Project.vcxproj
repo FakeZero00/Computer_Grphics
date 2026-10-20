@@ -26,6 +26,7 @@
     <ClInclude Include="Component\Camera.h" />
     <ClInclude Include="Component\MeshRenderer3D.h" />
     <ClInclude Include="Component\MeshSpline.h" />
+    <ClInclude Include="Component\SphereCollider.h" />
     <ClInclude Include="Component\Spline.h" />
     <ClInclude Include="Component\Transform.h" />
     <ClInclude Include="Data_Structure\AppContext.h" />
@@ -52,6 +53,7 @@
     <ClCompile Include="Component\Camera.cpp" />
     <ClCompile Include="Component\MeshRenderer3D.cpp" />
     <ClCompile Include="Component\MeshSpline.cpp" />
+    <ClCompile Include="Component\SphereCollider.cpp" />
     <ClCompile Include="Component\Spline.cpp" />
     <ClCompile Include="Component\Transform.cpp" />
     <ClCompile Include="Data_Structure\Material.cpp" />
