@@ -17,15 +17,15 @@ bool ColliderManager::CheckCollision(Collider* colA, Collider* colB) {
 
 	//2. Sphere vs Sphere 충돌 체크
 	else if (colA->type == ColliderType::Sphere && colB->type == ColliderType::Sphere) {
-		//임시
-		return false;
+		return CheckSphereSphere(static_cast<SphereCollider*>(colA), static_cast<SphereCollider*>(colB));
 	}
 
 	//3. Box vs Sphere 충돌 체크
-	else if ((colA->type == ColliderType::Box && colB->type == ColliderType::Sphere) ||
-		(colA->type == ColliderType::Sphere && colB->type == ColliderType::Box)) {
-		//임시
-		return false;
+	else if (colA->type == ColliderType::Box && colB->type == ColliderType::Sphere) {
+		return CheckBoxSphere(static_cast<BoxCollider*>(colA), static_cast<SphereCollider*>(colB));
+	}
+	else if (colA->type == ColliderType::Sphere && colB->type == ColliderType::Box) {
+		return CheckBoxSphere(static_cast<BoxCollider*>(colB), static_cast<SphereCollider*>(colA));
 	}
 
 	//4. 그 외의 경우
@@ -43,6 +43,24 @@ bool ColliderManager::CheckBoxBox(BoxCollider* colA, BoxCollider* colB) {
 	if (minA.z > maxB.z || maxA.z < minB.z) return false;
 
 	return true;
+}
+
+bool ColliderManager::CheckSphereSphere(SphereCollider* colA, SphereCollider* colB) {
+	float dist = glm::distance(colA->worldCenter, colB->worldCenter);
+	return dist <= (colA->worldRadius + colB->worldRadius);
+}
+
+bool ColliderManager::CheckBoxSphere(BoxCollider* box, SphereCollider* sphere) {
+	// AABB 박스 안에서 구체의 중심점과 가장 가까운 x,y,z 좌표를 찾음 (Clamp)
+	float closestX = glm::clamp(sphere->worldCenter.x, box->minPos.x, box->maxPos.x);
+	float closestY = glm::clamp(sphere->worldCenter.y, box->minPos.y, box->maxPos.y);
+	float closestZ = glm::clamp(sphere->worldCenter.z, box->minPos.z, box->maxPos.z);
+
+	vec3 closestPoint = vec3(closestX, closestY, closestZ);
+
+	// 박스 위에서 가장 가까운 점과 구체의 중심 사이의 거리가 반지름보다 작으면 충돌
+	float dist = glm::distance(closestPoint, sphere->worldCenter);
+	return dist <= sphere->worldRadius;
 }
 
 void ColliderManager::Update() {

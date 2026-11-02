@@ -35,17 +35,17 @@
         {
           "type": "MeshRenderer3D",
           "properties": {
-            "mesh": "Cube",
+            "mesh": "Sphere",
             "materials":[
 				"Red"
 			]
           }
         },
         {
-          "type": "BoxCollider",
+          "type": "SphereCollider",
 		  "properties": {
 			  "center": [ 0.0, 0.0, 0.0 ],
-			  "size": [ 1.0, 1.0, 1.0 ],
+			  "radius": 1.0,
 			  "isDebug": true
 		  }
         },
