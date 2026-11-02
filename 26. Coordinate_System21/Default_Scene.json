@@ -1,0 +1,161 @@
+{
+  "SceneName": "Default_Scene",
+  "Objects": [
+    {
+      "name": "MainCamera",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 15.0 ],
+        "rotation": [ 0.0, 180.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "Camera",
+          "properties": {
+            "fov": 60.0,
+            "nearPlane": 0.1,
+            "farPlane": 1000.0
+          }
+        },
+        {
+          "type": "SceneCamera"
+        },
+		{
+          "type": "BoxController"
+        }
+      ]
+    },
+	{
+      "name": "Background_Wall",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "BG_Plane",
+            "materials":[
+				"Red"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Wall_Plane1",
+      "parent": "Background_Wall",
+      "transform": {
+        "position": [ -5.0, -5.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Wall",
+            "materials":[
+				"Green"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Wall_Plane2",
+      "parent": "Background_Wall",
+      "transform": {
+        "position": [ -5.0, 5.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, -90.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Wall",
+            "materials":[
+				"Blue"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Wall_Plane3",
+      "parent": "Background_Wall",
+      "transform": {
+        "position": [ 5.0, 5.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 180.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Wall",
+            "materials":[
+				"Orange"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Wall_Plane4",
+      "parent": "Background_Wall",
+      "transform": {
+        "position": [ 5.0, -5.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 90.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Wall",
+            "materials":[
+				"Purple"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "BallGenerator",
+      "parent": "Background_Wall",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "BallGenerator",
+		  "properties": {
+			  "count": 5
+		  }
+        }
+      ]
+    },
+	{
+      "name": "SBGenerator",
+      "parent": "Background_Wall",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "SBGenerator"
+        }
+      ]
+    }
+  ]
+}
