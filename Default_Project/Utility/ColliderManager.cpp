@@ -160,7 +160,7 @@ void ColliderManager::Update() {
 			if (colA && colB) {
 				bool isColliding = CheckCollision(colA, colB);
 
-				if (isColliding) {
+				if (isColliding && !colA->isTrigger && !colB->isTrigger) {
 					Transform* trA = colA->gameObject->GetComponent<Transform>();
 					Transform* trB = colB->gameObject->GetComponent<Transform>();
 

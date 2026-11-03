@@ -18,6 +18,8 @@ public:
 	float staticFriction = 0.6f;
 	float bounciness = 0.0f;
 
+	bool isTrigger = false; //트리거 여부 (충돌은 감지하지만 물리적 반응은 없음)
+
 	vector<Collider*> collidingColliders;
 
 	//디버그 렌더링용 버퍼

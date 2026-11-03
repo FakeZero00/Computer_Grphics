@@ -158,6 +158,7 @@ Component* BoxCollider::CreateFromJson(Object* obj, const json& props, const map
 	auto size = props["size"];
 	BoxCollider* boxCollider = obj->AddComponent<BoxCollider>(vec3{ center[0], center[1], center[2] },
 		vec3(size[0], size[1], size[2]));
+	if (props.contains("isTrigger")) boxCollider->isTrigger = props["isTrigger"];
 	if (props.contains("isDebug")) boxCollider->isDebug = props["isDebug"];
 
 	return boxCollider;

@@ -118,6 +118,7 @@ Component* SphereCollider::CreateFromJson(Object* obj, const json& props, const 
 	float radius = props["radius"];
 	SphereCollider* sphereCollider = obj->AddComponent<SphereCollider>(vec3{ center[0], center[1], center[2] }, radius);
 
+	if (props.contains("isTrigger")) sphereCollider->isTrigger = props["isTrigger"];
 	if (props.contains("isDebug")) sphereCollider->isDebug = props["isDebug"];
 	return sphereCollider;
 }
