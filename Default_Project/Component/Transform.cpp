@@ -34,6 +34,18 @@ void Transform::Translate(float x, float y, float z, bool isWorld) {
 	CalculateWorldMatrix();
 }
 
+void Transform::Translate(vec3 delta, bool isWorld) {
+	if (isWorld) position += delta;
+
+	else {
+		position += right * delta.x;
+		position += up * delta.y;
+		position += forward * delta.z;
+	}
+
+	CalculateWorldMatrix();
+}
+
 void Transform::SetLocalRotation(float x, float y, float z) {
 	vec3 eulerRadians = vec3{ radians(x), radians(y), radians(z) };
 	rotation = quat(eulerRadians);

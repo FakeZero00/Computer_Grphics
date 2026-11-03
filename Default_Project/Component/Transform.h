@@ -31,6 +31,7 @@ public:
 	void SetLocalPosition(float x, float y, float z);
 	void SetLocalPosition(vec3 newPos);
 	void Translate(float x, float y, float z, bool isWorld = false);
+	void Translate(vec3 delta, bool isWorld = false);
 
 	void SetLocalRotation(float x, float y, float z);
 	void SetLocalRotation(quat newRot);
