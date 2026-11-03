@@ -44,6 +44,6 @@ public:
 	void Awake();
 	void Start();
 	void Update(double deltaTime);
-	void Render();
+	void Render(Camera* activeCamera);
 	void Destroy();
 };

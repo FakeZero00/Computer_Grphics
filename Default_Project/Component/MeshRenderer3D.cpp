@@ -16,7 +16,7 @@ MeshRenderer3D::MeshRenderer3D(Mesh* mesh, Material* material) : mesh(mesh) {
 	this->materials.push_back(material);
 }
 
-void MeshRenderer3D::Render() {
+void MeshRenderer3D::Render(Camera* activeCamera) {
 	for (auto& material : materials) {
 		//셰이더 사용
 		material->Use();
@@ -29,13 +29,12 @@ void MeshRenderer3D::Render() {
 		GLuint colorLoc = glGetUniformLocation(material->shaderProgram, "tColor");
 
 		// View, Projection 행렬 전달
-		Camera* camera = Camera::mainCamera;
-		if (camera != nullptr) {
+		if (activeCamera != nullptr) {
 			GLuint viewLoc = glGetUniformLocation(material->shaderProgram, "view");
-			glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(camera->GetViewMatrix()));
+			glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(activeCamera->GetViewMatrix()));
 
 			GLuint projLoc = glGetUniformLocation(material->shaderProgram, "proj");
-			glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(camera->GetProjectionMatrix()));
+			glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(activeCamera->GetProjectionMatrix()));
 		}
 
 		//Pass1 : 외곽선 렌더링 처리

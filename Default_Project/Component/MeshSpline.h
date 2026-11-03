@@ -21,7 +21,7 @@ public:
 	void InitRender();
 	void SetColor(vec4 newColor);
 
-	void Render() override;
+	void Render(Camera* activeCamera) override;
 
 	static Component* CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects);
 };

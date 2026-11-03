@@ -15,7 +15,7 @@ Spline::Spline(vector<vec3> controlPoints, vec4 color, float lineWidth) : contro
 	InitRender();
 }
 
-void Spline::Render() {
+void Spline::Render(Camera* activeCamera) {
 	GLuint splineShader = shaders["Spline"];
 	glUseProgram(splineShader);
 
@@ -24,13 +24,12 @@ void Spline::Render() {
 	Transform* tr = gameObject->GetComponent<Transform>();
 
 	// View, Projection 행렬 전달
-	Camera* camera = Camera::mainCamera;
-	if (camera != nullptr) {
+	if (activeCamera != nullptr) {
 		GLuint viewLoc = glGetUniformLocation(splineShader, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(camera->GetViewMatrix()));
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(activeCamera->GetViewMatrix()));
 
 		GLuint projLoc = glGetUniformLocation(splineShader, "proj");
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(camera->GetProjectionMatrix()));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(activeCamera->GetProjectionMatrix()));
 	}
 
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(tr->worldMatrix));

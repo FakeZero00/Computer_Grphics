@@ -6,13 +6,7 @@
 
 extern ScreenSize screenSize;
 
-Camera* Camera::mainCamera = nullptr;
-
 Camera::Camera(float width, float height) : width(width), height(height) {
-	if (mainCamera == nullptr) {
-		mainCamera = this;
-	}
-
 	aspectRatio = width / height;
 
 	Expose("fov", &fov);
@@ -21,10 +15,9 @@ Camera::Camera(float width, float height) : width(width), height(height) {
 	Expose("farPlane", &farPlane);
 }
 
-Camera::~Camera() {
-	if (mainCamera == this) {
-		mainCamera = nullptr;
-	}
+void Camera::Start() {
+	//카메라를 AppContext에 등록
+	gameObject->ctx.pendingCameras.push_back(this);
 }
 
 mat4 Camera::GetViewMatrix() {
@@ -57,6 +50,20 @@ Component* Camera::CreateFromJson(Object* obj, const json& props, const map<stri
 	if (props.contains("fov")) cam->fov = props["fov"];
 	if (props.contains("nearPlane")) cam->nearPlane = props["nearPlane"];
 	if (props.contains("farPlane")) cam->farPlane = props["farPlane"];
+	if (props.contains("isOrthographic")) cam->isOrthographic = props["isOrthographic"];
+	if (props.contains("priority")) cam->priority = props["priority"];
+	if (props.contains("backgroundColor")) {
+		auto colorArray = props["backgroundColor"];
+		if (colorArray.is_array() && colorArray.size() == 4) {
+			cam->backgroundColor = vec4(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
+		}
+	}
+	if (props.contains("viewportRect")) {
+		auto rectArray = props["viewportRect"];
+		if (rectArray.is_array() && rectArray.size() == 4) {
+			cam->viewportRect = vec4(rectArray[0], rectArray[1], rectArray[2], rectArray[3]);
+		}
+	}
 	return cam;
 }
 

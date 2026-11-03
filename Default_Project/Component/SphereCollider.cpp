@@ -76,19 +76,18 @@ void SphereCollider::InitDebugRender() {
 	glBindVertexArray(0);
 }
 
-void SphereCollider::Render() {
+void SphereCollider::Render(Camera* activeCamera) {
 	if (!isDebug) return;
 	RecalculateCollision();
 
 	GLuint debugShader = shaders["Debug"];
 	glUseProgram(debugShader);
 
-	Camera* cam = Camera::mainCamera;
-	if (cam != nullptr) {
+	if (activeCamera != nullptr) {
 		GLuint viewLoc = glGetUniformLocation(debugShader, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(cam->GetViewMatrix()));
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(activeCamera->GetViewMatrix()));
 		GLuint projLoc = glGetUniformLocation(debugShader, "proj");
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(cam->GetProjectionMatrix()));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(activeCamera->GetProjectionMatrix()));
 	}
 
 	// 구체의 중심과 반지름을 모델 행렬에 적용

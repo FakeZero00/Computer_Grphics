@@ -77,7 +77,7 @@ void BoxCollider::Start() {
 	gameObject->ctx.pendingCollisionObjects.push_back(this);
 }
 
-void BoxCollider::Render() {
+void BoxCollider::Render(Camera* activeCamera) {
 	if (not isDebug) return;
 
 	RecalculateCollision();
@@ -86,12 +86,11 @@ void BoxCollider::Render() {
 	glUseProgram(debugShader);
 
 	//view, projection 행렬 설정
-	Camera* cam = Camera::mainCamera;
-	if (cam != nullptr) {
+	if (activeCamera != nullptr) {
 		GLuint viewLoc = glGetUniformLocation(debugShader, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(cam->GetViewMatrix()));
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(activeCamera->GetViewMatrix()));
 		GLuint projLoc = glGetUniformLocation(debugShader, "proj");
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(cam->GetProjectionMatrix()));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(activeCamera->GetProjectionMatrix()));
 	}
 
 	//오브젝트의 worldMatrix를 그대로 모델 행렬에 넘겨 회전

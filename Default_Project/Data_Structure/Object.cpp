@@ -44,9 +44,9 @@ void Object::Update(double deltaTime) {
 	}
 }
 
-void Object::Render() {
+void Object::Render(Camera* activeCamera) {
 	for (auto& comp : components) {
-		comp->Render();
+		comp->Render(activeCamera);
 	}
 }
 

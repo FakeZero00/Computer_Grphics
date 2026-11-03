@@ -17,7 +17,7 @@ public:
 
 	void RecalculateCollision() override;
 	void Start() override;
-	void Render() override;
+	void Render(Camera* activeCamera) override;
 
 	static Component* CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects);
 

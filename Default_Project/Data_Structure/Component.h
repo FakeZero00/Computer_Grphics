@@ -8,6 +8,7 @@ using json = nlohmann::json;
 
 //전방선언
 class Object;
+class Camera;
 
 enum class PropertyType {
 	Float,
@@ -38,7 +39,7 @@ public:
 	virtual void Awake() {}
 	virtual void Start() {}
 	virtual void Update(float deltaTime) {}
-	virtual void Render() {}
+	virtual void Render(Camera* activeCamera) {}
 
 	//콜라이더 충돌 처리 함수
 	virtual void OnTriggerEnter(Object* other) {}

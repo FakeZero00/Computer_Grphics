@@ -15,7 +15,7 @@ public:
 
 	MeshRenderer3D(Mesh* mesh, Material* material);
 
-	void Render() override;
+	void Render(Camera* activeCamera) override;
 
 	static Component* CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects);
 };

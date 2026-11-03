@@ -128,8 +128,11 @@ int main(int argc, char** argv) {
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);
 	glfwSetCursorPosCallback(window, CursorPosCallback);
 
-	//뷰포트 설정
-	glViewport(0, 0, screenSize.width, screenSize.height);
+	//윈도우 크기 변경 시 screenSize를 동기화해 주는 콜백
+	glfwSetFramebufferSizeCallback(window, [](GLFWwindow* window, int width, int height) {
+		screenSize.width = width;
+		screenSize.height = height;
+		});
 
 	//컨텍스트 변수 생성, 윈도우 객체에 연결
 	AppContext ctx;
@@ -194,6 +197,14 @@ int main(int argc, char** argv) {
 			ctx.pendingCollisionObjects.clear();
 		}
 
+		//추가할 카메라가 있다면 cameras에 추가
+		if (!ctx.pendingCameras.empty()) {
+			for (auto& newCam : ctx.pendingCameras) {
+				ctx.cameras.push_back(newCam);
+			}
+			ctx.pendingCameras.clear();
+		}
+
 		//제거할 오브젝트가 있다면 Hierarchy에서 제거
 		if (!ctx.pendingDestroyObjects.empty()) {
 			for (auto& targetObj : ctx.pendingDestroyObjects) {
@@ -204,6 +215,14 @@ int main(int argc, char** argv) {
 						return col->gameObject == targetObj;
 					}),
 					collist.end());
+
+				//cameras에서도 제거
+				auto& camlist = ctx.cameras;
+				camlist.erase(remove_if(camlist.begin(), camlist.end(),
+					[targetObj](Camera* cam) {
+						return cam->gameObject == targetObj;
+					}),
+					camlist.end());
 
 				//부모 자식 관계 정리
 				Transform* targetTr = targetObj->GetComponent<Transform>();
@@ -281,8 +300,27 @@ void DrawScene(GLFWwindow* window)
 	AppContext* ctx = static_cast<AppContext*>(glfwGetWindowUserPointer(window));
 
 	//버퍼 초기화
-	glClearColor(ctx->bgColor.r, ctx->bgColor.g, ctx->bgColor.b, ctx->bgColor.a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	/*glClearColor(ctx->bgColor.r, ctx->bgColor.g, ctx->bgColor.b, ctx->bgColor.a);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);*/
+
+	//활성화 되어 있는 카메라 추출
+	vector<Camera*> activeCameras;
+	for (Camera* cam : ctx->cameras) {
+		if (cam && cam->gameObject && cam->gameObject->isValid) activeCameras.push_back(cam);
+	}
+
+	//카메라가 없을때 배경색으로 화면 초기화 후 버퍼 스왑
+	if (activeCameras.empty()) {
+		glClearColor(ctx->bgColor.r, ctx->bgColor.g, ctx->bgColor.b, ctx->bgColor.a);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glfwSwapBuffers(window);
+		return;
+	}
+
+	//카메라 우선순위에 따라 정렬
+	stable_sort(activeCameras.begin(), activeCameras.end(), [](Camera* a, Camera* b) {
+		return a->priority < b->priority;
+	});
 
 	//렌더링 큐 생성
 	vector<Object*> renderQueue;
@@ -302,9 +340,38 @@ void DrawScene(GLFWwindow* window)
 			return false;
 		});
 
-	//오브젝트 렌더링
-	for (auto& obj : renderQueue) {
-		if(obj->isValid) obj->Render();
+	//각 카메라 시점별 렌더링
+	for (Camera* cam : activeCameras) {
+		int vpX = static_cast<GLint>(cam->viewportRect.x * screenSize.width);
+		int vpY = static_cast<GLint>(cam->viewportRect.y * screenSize.height);
+		int vpW = static_cast<GLsizei>(cam->viewportRect.z * screenSize.width);
+		int vpH = static_cast<GLsizei>(cam->viewportRect.w * screenSize.height);
+
+		if (vpW <= 0 || vpH <= 0) continue;
+
+		cam->aspectRatio = static_cast<float>(vpW) / static_cast<float>(vpH);
+
+		glViewport(vpX, vpY, vpW, vpH);
+
+		glEnable(GL_SCISSOR_TEST);
+		glScissor(vpX, vpY, vpW, vpH);
+
+		GLbitfield clearFlags = 0;
+		if (cam->clearColorBuffer) {
+			glClearColor(cam->backgroundColor.r, cam->backgroundColor.g, cam->backgroundColor.b, cam->backgroundColor.a);
+			clearFlags |= GL_COLOR_BUFFER_BIT;
+		}
+		if (cam->clearDepthBuffer) {
+			clearFlags |= GL_DEPTH_BUFFER_BIT;
+		}
+		if (clearFlags != 0) glClear(clearFlags);
+
+		glDisable(GL_SCISSOR_TEST);
+
+		// 현재 그리려는 카메라 객체를 전달하여 렌더링
+		for (auto& obj : renderQueue) {
+			obj->Render(cam);
+		}
 	}
 
 	//버퍼 스왑
