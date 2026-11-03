@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Transform.h"
+#include "ForceMode.h"
 #include <gl/glm/glm.hpp>
 using namespace glm;
 
@@ -11,11 +12,6 @@ private:
 	vec3 forceAccumulator = vec3{ 0.0f };
 
 public:
-	enum ForceMode {
-		Force,
-		Impulse
-	};
-
 	float mass = 1.0;
 	bool useGravity = true;
 	bool isKinematic = false;

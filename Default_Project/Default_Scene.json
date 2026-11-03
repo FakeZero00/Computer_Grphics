@@ -5,7 +5,7 @@
       "name": "MainCamera",
       "parent": "",
       "transform": {
-        "position": [ 0.0, 5.0, 5.0 ],
+        "position": [ 0.0, 10.0, 10.0 ],
         "rotation": [ 45.0, 180.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
@@ -48,10 +48,41 @@
 			  "size": [ 1.0, 1.0, 1.0 ],
 			  "isDebug": true
 		  }
+        }
+      ]
+    },
+	{
+      "name": "Test2",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 5.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials":[
+				"Blue"
+			]
+          }
         },
 		{
-          "type": "TestScript"
-        }
+          "type": "SphereCollider",
+		  "properties": {
+			  "center": [ 0.0, 0.0, 0.0 ],
+			  "radius": 1.0,
+			  "isDebug": true
+		  }
+        },
+		{
+          "type": "RigidBody"
+        },
+		{
+			"type": "TestScript"
+		}
       ]
     }
   ]

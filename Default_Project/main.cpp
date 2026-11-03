@@ -152,6 +152,7 @@ int main(int argc, char** argv) {
 		//시간 계산
 		double currentTime = glfwGetTime();
 		ctx.deltaTime = currentTime - ctx.time;
+		ctx.deltaTime = std::min(ctx.deltaTime, 0.05); //델타타임 제한(너무 큰 값 방지)
 		ctx.time = currentTime;
 
 		//입력 처리

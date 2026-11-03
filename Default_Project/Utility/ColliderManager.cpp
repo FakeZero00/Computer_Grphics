@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Component.h"
 #include "Collider.h"
+#include "RigidBody.h"
 #include <iostream>
 #include <cmath>
 using namespace std;
@@ -159,6 +160,54 @@ void ColliderManager::Update() {
 			if (colA && colB) {
 				bool isColliding = CheckCollision(colA, colB);
 
+				if (isColliding) {
+					Transform* trA = colA->gameObject->GetComponent<Transform>();
+					Transform* trB = colB->gameObject->GetComponent<Transform>();
+
+					//A에서 B를 향하는 중심선 벡터로 Normal 기본값 설정 (A->B 밀어내기 축 방향 보장)
+					vec3 centerA = vec3(trA->worldMatrix[3]);
+					vec3 centerB = vec3(trB->worldMatrix[3]);
+					vec3 dir = centerB - centerA;
+
+					//두 오브젝트의 충돌 수직 방향 계산
+					vec3 normal = vec3{ 0.0f, 1.0f, 0.0f };
+					if (glm::length(dir) > 0.0001f) normal = glm::normalize(dir);
+
+					// 기본 침투 깊이
+					float penetration = 0.01f;
+
+					//Sphere vs Sphere 충돌 시, 두 구체 중심점의 거리로 노말 계산
+					if(colA->type == ColliderType::Sphere && colB->type == ColliderType::Sphere) {
+						auto sphA = static_cast<SphereCollider*>(colA);
+						auto sphB = static_cast<SphereCollider*>(colB);
+
+						vec3 dir = sphB->worldCenter - sphA->worldCenter;
+						float dist = glm::length(dir);
+
+						if (glm::length(dir) > 0.0001f) {
+							normal = dir / dist;
+							penetration = (sphA->worldRadius + sphB->worldRadius) - dist;
+						}
+					}
+					//Box vs Box 충돌 시, Y축 침투량 자동 산출
+					else if (colA->type == ColliderType::Box && colB->type == ColliderType::Box) {
+						auto boxA = static_cast<BoxCollider*>(colA);
+						auto boxB = static_cast<BoxCollider*>(colB);
+
+						float halfY_A = (boxA->localMax.y - boxA->localMin.y) * 0.5f * glm::length(vec3(trA->worldMatrix[1]));
+						float halfY_B = (boxB->localMax.y - boxB->localMin.y) * 0.5f * glm::length(vec3(trB->worldMatrix[1]));
+
+						float overlapY = (halfY_A + halfY_B) - std::abs(dir.y);
+						if (overlapY > 0.0f) {
+							penetration = overlapY;
+							normal = (dir.y > 0.0f) ? vec3(0.0f, 1.0f, 0.0f) : vec3(0.0f, -1.0f, 0.0f);
+						}
+					}
+
+					//충돌 해결
+					ResolveCollision(colA, colB, normal, penetration);
+				}
+
 				//A 입장에서의 B와 충돌 처리
 				auto it = find(colA->collidingColliders.begin(), colA->collidingColliders.end(), colB);
 				bool aAlreadyColliding = (it != colA->collidingColliders.end());
@@ -217,4 +266,106 @@ void ColliderManager::Update() {
 			}
 		}
 	}
+}
+
+float ColliderManager::CombineFriction(float coefA, float coefB) {
+	return (coefA + coefB) / 2.0f;
+}
+
+float ColliderManager::CombineRestitution(float restA, float restB) {
+	return std::min(restA, restB);
+}
+
+void ColliderManager::ResolveCollisionWithFriction(Collider* colA, Collider* colB, vec3 collisionNormal) {
+	RigidBody* rbA = colA->gameObject->GetComponent<RigidBody>();
+	RigidBody* rbB = colB->gameObject->GetComponent<RigidBody>();
+
+	if (!rbA && !rbB) return; // 두 오브젝트 모두 RigidBody가 없으면 충돌 해결 불가
+
+	//최종 정적 / 동적 마찰 계수 계산
+	float mu_s = CombineFriction(colA->staticFriction, colB->staticFriction);
+	float mu_d = CombineFriction(colA->dynamicFriction, colB->dynamicFriction);
+
+	// 상대 속도 계산
+	vec3 velA = (rbA && !rbA->isKinematic) ? rbA->velocity : vec3(0.0f);
+	vec3 velB = (rbB && !rbB->isKinematic) ? rbB->velocity : vec3(0.0f);
+	vec3 relativeVel = velB - velA;
+
+	//노말 방향 속도 성분
+	float normalVelMag = glm::dot(relativeVel, collisionNormal);
+
+	//두 무체가 서로 접근 중일 때만 마찰력 적용
+	if (normalVelMag < 0.0f) {
+		vec3 normalVelocity = normalVelMag * collisionNormal;
+		vec3 tangentVelocity = relativeVel - normalVelocity;		//수평 접선 속도
+		float tangentSpeed = glm::length(tangentVelocity);
+
+		if (tangentSpeed > 0.0001f) {
+			vec3 tangentDir = tangentVelocity / tangentSpeed; // 미끄러지는 방향
+			float normalForceImpact = std::abs(normalVelMag); // 노말 방향 충격량
+
+			vec3 frictionImpulse = vec3{ 0.0f };
+
+			//정적 마찰력 판단(수평 속도가 작으면 정지)
+			if (tangentSpeed <= normalForceImpact * mu_s) frictionImpulse = tangentVelocity;
+			//동적 마찰력 적용(미끄러지는 동안 감속)
+			else {
+				float frictionDecel = normalForceImpact * mu_d;
+				frictionImpulse = tangentDir * std::min(frictionDecel, tangentSpeed);
+			}
+
+			if (rbA && !rbA->isKinematic) rbA->velocity += frictionImpulse;
+			if (rbA && !rbB->isKinematic) rbB->velocity -= frictionImpulse;
+		}
+	}
+}
+
+void ColliderManager::ResolveCollision(Collider* colA, Collider* colB, vec3 collisionNormal, float penetration) {
+	RigidBody* rbA = colA->gameObject->GetComponent<RigidBody>();
+	RigidBody* rbB = colB->gameObject->GetComponent<RigidBody>();
+	if (!rbA && !rbB) return;
+
+	float invMassA = (rbA && !rbA->isKinematic && rbA->mass > 0.0f) ? (1.0f / rbA->mass) : 0.0f;
+	float invMassB = (rbB && !rbB->isKinematic && rbB->mass > 0.0f) ? (1.0f / rbB->mass) : 0.0f;
+	if (invMassA + invMassB == 0.0f) return; // 두 오브젝트 모두 고정된 물체면 무시
+
+	Transform* trA = colA->gameObject->GetComponent<Transform>();
+	Transform* trB = colB->gameObject->GetComponent<Transform>();
+
+	//위치 보정 (Penetration Correction)
+	const float percent = 0.4f; // 보정 비율
+	const float slop = 0.002f; // 허용 오차(지터링 방지)
+	vec3 correction = std::max(penetration - slop, 0.0f) / (invMassA + invMassB) * percent * collisionNormal;
+
+	if (invMassA > 0.0f) trA->Translate(-invMassA * correction, true);
+	if (invMassB > 0.0f) trB->Translate(invMassB * correction, true);
+
+	//탄성 충돌 속도 계산(Impulse Resolution)
+	vec3 velA = (rbA && !rbA->isKinematic) ? rbA->velocity : vec3(0.0f);
+	vec3 velB = (rbB && !rbB->isKinematic) ? rbB->velocity : vec3(0.0f);
+	vec3 relativeVel = velB - velA;
+
+	//충돌 수직 방향 상대 속도
+	float velAlongNormal = glm::dot(relativeVel, collisionNormal);
+
+	//물체가 이미 멀어지는 중이면 속도 변환 필요없음
+	if (velAlongNormal > 0.0f) return;
+
+	//반발 계수 계산
+	float e = CombineRestitution(colA->bounciness, colB->bounciness);
+	if (std::abs(velAlongNormal) < 0.2f) e = 0.0f; //충돌 속도가 낮으면 반발 계수 무시(충돌 후 튀지 않음)
+
+	//충격량 크기 계산
+	float j = -(1.0f + e) * velAlongNormal;
+	j /= invMassA + invMassB;
+
+	//충격량 벡터
+	vec3 impulse = j * collisionNormal;
+
+	//속도 적용
+	if (invMassA > 0.0f) rbA->velocity -= invMassA * impulse;
+	if (invMassB > 0.0f) rbB->velocity += invMassB * impulse;
+
+	//마찰력 적용
+	ResolveCollisionWithFriction(colA, colB, collisionNormal);
 }

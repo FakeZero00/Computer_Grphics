@@ -132,6 +132,12 @@
     <ClInclude Include="Component\SphereCollider.h">
       <Filter>Component\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Component\RigidBody.h">
+      <Filter>Component\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Structure\ForceMode.h">
+      <Filter>Data_Structure\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -189,6 +195,9 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="Component\SphereCollider.cpp">
+      <Filter>Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\RigidBody.cpp">
       <Filter>Component\Source</Filter>
     </ClCompile>
   </ItemGroup>

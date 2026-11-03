@@ -12,6 +12,12 @@ enum class ColliderType {
 class Collider : public Component {
 public:
 	ColliderType type;
+
+	//마찰 계수 및 반발 계수
+	float dynamicFriction = 0.6f;
+	float staticFriction = 0.6f;
+	float bounciness = 0.0f;
+
 	vector<Collider*> collidingColliders;
 
 	//디버그 렌더링용 버퍼
