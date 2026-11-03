@@ -1,6 +1,5 @@
 #include "BoxCollider.h"
 #include "Object.h"
-#include "Transform.h"
 #include "MeshRenderer3D.h"
 #include "Mesh.h"
 #include "Material.h"
@@ -29,9 +28,6 @@ bool BoxCollider::MouseCollide(vec2 mousePos) {
 void BoxCollider::RecalculateCollision() {
 	if (not gameObject) return;
 
-	Transform* tr = gameObject->GetComponent<Transform>();
-	if (not tr) return;
-
 	//메시 데이터가 없을 때의 기본 박스 범위 설정
 	vec3 meshMin{ -0.5f };
 	vec3 meshMax{ 0.5f };
@@ -46,8 +42,8 @@ void BoxCollider::RecalculateCollision() {
 	vec3 meshCenter = (meshMin + meshMax) / 2.0f;
 	vec3 meshExtent = (meshMax - meshMin) / 2.0f;
 
-	vec3 localMin = (meshCenter + center) - (meshExtent * size);
-	vec3 localMax = (meshCenter + center) + (meshExtent * size);
+	localMin = (meshCenter + center) - (meshExtent * size);
+	localMax = (meshCenter + center) + (meshExtent * size);
 
 	//로컬 바운딩 박스의 8개 꼭짓점 좌표 배열 생성
 	vec3 corners[8] = {
@@ -74,6 +70,8 @@ void BoxCollider::RecalculateCollision() {
 }
 
 void BoxCollider::Start() {
+	tr = gameObject->GetComponent<Transform>();
+	
 	RecalculateCollision();
 
 	gameObject->ctx.pendingCollisionObjects.push_back(this);
@@ -81,6 +79,8 @@ void BoxCollider::Start() {
 
 void BoxCollider::Render() {
 	if (not isDebug) return;
+
+	RecalculateCollision();
 
 	GLuint debugShader = shaders["Debug"];
 	glUseProgram(debugShader);
@@ -94,14 +94,13 @@ void BoxCollider::Render() {
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(cam->GetProjectionMatrix()));
 	}
 
-	// minPos, maxPos는 이미 월드 좌표이므로 모델 변환 행렬을 단위 행렬(Identity)로 덮어씌움
+	//오브젝트의 worldMatrix를 그대로 모델 행렬에 넘겨 회전
 	GLuint modelLoc = glGetUniformLocation(debugShader, "model");
-	mat4 identity = mat4{ 1.0f };
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(identity));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(tr->worldMatrix));
 
-	//minPos와 maxPos를 이용해 8개의 꼭짓점 계산
-	float x1 = minPos.x, y1 = minPos.y, z1 = minPos.z;
-	float x2 = maxPos.x, y2 = maxPos.y, z2 = maxPos.z;
+	//월드 좌표가 아닌 로컬 좌표로 8개 꼭짓점 버퍼 구성
+	float x1 = localMin.x, y1 = localMin.y, z1 = localMin.z;
+	float x2 = localMax.x, y2 = localMax.y, z2 = localMax.z;
 	float g = 1.0f;
 
 	float vertices[] = {
