@@ -87,17 +87,16 @@ int main(int argc, char** argv) {
 	meshChache["Pyramid"] = new Mesh("Default_Pyramid.obj");
 	meshChache["Sphere"] = new Mesh("Default_Sphere.obj");
 	meshChache["Torus"] = new Mesh("Default_Torus.obj");
+	meshChache["FBWall"] = new Mesh("FBWall.obj");
+	meshChache["Floor"] = new Mesh("Floor.obj");
+	meshChache["LRWall"] = new Mesh("LRWall.obj");
+	meshChache["R_ArmL"] = new Mesh("R_Arm_L.obj");
+	meshChache["R_ArmR"] = new Mesh("R_Arm_R.obj");
+	meshChache["R_Body"] = new Mesh("R_Body.obj");
+	meshChache["R_Head"] = new Mesh("R_Head.obj");
+	meshChache["R_Leg"] = new Mesh("R_Leg.obj");
+	meshChache["R_Nose"] = new Mesh("R_Nose.obj");
 
-	Material* darkGreen = new Material(shaders["Standard"]);
-	darkGreen->SetVec4("tColor", vec4(0.29f, 0.31f, 0.29f, 1.0f));
-	Material* darkGray = new Material(shaders["Standard"]);
-	darkGray->SetVec4("tColor", vec4(0.1f, 0.1f, 0.1f, 1.0f));
-	Material* lightGray = new Material(shaders["Standard"]);
-	lightGray->SetVec4("tColor", vec4(0.34f, 0.34f, 0.39f, 1.0f));
-	Material* darkYellow = new Material(shaders["Standard"]);
-	darkYellow->SetVec4("tColor", vec4(0.72f, 0.66f, 0.24f, 1.0f));
-	Material* black = new Material(shaders["Standard"]);
-	black->SetVec4("tColor", vec4(0.0f, 0.0f, 0.0f, 1.0f));
 	Material* red = new Material(shaders["Standard"]);
 	red->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	Material* green = new Material(shaders["Standard"]);
@@ -106,20 +105,36 @@ int main(int argc, char** argv) {
 	blue->SetVec4("tColor", vec4(0.0f, 0.0f, 1.0f, 1.0f));
 	Material* orange = new Material(shaders["Standard"]);
 	orange->SetVec4("tColor", vec4(1.0f, 0.5f, 0.0f, 1.0f));
-	Material* purple = new Material(shaders["Standard"]);
-	purple->SetVec4("tColor", vec4(0.5f, 0.0f, 1.0f, 1.0f));
+	Material* magenta = new Material(shaders["Standard"]);
+	magenta->SetVec4("tColor", vec4(1.0f, 0.0f, 1.0f, 1.0f));
+	Material* yellow = new Material(shaders["Standard"]);
+	yellow->SetVec4("tColor", vec4(1.0f, 1.0f, 0.0f, 1.0f));
+	Material* cyan = new Material(shaders["Standard"]);
+	cyan->SetVec4("tColor", vec4(0.0f, 1.0f, 1.0f, 1.0f));
+	Material* floor = new Material(shaders["Standard"]);
+	floor->SetVec4("tColor", vec4(0.43f, 0.55f, 0.41f, 1.0f));
+	Material* lrWallL = new Material(shaders["Standard"]);
+	lrWallL->SetVec4("tColor", vec4(0.15f, 0.2f, 0.37f, 1.0f));
+	Material* lrWallR = new Material(shaders["Standard"]);
+	lrWallR->SetVec4("tColor", vec4(0.24f, 0.43f, 0.25f, 1.0f));
+	Material* fbWall = new Material(shaders["Standard"]);
+	fbWall->SetVec4("tColor", vec4(0.56f, 0.24f, 0.22f, 1.0f));
+	Material* head = new Material(shaders["Standard"]);
+	head->SetVec4("tColor", vec4(0.86f, 0.72f, 0.58f, 1.0f));
 
 	materialChache["LocalPosColor"] = new Material(shaders["LocalPosColor"]);
-	materialChache["DarkGreen"] = darkGreen;
-	materialChache["DarkGray"] = darkGray;
-	materialChache["LightGray"] = lightGray;
-	materialChache["DarkYellow"] = darkYellow;
-	materialChache["Black"] = black;
 	materialChache["Red"] = red;
 	materialChache["Green"] = green;
 	materialChache["Blue"] = blue;
 	materialChache["Orange"] = orange;
-	materialChache["Purple"] = purple;
+	materialChache["Magenta"] = magenta;
+	materialChache["Yellow"] = yellow;
+	materialChache["Cyan"] = cyan;
+	materialChache["Floor"] = floor;
+	materialChache["LRWallL"] = lrWallL;
+	materialChache["LRWallR"] = lrWallR;
+	materialChache["FBWall"] = fbWall;
+	materialChache["Head"] = head;
 
 	//////////////////사용자 정의 초기화////////////////////
 

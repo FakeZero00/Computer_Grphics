@@ -5,8 +5,8 @@
       "name": "MainCamera",
       "parent": "",
       "transform": {
-        "position": [ 0.0, 10.0, 10.0 ],
-        "rotation": [ 45.0, 180.0, 0.0 ],
+        "position": [ 0.0, 50.0, 90.0 ],
+        "rotation": [ 15.0, 180.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
       "components": [
@@ -24,29 +24,7 @@
       ]
     },
 	{
-      "name": "MinimapCamera",
-      "parent": "",
-      "transform": {
-        "position": [ 0.0, 20.0, 0.0 ],
-        "rotation": [ 90.0, 0.0, 0.0 ],
-        "scale": [ 1.0, 1.0, 1.0 ]
-      },
-      "components": [
-        {
-          "type": "Camera",
-          "properties": {
-            "fov": 60.0,
-            "nearPlane": 0.1,
-            "farPlane": 1000.0,
-			"viewportRect": [0.75, 0.75, 0.23, 0.23],
-			"backgroundColor": [0.0, 0.0, 0.0, 1.0],
-			"priority": 1
-          }
-        }
-      ]
-    },
-	{
-      "name": "Test",
+      "name": "Floor",
       "parent": "",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
@@ -57,9 +35,9 @@
         {
           "type": "MeshRenderer3D",
           "properties": {
-            "mesh": "Cube",
+            "mesh": "Floor",
             "materials":[
-				"Red"
+				"Floor"
 			]
           }
         },
@@ -74,10 +52,10 @@
       ]
     },
 	{
-      "name": "Test2",
+      "name": "Wall.L",
       "parent": "",
       "transform": {
-        "position": [ 0.0, 5.0, 0.0 ],
+        "position": [ 42.78, 29.67, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
@@ -85,26 +63,247 @@
         {
           "type": "MeshRenderer3D",
           "properties": {
-            "mesh": "Sphere",
+            "mesh": "LRWall",
             "materials":[
-				"Blue"
+				"LRWallL"
 			]
           }
         },
 		{
-          "type": "SphereCollider",
+          "type": "BoxCollider",
 		  "properties": {
 			  "center": [ 0.0, 0.0, 0.0 ],
-			  "radius": 1.0,
+			  "size": [ 1.0, 1.0, 1.0 ],
+			  "isDebug": true
+		  }
+        }
+      ]
+    },
+	{
+      "name": "Wall.R",
+      "parent": "",
+      "transform": {
+        "position": [ -42.78, 29.67, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "LRWall",
+            "materials":[
+				"LRWallR"
+			]
+          }
+        },
+		{
+          "type": "BoxCollider",
+		  "properties": {
+			  "center": [ 0.0, 0.0, 0.0 ],
+			  "size": [ 1.0, 1.0, 1.0 ],
+			  "isDebug": true
+		  }
+        }
+      ]
+    },
+	{
+      "name": "Wall.B",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 29.70, -29.55 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "FBWall",
+            "materials":[
+				"FBWall"
+			]
+          }
+        },
+		{
+          "type": "BoxCollider",
+		  "properties": {
+			  "center": [ 0.0, 0.0, 0.0 ],
+			  "size": [ 1.0, 1.0, 1.0 ],
+			  "isDebug": true
+		  }
+        }
+      ]
+    },
+	{
+      "name": "Robot_Root",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+	  "components": [
+		{
+          "type": "BoxCollider",
+		  "properties": {
+			  "center": [ 0.0, 8.2, 0.0 ],
+			  "size": [ 7.7, 16.4, 4.0 ],
 			  "isDebug": true
 		  }
         },
 		{
-          "type": "RigidBody"
-        },
+			"type": "RigidBody"
+		},
 		{
-			"type": "TestScript"
+			"type": "RobotController",
+			"properties": {
+				"ArmL": "Robot_Arm.L",
+				"ArmR": "Robot_Arm.R",
+				"LegL": "Robot_Leg.L",
+				"LegR": "Robot_Leg.R"
+			}
 		}
+      ]
+    },
+	{
+      "name": "Robot_Body",
+      "parent": "Robot_Root",
+      "transform": {
+        "position": [ 0.0, 9.09, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "R_Body",
+            "materials":[
+				"Blue"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Robot_Head",
+      "parent": "Robot_Body",
+      "transform": {
+        "position": [ 0.0, 3.89, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "R_Head",
+            "materials":[
+				"Head"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Robot_Nose",
+      "parent": "Robot_Head",
+      "transform": {
+        "position": [ 0.0, 1.64, 1.61 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "R_Nose",
+            "materials":[
+				"Yellow"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Robot_Arm.L",
+      "parent": "Robot_Body",
+      "transform": {
+        "position": [ 2.22, 2.24, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "R_ArmL",
+            "materials":[
+				"Red"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Robot_Arm.R",
+      "parent": "Robot_Body",
+      "transform": {
+        "position": [ -2.22, 2.24, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "R_ArmR",
+            "materials":[
+				"Green"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Robot_Leg.L",
+      "parent": "Robot_Body",
+      "transform": {
+        "position": [ 1.27, -3.84, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "R_Leg",
+            "materials":[
+				"Magenta"
+			]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Robot_Leg.R",
+      "parent": "Robot_Body",
+      "transform": {
+        "position": [ -1.27, -3.84, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "R_Leg",
+            "materials":[
+				"Cyan"
+			]
+          }
+        }
       ]
     }
   ]

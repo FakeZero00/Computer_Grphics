@@ -165,8 +165,27 @@ void ColliderManager::Update() {
 					Transform* trB = colB->gameObject->GetComponent<Transform>();
 
 					//A에서 B를 향하는 중심선 벡터로 Normal 기본값 설정 (A->B 밀어내기 축 방향 보장)
-					vec3 centerA = vec3(trA->worldMatrix[3]);
-					vec3 centerB = vec3(trB->worldMatrix[3]);
+					vec3 centerA = trA->worldPosition;
+					vec3 centerB = trA->worldPosition;
+
+					if (colA->type == ColliderType::Box) {
+						auto boxA = static_cast<BoxCollider*>(colA);
+						vec3 localCenterA = (boxA->localMin + boxA->localMax) * 0.5f;
+						centerA = vec3(trA->worldMatrix * vec4(localCenterA, 1.0f));
+					}
+					else if (colA->type == ColliderType::Sphere) {
+						centerA = static_cast<SphereCollider*>(colA)->worldCenter;
+					}
+
+					if (colB->type == ColliderType::Box) {
+						auto boxB = static_cast<BoxCollider*>(colB);
+						vec3 localCenterB = (boxB->localMin + boxB->localMax) * 0.5f;
+						centerB = vec3(trB->worldMatrix * vec4(localCenterB, 1.0f));
+					}
+					else if (colB->type == ColliderType::Sphere) {
+						centerB = static_cast<SphereCollider*>(colB)->worldCenter;
+					}
+
 					vec3 dir = centerB - centerA;
 
 					//두 오브젝트의 충돌 수직 방향 계산
@@ -181,12 +200,17 @@ void ColliderManager::Update() {
 						auto sphA = static_cast<SphereCollider*>(colA);
 						auto sphB = static_cast<SphereCollider*>(colB);
 
-						vec3 dir = sphB->worldCenter - sphA->worldCenter;
-						float dist = glm::length(dir);
+						vec3 sphereDir = sphB->worldCenter - sphA->worldCenter;
+						float dist = glm::length(sphereDir);
 
-						if (glm::length(dir) > 0.0001f) {
-							normal = dir / dist;
+						if (dist > 0.0001f) {
+							normal = sphereDir / dist;
 							penetration = (sphA->worldRadius + sphB->worldRadius) - dist;
+						}
+						else {
+							// 예외 처리: 두 구체의 중심이 완전히 똑같은 위치에 겹쳤을 때
+							normal = vec3(0.0f, 1.0f, 0.0f); // 임의로 위로 밀어냄
+							penetration = sphA->worldRadius + sphB->worldRadius;
 						}
 					}
 					//Box vs Box 충돌 시, Y축 침투량 자동 산출
@@ -194,14 +218,106 @@ void ColliderManager::Update() {
 						auto boxA = static_cast<BoxCollider*>(colA);
 						auto boxB = static_cast<BoxCollider*>(colB);
 
-						float halfY_A = (boxA->localMax.y - boxA->localMin.y) * 0.5f * glm::length(vec3(trA->worldMatrix[1]));
-						float halfY_B = (boxB->localMax.y - boxB->localMin.y) * 0.5f * glm::length(vec3(trB->worldMatrix[1]));
+						// 각 축(X, Y, Z)별 반-크기(Half-Extents) 계산 (스케일 반영)
+						vec3 halfExtentsA = (boxA->localMax - boxA->localMin) * 0.5f;
+						vec3 scaleA = vec3(glm::length(vec3(trA->worldMatrix[0])),
+							glm::length(vec3(trA->worldMatrix[1])),
+							glm::length(vec3(trA->worldMatrix[2])));
+						halfExtentsA *= scaleA;
 
-						float overlapY = (halfY_A + halfY_B) - std::abs(dir.y);
-						if (overlapY > 0.0f) {
-							penetration = overlapY;
-							normal = (dir.y > 0.0f) ? vec3(0.0f, 1.0f, 0.0f) : vec3(0.0f, -1.0f, 0.0f);
+						vec3 halfExtentsB = (boxB->localMax - boxB->localMin) * 0.5f;
+						vec3 scaleB = vec3(glm::length(vec3(trB->worldMatrix[0])),
+							glm::length(vec3(trB->worldMatrix[1])),
+							glm::length(vec3(trB->worldMatrix[2])));
+						halfExtentsB *= scaleB;
+
+						// X, Y, Z 각 축별 겹침(Overlap) 정도 계산
+						vec3 overlap;
+						overlap.x = (halfExtentsA.x + halfExtentsB.x) - std::abs(dir.x);
+						overlap.y = (halfExtentsA.y + halfExtentsB.y) - std::abs(dir.y);
+						overlap.z = (halfExtentsA.z + halfExtentsB.z) - std::abs(dir.z);
+
+						// 가장 적게 겹친 축(최소 침투 깊이)을 찾아 그 방향으로 밀어냄
+						if (overlap.x > 0.0f && overlap.y > 0.0f && overlap.z > 0.0f) {
+							if (overlap.x < overlap.y && overlap.x < overlap.z) {
+								// X축이 최소 겹침 (좌우 벽 충돌)
+								penetration = overlap.x;
+								normal = (dir.x > 0.0f) ? vec3(1.0f, 0.0f, 0.0f) : vec3(-1.0f, 0.0f, 0.0f);
+							}
+							else if (overlap.y < overlap.x && overlap.y < overlap.z) {
+								// Y축이 최소 겹침 (바닥/천장 충돌)
+								penetration = overlap.y;
+								normal = (dir.y > 0.0f) ? vec3(0.0f, 1.0f, 0.0f) : vec3(0.0f, -1.0f, 0.0f);
+							}
+							else {
+								// Z축이 최소 겹침 (앞뒤 벽 충돌)
+								penetration = overlap.z;
+								normal = (dir.z > 0.0f) ? vec3(0.0f, 0.0f, 1.0f) : vec3(0.0f, 0.0f, -1.0f);
+							}
 						}
+					}
+					else if ((colA->type == ColliderType::Box && colB->type == ColliderType::Sphere) ||
+						(colA->type == ColliderType::Sphere && colB->type == ColliderType::Box)) {
+						BoxCollider* box = (colA->type == ColliderType::Box) ? static_cast<BoxCollider*>(colA) : static_cast<BoxCollider*>(colB);
+						SphereCollider* sphere = (colA->type == ColliderType::Sphere) ? static_cast<SphereCollider*>(colA) : static_cast<SphereCollider*>(colB);
+						Transform* boxTr = box->gameObject->GetComponent<Transform>();
+
+						// 구체 중심을 박스의 로컬 좌표계로 변환
+						mat4 invBoxMatrix = glm::inverse(boxTr->worldMatrix);
+						vec3 localSphereCenter = vec3(invBoxMatrix * vec4(sphere->worldCenter, 1.0f));
+
+						// 구체 중심이 박스 내부에 완전히 들어왔는지 확인
+						bool isInside = (localSphereCenter.x > box->localMin.x && localSphereCenter.x < box->localMax.x &&
+							localSphereCenter.y > box->localMin.y && localSphereCenter.y < box->localMax.y &&
+							localSphereCenter.z > box->localMin.z && localSphereCenter.z < box->localMax.z);
+
+						vec3 boxToSphereNormal;
+
+						if (isInside) {
+							// 깊은 침투(Deep Penetration) 처리: 구체가 박스 중심까지 파고들었을 때 가장 가까운 6개 면 중 하나를 찾아 밖으로 밀어냄
+							float distToMinX = localSphereCenter.x - box->localMin.x;
+							float distToMaxX = box->localMax.x - localSphereCenter.x;
+							float distToMinY = localSphereCenter.y - box->localMin.y;
+							float distToMaxY = box->localMax.y - localSphereCenter.y;
+							float distToMinZ = localSphereCenter.z - box->localMin.z;
+							float distToMaxZ = box->localMax.z - localSphereCenter.z;
+
+							float minDist = distToMinX;
+							vec3 localNormal = vec3(-1.0f, 0.0f, 0.0f);
+
+							if (distToMaxX < minDist) { minDist = distToMaxX; localNormal = vec3(1.0f, 0.0f, 0.0f); }
+							if (distToMinY < minDist) { minDist = distToMinY; localNormal = vec3(0.0f, -1.0f, 0.0f); }
+							if (distToMaxY < minDist) { minDist = distToMaxY; localNormal = vec3(0.0f, 1.0f, 0.0f); }
+							if (distToMinZ < minDist) { minDist = distToMinZ; localNormal = vec3(0.0f, 0.0f, -1.0f); }
+							if (distToMaxZ < minDist) { minDist = distToMaxZ; localNormal = vec3(0.0f, 0.0f, 1.0f); }
+
+							// 로컬 방향 벡터를 월드 방향 벡터로 변환 (w = 0.0f 주의)
+							boxToSphereNormal = glm::normalize(vec3(boxTr->worldMatrix * vec4(localNormal, 0.0f)));
+							penetration = sphere->worldRadius + minDist;
+						}
+						else {
+							// 외부에서 표면만 부딪힌 일반적인 경우 (기존 로직 보강)
+							float closestX = glm::clamp(localSphereCenter.x, box->localMin.x, box->localMax.x);
+							float closestY = glm::clamp(localSphereCenter.y, box->localMin.y, box->localMax.y);
+							float closestZ = glm::clamp(localSphereCenter.z, box->localMin.z, box->localMax.z);
+
+							vec3 worldClosestPoint = vec3(boxTr->worldMatrix * vec4(closestX, closestY, closestZ, 1.0f));
+							vec3 sphereDir = sphere->worldCenter - worldClosestPoint;
+							float dist = glm::length(sphereDir);
+
+							if (dist > 0.0001f) {
+								boxToSphereNormal = sphereDir / dist;
+								penetration = sphere->worldRadius - dist;
+							}
+							else {
+								// 예외 방어
+								boxToSphereNormal = vec3(0.0f, 1.0f, 0.0f);
+								penetration = sphere->worldRadius;
+							}
+						}
+
+						// A->B 방향에 맞게 Normal 설정
+						normal = (colA->type == ColliderType::Box) ? boxToSphereNormal : -boxToSphereNormal;
 					}
 
 					//충돌 해결
@@ -315,7 +431,7 @@ void ColliderManager::ResolveCollisionWithFriction(Collider* colA, Collider* col
 			}
 
 			if (rbA && !rbA->isKinematic) rbA->velocity += frictionImpulse;
-			if (rbA && !rbB->isKinematic) rbB->velocity -= frictionImpulse;
+			if (rbB && !rbB->isKinematic) rbB->velocity -= frictionImpulse;
 		}
 	}
 }
