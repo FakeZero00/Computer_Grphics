@@ -42,6 +42,12 @@ void RobotController::Update(float deltaTime) {
 			tr->SetLocalRotation(0.0f, 90.0f, 0.0f);
 		}
 	}
+	else if (inputManager.GetKeyDown(GLFW_KEY_J)) {
+		if (isGrounded) {
+			rb->AddForce(vec3(0.0f, 20.0f, 0.0f), ForceMode::Impulse);
+			isGrounded = false;
+		}
+	}
 
 	if (moveMode != 0) {
 		tr->Translate(0.0f, 0.0f, moveSpeed * deltaTime);
@@ -74,8 +80,32 @@ void RobotController::Update(float deltaTime) {
 	LegRtr->SetLocalRotation(currentRotL);
 }
 
-void RobotController::OnTriggerStay(Object* other) {
-	cout << "Trigger Entered with object: " << other->name << endl;
+void RobotController::OnTriggerEnter(Object* other) {
+	if (other->name == "Floor") {
+		isGrounded = true;
+	}
+	else if(other->name == "Wall.L" ||
+		other->name == "Wall.R" ||
+		other->name == "Wall.F" ||
+		other->name == "Wall.B") {
+		tr->Rotate(0.0f, 180.0f, 0.0f);
+		switch (moveMode) {
+			case 1:
+				moveMode = 2;
+				break;
+			case 2:
+				moveMode = 1;
+				break;
+			case 3:
+				moveMode = 4;
+				break;
+			case 4:
+				moveMode = 3;
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 Component* RobotController::CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects) {

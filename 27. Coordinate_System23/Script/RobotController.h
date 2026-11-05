@@ -33,12 +33,13 @@ private:
 	float weight = 0.5f;
 
 	float moveSpeed = 10.0f;
+	bool isGrounded = true;
 
 public:
 	void Start() override;
 	void Update(float deltaTime) override;
 
-	void OnTriggerStay(Object* other) override;
+	void OnTriggerEnter(Object* other) override;
 
 	static Component* CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects);
 };
