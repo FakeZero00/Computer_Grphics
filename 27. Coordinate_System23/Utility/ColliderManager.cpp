@@ -218,43 +218,55 @@ void ColliderManager::Update() {
 						auto boxA = static_cast<BoxCollider*>(colA);
 						auto boxB = static_cast<BoxCollider*>(colB);
 
-						// 각 축(X, Y, Z)별 반-크기(Half-Extents) 계산 (스케일 반영)
-						vec3 halfExtentsA = (boxA->localMax - boxA->localMin) * 0.5f;
-						vec3 scaleA = vec3(glm::length(vec3(trA->worldMatrix[0])),
-							glm::length(vec3(trA->worldMatrix[1])),
-							glm::length(vec3(trA->worldMatrix[2])));
-						halfExtentsA *= scaleA;
+						// 각 박스의 로컬 반-크기(Half-Extents)
+						vec3 localExtA = (boxA->localMax - boxA->localMin) * 0.5f;
+						vec3 localExtB = (boxB->localMax - boxB->localMin) * 0.5f;
 
-						vec3 halfExtentsB = (boxB->localMax - boxB->localMin) * 0.5f;
-						vec3 scaleB = vec3(glm::length(vec3(trB->worldMatrix[0])),
-							glm::length(vec3(trB->worldMatrix[1])),
-							glm::length(vec3(trB->worldMatrix[2])));
-						halfExtentsB *= scaleB;
+						// 각 박스의 로컬 축 벡터(정규화)와 스케일 반영된 크기 추출
+						vec3 A[3], B[3];
+						vec3 a, b;
+						for (int k = 0; k < 3; ++k) {
+							vec3 axisA = vec3(trA->worldMatrix[k]);
+							a[k] = localExtA[k] * glm::length(axisA);
+							A[k] = glm::normalize(axisA);
 
-						// X, Y, Z 각 축별 겹침(Overlap) 정도 계산
-						vec3 overlap;
-						overlap.x = (halfExtentsA.x + halfExtentsB.x) - std::abs(dir.x);
-						overlap.y = (halfExtentsA.y + halfExtentsB.y) - std::abs(dir.y);
-						overlap.z = (halfExtentsA.z + halfExtentsB.z) - std::abs(dir.z);
+							vec3 axisB = vec3(trB->worldMatrix[k]);
+							b[k] = localExtB[k] * glm::length(axisB);
+							B[k] = glm::normalize(axisB);
+						}
 
-						// 가장 적게 겹친 축(최소 침투 깊이)을 찾아 그 방향으로 밀어냄
-						if (overlap.x > 0.0f && overlap.y > 0.0f && overlap.z > 0.0f) {
-							if (overlap.x < overlap.y && overlap.x < overlap.z) {
-								// X축이 최소 겹침 (좌우 벽 충돌)
-								penetration = overlap.x;
-								normal = (dir.x > 0.0f) ? vec3(1.0f, 0.0f, 0.0f) : vec3(-1.0f, 0.0f, 0.0f);
-							}
-							else if (overlap.y < overlap.x && overlap.y < overlap.z) {
-								// Y축이 최소 겹침 (바닥/천장 충돌)
-								penetration = overlap.y;
-								normal = (dir.y > 0.0f) ? vec3(0.0f, 1.0f, 0.0f) : vec3(0.0f, -1.0f, 0.0f);
-							}
-							else {
-								// Z축이 최소 겹침 (앞뒤 벽 충돌)
-								penetration = overlap.z;
-								normal = (dir.z > 0.0f) ? vec3(0.0f, 0.0f, 1.0f) : vec3(0.0f, 0.0f, -1.0f);
+						// 검사할 6개의 주요 표면 축 (A의 3축, B의 3축)
+						vec3 axes[6] = { A[0], A[1], A[2], B[0], B[1], B[2] };
+						float minOverlap = FLT_MAX;
+						vec3 bestAxis = vec3(0.0f, 1.0f, 0.0f);
+
+						for (int k = 0; k < 6; ++k) {
+							vec3 axis = axes[k];
+							if (glm::length(axis) < 0.0001f) continue;
+
+							// A와 B의 크기를 현재 검사 중인 축(axis)에 투영
+							float rA = a[0] * std::abs(glm::dot(A[0], axis)) +
+								a[1] * std::abs(glm::dot(A[1], axis)) +
+								a[2] * std::abs(glm::dot(A[2], axis));
+
+							float rB = b[0] * std::abs(glm::dot(B[0], axis)) +
+								b[1] * std::abs(glm::dot(B[1], axis)) +
+								b[2] * std::abs(glm::dot(B[2], axis));
+
+							// 두 박스 중심 간의 거리를 같은 축에 투영
+							float projDist = std::abs(glm::dot(dir, axis));
+							float overlap = (rA + rB) - projDist;
+
+							// 가장 얕게 겹친 축(최소 침투) 찾기
+							if (overlap < minOverlap) {
+								minOverlap = overlap;
+								bestAxis = axis;
 							}
 						}
+
+						// 최종 충돌 방향과 밀어낼 깊이 결정
+						penetration = minOverlap;
+						normal = (glm::dot(dir, bestAxis) > 0.0f) ? bestAxis : -bestAxis;
 					}
 					else if ((colA->type == ColliderType::Box && colB->type == ColliderType::Sphere) ||
 						(colA->type == ColliderType::Sphere && colB->type == ColliderType::Box)) {
