@@ -1,9 +1,26 @@
 {
   "SceneName": "Default_Scene",
   "Objects": [
+	{
+      "name": "CameraArm",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "CameraController",
+		  "properties":{
+			  "camTr": "MainCamera"
+		  }
+        }
+      ]
+    },
     {
       "name": "MainCamera",
-      "parent": "",
+      "parent": "CameraArm",
       "transform": {
         "position": [ 0.0, 50.0, 90.0 ],
         "rotation": [ 15.0, 180.0, 0.0 ],
@@ -84,7 +101,7 @@
       "parent": "",
       "transform": {
         "position": [ -42.78, 29.67, 0.0 ],
-        "rotation": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 180.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
       "components": [
@@ -132,6 +149,29 @@
 			  "size": [ 1.0, 1.0, 1.0 ],
 			  "isDebug": true
 		  }
+        }
+      ]
+    },
+	{
+      "name": "Wall.F",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 29.70, 29.55 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "FBWall",
+            "materials":[
+				"FBWall"
+			]
+          }
+        },
+		{
+          "type": "Door"
         }
       ]
     },

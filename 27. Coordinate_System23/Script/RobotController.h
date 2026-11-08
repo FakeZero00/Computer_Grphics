@@ -18,21 +18,13 @@ private:
 	Transform* LegLtr;
 	Transform* LegRtr;
 
-	vec3 startRotL = vec3(-30.0f, 0.0f, 0.0f);
-	quat qStartRotL = quat{ radians(startRotL) };
-	vec3 lastRotL = vec3(30.0f, 0.0f, 0.0f);
-	quat qLastRotL = quat{ radians(lastRotL) };
-
-	vec3 startRotR = -startRotL;
-	quat qStartRotR = quat{ radians(startRotR) };
-	vec3 lastRotR = -lastRotL;
-	quat qLastRotR = quat{ radians(lastRotR) };
-
 	int moveMode = 0;
 	bool movingBackward = false;
 	float weight = 0.5f;
 
 	float moveSpeed = 10.0f;
+	float rotateAngle = 30.0f;
+	float rotateSpeed = 1.5f;
 	bool isGrounded = true;
 
 public:
@@ -40,6 +32,8 @@ public:
 	void Update(float deltaTime) override;
 
 	void OnTriggerEnter(Object* other) override;
+
+	void Reset();
 
 	static Component* CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects);
 };

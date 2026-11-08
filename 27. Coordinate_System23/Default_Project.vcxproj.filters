@@ -138,6 +138,12 @@
     <ClInclude Include="Data_Structure\ForceMode.h">
       <Filter>Data_Structure\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Script\Door.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\CameraController.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -199,6 +205,12 @@
     </ClCompile>
     <ClCompile Include="Component\RigidBody.cpp">
       <Filter>Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Door.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\CameraController.cpp">
+      <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

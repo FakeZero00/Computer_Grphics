@@ -14,6 +14,16 @@ void RobotController::Start() {
 void RobotController::Update(float deltaTime) {
 	InputManager inputManager = gameObject->ctx.inputManager;
 
+	vec3 startRotL = vec3(-rotateAngle, 0.0f, 0.0f);
+	quat qStartRotL = quat{ radians(startRotL) };
+	vec3 lastRotL = vec3(rotateAngle, 0.0f, 0.0f);
+	quat qLastRotL = quat{ radians(lastRotL) };
+
+	vec3 startRotR = -startRotL;
+	quat qStartRotR = quat{ radians(startRotR) };
+	vec3 lastRotR = -lastRotL;
+	quat qLastRotR = quat{ radians(lastRotR) };
+
 	if (inputManager.GetKeyDown(GLFW_KEY_W)) {
 		if (moveMode == 1) moveMode = 0;
 		else {
@@ -48,6 +58,23 @@ void RobotController::Update(float deltaTime) {
 			isGrounded = false;
 		}
 	}
+	else if (inputManager.GetKeyDown(GLFW_KEY_KP_ADD)) {
+		moveSpeed += 2.0f;
+		if (moveSpeed >= 22.0f) moveSpeed = 22.0f;
+		rotateAngle += 10.0f;
+		if (rotateAngle >= 90.0f) rotateAngle = 90.0f;
+		rotateSpeed += 0.5f;
+		if (rotateSpeed >= 4.5f) rotateSpeed = 4.5f;
+	}
+	else if (inputManager.GetKeyDown(GLFW_KEY_KP_SUBTRACT)) {
+		moveSpeed -= 2.0f;
+		if (moveSpeed < 10.0f) moveSpeed = 10.0f;
+		rotateAngle -= 10.0f;
+		if (rotateAngle < 30.0f) rotateAngle = 30.0f;
+		rotateSpeed -= 0.5f;
+		if (rotateSpeed < 1.5f) rotateSpeed = 1.5f;
+	}
+	else if (inputManager.GetKeyDown(GLFW_KEY_I)) Reset();
 
 	if (moveMode != 0) {
 		tr->Translate(0.0f, 0.0f, moveSpeed * deltaTime);
@@ -106,6 +133,20 @@ void RobotController::OnTriggerEnter(Object* other) {
 				break;
 		}
 	}
+}
+
+void RobotController::Reset() {
+	moveMode = 0;
+	movingBackward = false;
+	weight = 0.5f;
+
+	moveSpeed = 10.0f;
+	rotateAngle = 30.0f;
+	rotateSpeed = 1.5f;
+	isGrounded = true;
+
+	tr->SetLocalPosition(vec3{ 0.0f });
+	tr->SetLocalRotation(vec3{ 0.0f });
 }
 
 Component* RobotController::CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects) {
