@@ -138,6 +138,12 @@
     <ClInclude Include="Data_Structure\ForceMode.h">
       <Filter>Data_Structure\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Component\Light.h">
+      <Filter>Component\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Structure\LightType.h">
+      <Filter>Data_Structure\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -198,6 +204,9 @@
       <Filter>Component\Source</Filter>
     </ClCompile>
     <ClCompile Include="Component\RigidBody.cpp">
+      <Filter>Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Light.cpp">
       <Filter>Component\Source</Filter>
     </ClCompile>
   </ItemGroup>

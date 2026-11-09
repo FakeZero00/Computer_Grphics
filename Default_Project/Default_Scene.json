@@ -46,6 +46,34 @@
       ]
     },
 	{
+      "name": "Directional Light",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 10.0, 10.0 ],
+        "rotation": [ 150.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+		{
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "SpotLight",
+            "materials":[
+				"Green"
+			]
+          }
+        },
+        {
+          "type": "Light",
+          "properties": {
+            "lightType": "Directional",
+            "lightColor": [1.0, 1.0, 1.0, 1.0],
+            "intensity": 2.0
+          }
+        }
+      ]
+    },
+	{
       "name": "Test",
       "parent": "",
       "transform": {
@@ -68,7 +96,7 @@
 		  "properties": {
 			  "center": [ 0.0, 0.0, 0.0 ],
 			  "size": [ 1.0, 1.0, 1.0 ],
-			  "isDebug": true
+			  "isDebug": false
 		  }
         }
       ]
@@ -96,7 +124,7 @@
 		  "properties": {
 			  "center": [ 0.0, 0.0, 0.0 ],
 			  "radius": 1.0,
-			  "isDebug": true
+			  "isDebug": false
 		  }
         },
 		{

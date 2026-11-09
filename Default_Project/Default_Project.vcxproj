@@ -24,6 +24,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Component\BoxCollider.h" />
     <ClInclude Include="Component\Camera.h" />
+    <ClInclude Include="Component\Light.h" />
     <ClInclude Include="Component\MeshRenderer3D.h" />
     <ClInclude Include="Component\MeshSpline.h" />
     <ClInclude Include="Component\RigidBody.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="Data_Structure\Component.h" />
     <ClInclude Include="Data_Structure\ForceMode.h" />
     <ClInclude Include="Data_Structure\json.hpp" />
+    <ClInclude Include="Data_Structure\LightType.h" />
     <ClInclude Include="Data_Structure\Material.h" />
     <ClInclude Include="Data_Structure\Mesh.h" />
     <ClInclude Include="Data_Structure\Object.h" />
@@ -53,6 +55,7 @@
   <ItemGroup>
     <ClCompile Include="Component\BoxCollider.cpp" />
     <ClCompile Include="Component\Camera.cpp" />
+    <ClCompile Include="Component\Light.cpp" />
     <ClCompile Include="Component\MeshRenderer3D.cpp" />
     <ClCompile Include="Component\MeshSpline.cpp" />
     <ClCompile Include="Component\RigidBody.cpp" />
