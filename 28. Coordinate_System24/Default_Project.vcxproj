@@ -47,6 +47,7 @@
     <ClInclude Include="Script\RailGenerator.h" />
     <ClInclude Include="Script\RailMovement.h" />
     <ClInclude Include="Script\SceneCamera.h" />
+    <ClInclude Include="Script\TruckController.h" />
     <ClInclude Include="Utility\ColliderManager.h" />
     <ClInclude Include="Utility\InputManager.h" />
     <ClInclude Include="Utility\ObjImporter.h" />
@@ -73,6 +74,7 @@
     <ClCompile Include="Script\RailGenerator.cpp" />
     <ClCompile Include="Script\RailMovement.cpp" />
     <ClCompile Include="Script\SceneCamera.cpp" />
+    <ClCompile Include="Script\TruckController.cpp" />
     <ClCompile Include="Utility\ColliderManager.cpp" />
     <ClCompile Include="Utility\ObjImporter.cpp" />
     <ClCompile Include="Utility\SceneLoader.cpp" />

@@ -33,7 +33,8 @@
 		{
 			"type": "CameraControl",
 			"properties": {
-				"camArmTr": "CameraArm"
+				"camArmTr": "CameraArm",
+				"railGenerator": "Rail_Generator"
 			}
 		}
       ]
@@ -71,7 +72,18 @@
             "mesh": "Truck_Body",
             "materials": [ "Truck_Body" ]
           }
-        }
+		},
+		{
+          "type": "TruckController",
+          "properties": {
+            "railGenerator": "Rail_Generator",
+			"truckCube1": "Truck_Box_Root1",
+			"truckCube2": "Truck_Box_Root2",
+			"truckCube3": "Truck_Box_Root3",
+			"truckCube4": "Truck_Box_Root4",
+			"truckCube5": "Truck_Box_Root5"
+          }
+		}
       ]
     },
 	{
@@ -91,6 +103,51 @@
           }
         }
       ]
+    },
+	{
+      "name": "Truck_Box_Root1",
+      "parent": "Truck_Body",
+      "transform": {
+        "position": [ 0.87, 0.65, -0.3 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
+	{
+      "name": "Truck_Box_Root2",
+      "parent": "Truck_Body",
+      "transform": {
+        "position": [ 0.24, 0.65, -0.3 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
+	{
+      "name": "Truck_Box_Root3",
+      "parent": "Truck_Body",
+      "transform": {
+        "position": [ 0.87, 0.65, -0.91 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
+	{
+      "name": "Truck_Box_Root4",
+      "parent": "Truck_Body",
+      "transform": {
+        "position": [ 0.24, 0.65, -0.91 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
+	{
+      "name": "Truck_Box_Root5",
+      "parent": "Truck_Body",
+      "transform": {
+        "position": [ 0.87, 0.65, -1.53 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
     },
 	{
       "name": "Rail_Leg",

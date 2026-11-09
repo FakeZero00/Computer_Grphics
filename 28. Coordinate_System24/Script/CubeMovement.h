@@ -24,8 +24,17 @@ public:
 	float weight = 0.0f;
 	float truckWeight = 0.0f;
 
+	bool isLoaded = false;
+	Transform* loadedDestTr;
+	float loadTotalLen;
+	float loadWeight = 0.0f;
+	float loadSpeed = 5.0f;
+	vec3 loadedStartPos;
+
 	void Start() override;
 	void Update(float deltaTime) override;
+
+	void Load2Truck(Transform* destObjTr);
 
 	CubeMovement() = default;
 	CubeMovement(int number, float weight, vec3 startPos1, vec3 endPos1, vec3 startPos2, vec3 endPos2) : number(number), weight(weight), startPos1(startPos1), endPos1(endPos1), startPos2(startPos2), endPos2(endPos2) {}
