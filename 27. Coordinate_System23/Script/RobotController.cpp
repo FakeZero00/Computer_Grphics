@@ -133,6 +133,27 @@ void RobotController::OnTriggerEnter(Object* other) {
 				break;
 		}
 	}
+	else {
+		if (isGrounded) {
+			tr->Rotate(0.0f, 180.0f, 0.0f);
+			switch (moveMode) {
+			case 1:
+				moveMode = 2;
+				break;
+			case 2:
+				moveMode = 1;
+				break;
+			case 3:
+				moveMode = 4;
+				break;
+			case 4:
+				moveMode = 3;
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }
 
 void RobotController::Reset() {

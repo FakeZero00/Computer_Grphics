@@ -176,6 +176,90 @@
       ]
     },
 	{
+      "name": "Obstacle1",
+      "parent": "",
+      "transform": {
+        "position": [ -15.13, 0.0, 12.75 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Obstacle",
+            "materials":[
+				"Red"
+			]
+          }
+        },
+		{
+          "type": "BoxCollider",
+		  "properties": {
+			  "center": [ 0.0, 0.0, 0.0 ],
+			  "size": [ 1.0, 1.0, 1.0 ],
+			  "isDebug": true
+		  }
+        }
+      ]
+    },
+	{
+      "name": "Obstacle2",
+      "parent": "",
+      "transform": {
+        "position": [ -14.34, 0.0, -13.26 ],
+        "rotation": [ 0.0, 90.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Obstacle",
+            "materials":[
+				"Blue"
+			]
+          }
+        },
+		{
+          "type": "BoxCollider",
+		  "properties": {
+			  "center": [ 0.0, 0.0, 0.0 ],
+			  "size": [ 1.0, 1.0, 1.0 ],
+			  "isDebug": true
+		  }
+        }
+      ]
+    },
+	{
+      "name": "Obstacle3",
+      "parent": "",
+      "transform": {
+        "position": [ 28.29, 0.0, 6.06 ],
+        "rotation": [ 0.0, 90.0, 0.0 ],
+        "scale": [ 1.0, 2.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Obstacle",
+            "materials":[
+				"Green"
+			]
+          }
+        },
+		{
+          "type": "BoxCollider",
+		  "properties": {
+			  "center": [ 0.0, 0.0, 0.0 ],
+			  "size": [ 1.0, 1.0, 1.0 ],
+			  "isDebug": true
+		  }
+        }
+      ]
+    },
+	{
       "name": "Robot_Root",
       "parent": "",
       "transform": {

@@ -96,6 +96,7 @@ int main(int argc, char** argv) {
 	meshChache["R_Head"] = new Mesh("R_Head.obj");
 	meshChache["R_Leg"] = new Mesh("R_Leg.obj");
 	meshChache["R_Nose"] = new Mesh("R_Nose.obj");
+	meshChache["Obstacle"] = new Mesh("Obstacle.obj");
 
 	Material* red = new Material(shaders["Standard"]);
 	red->SetVec4("tColor", vec4(1.0f, 0.0f, 0.0f, 1.0f));
