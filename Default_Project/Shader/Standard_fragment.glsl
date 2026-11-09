@@ -25,12 +25,11 @@ void main()
     vec3 diffuse = diff * lightColor;
 
 	// 3. Specular (정반사광)
-	float specularStrength = 0.5f;
+	float shiness = 128.0;
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDirNormalized, norm);  
-    
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 32);
-    vec3 specular = specularStrength * spec * lightColor;
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0f), shiness);
+    vec3 specular = spec * lightColor;
 
 	vec3 result = (ambient + diffuse + specular) * vec3(tColor);
 	FragColor = vec4(result, tColor.a);

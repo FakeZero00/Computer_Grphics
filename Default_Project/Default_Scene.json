@@ -68,7 +68,7 @@
           "properties": {
             "lightType": "Directional",
             "lightColor": [1.0, 1.0, 1.0, 1.0],
-            "intensity": 2.0
+            "intensity": 1.0
           }
         }
       ]
