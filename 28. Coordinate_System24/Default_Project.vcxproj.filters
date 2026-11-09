@@ -126,13 +126,25 @@
     <ClInclude Include="Component\MeshSpline.h">
       <Filter>Component\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Component\SphereCollider.h">
+      <Filter>Component\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\RigidBody.h">
+      <Filter>Component\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Structure\ForceMode.h">
+      <Filter>Data_Structure\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\CameraControl.h">
+      <Filter>Script</Filter>
+    </ClInclude>
     <ClInclude Include="Script\RailGenerator.h">
       <Filter>Script</Filter>
     </ClInclude>
     <ClInclude Include="Script\RailMovement.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="Script\CameraControl.h">
+    <ClInclude Include="Script\CubeMovement.h">
       <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>
@@ -188,13 +200,22 @@
     <ClCompile Include="Component\MeshSpline.cpp">
       <Filter>Component\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Component\SphereCollider.cpp">
+      <Filter>Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\RigidBody.cpp">
+      <Filter>Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\CameraControl.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
     <ClCompile Include="Script\RailGenerator.cpp">
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="Script\RailMovement.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="Script\CameraControl.cpp">
+    <ClCompile Include="Script\CubeMovement.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

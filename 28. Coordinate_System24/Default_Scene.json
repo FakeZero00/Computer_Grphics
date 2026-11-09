@@ -57,6 +57,42 @@
       ]
     },
 	{
+      "name": "Truck_Body",
+      "parent": "",
+      "transform": {
+        "position": [ -4.01, 0.0, -1.15 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Truck_Body",
+            "materials": [ "Truck_Body" ]
+          }
+        }
+      ]
+    },
+	{
+      "name": "Truck_Wheel",
+      "parent": "Truck_Body",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Truck_Wheel",
+            "materials": [ "DarkGray" ]
+          }
+        }
+      ]
+    },
+	{
       "name": "Rail_Leg",
       "parent": "",
       "transform": {
