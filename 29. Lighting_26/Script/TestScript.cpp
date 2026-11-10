@@ -2,28 +2,35 @@
 #include "Object.h"
 
 void TestScript::Start() {
-	tr = gameObject->GetComponent<Transform>();
-	rb = gameObject->GetComponent<RigidBody>();
+	light = lightObj->GetComponent<Light>();
+
+	orbitTr = orbitObj->GetComponent<Transform>();
+	orbitChildTr = orbitChild->GetComponent<Transform>();
+
+	inputManager = &gameObject->ctx.inputManager;
 }
 
 void TestScript::Update(float deltaTime) {
-	InputManager inputManager = gameObject->ctx.inputManager;
-
-	if (inputManager.GetKeyPressed(GLFW_KEY_R)) {
-		rb->AddForce(vec3(0.0f, 50.0f, 0.0f));
+	if (inputManager->GetKeyDown(GLFW_KEY_M)) {
+		if (isLightOn) {
+			light->intensity = 0.1f;
+			isLightOn = false;
+		}
+		else {
+			light->intensity = 1.0f;
+			isLightOn = true;
+		}
 	}
-	if (inputManager.GetKeyPressed(GLFW_KEY_UP)) {
-		tr->Translate(0.0f, 2.0f * deltaTime, 0.0f);
-	}
-}
-
-void TestScript::OnTriggerStay(Object* other) {
-	cout << "Trigger Entered with object: " << other->name << endl;
 }
 
 Component* TestScript::CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects) {
 	TestScript* testScript = obj->AddComponent<TestScript>();
 	
+	if (props.contains("lightObj")) testScript->lightObj = spawnedObjects.at(props["lightObj"].get<string>());
+	if (props.contains("objRoot")) testScript->objRoot = spawnedObjects.at(props["objRoot"].get<string>());
+	if (props.contains("orbitObj")) testScript->orbitObj = spawnedObjects.at(props["orbitObj"].get<string>());
+	if (props.contains("orbitChild")) testScript->orbitChild = spawnedObjects.at(props["orbitChild"].get<string>());
+
 	return testScript;
 }
 

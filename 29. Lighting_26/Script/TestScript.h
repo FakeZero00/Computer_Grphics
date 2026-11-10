@@ -1,17 +1,27 @@
 #pragma once
 #include "Component.h"
+#include "Object.h"
 #include "../AllComponent.h"
 
 class TestScript : public Component {
 private:
-	Transform* tr;
-	RigidBody* rb;
+	Object* lightObj;
+	Light* light;
+
+	Object* objRoot;
+
+	Object* orbitObj;
+	Transform* orbitTr;
+	Object* orbitChild;
+	Transform* orbitChildTr;
+
+	InputManager* inputManager;
+
+	bool isLightOn = true;
 
 public:
 	void Start() override;
 	void Update(float deltaTime) override;
-
-	void OnTriggerStay(Object* other) override;
 
 	static Component* CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects);
 };

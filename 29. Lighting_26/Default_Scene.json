@@ -24,33 +24,11 @@
       ]
     },
 	{
-      "name": "MinimapCamera",
-      "parent": "",
-      "transform": {
-        "position": [ 0.0, 20.0, 0.0 ],
-        "rotation": [ 90.0, 0.0, 0.0 ],
-        "scale": [ 1.0, 1.0, 1.0 ]
-      },
-      "components": [
-        {
-          "type": "Camera",
-          "properties": {
-            "fov": 60.0,
-            "nearPlane": 0.1,
-            "farPlane": 1000.0,
-			"viewportRect": [0.75, 0.75, 0.23, 0.23],
-			"backgroundColor": [0.0, 0.0, 0.0, 1.0],
-			"priority": 1
-          }
-        }
-      ]
-    },
-	{
       "name": "Directional Light",
       "parent": "",
       "transform": {
-        "position": [ 0.0, 10.0, 10.0 ],
-        "rotation": [ 150.0, 0.0, 0.0 ],
+        "position": [ 0.0, 0.0, 5.0 ],
+        "rotation": [ 0.0, 180.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
       "components": [
@@ -59,14 +37,14 @@
           "properties": {
             "mesh": "SpotLight",
             "materials":[
-				"Green"
+				"LightGray"
 			]
           }
         },
         {
           "type": "Light",
           "properties": {
-            "lightType": "Directional",
+            "lightType": "Spot",
             "lightColor": [1.0, 1.0, 1.0, 1.0],
             "intensity": 1.0
           }
@@ -74,8 +52,37 @@
       ]
     },
 	{
-      "name": "Test",
+      "name": "Director",
       "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "TestScript",
+          "properties": {
+            "lightObj": "Directional Light",
+			"objRoot": "ObjRoot",
+			"orbitObj": "Orbit",
+			"orbitChild": "Light_Root"
+          }
+        }
+      ]
+    },
+	{
+      "name": "ObjRoot",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
+	{
+      "name": "Pyramid",
+      "parent": "ObjRoot",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
@@ -85,55 +92,41 @@
         {
           "type": "MeshRenderer3D",
           "properties": {
-            "mesh": "Cube",
+            "mesh": "Pyramid",
             "materials":[
-				"Red"
+				"Green"
 			]
           }
-        },
-		{
-          "type": "BoxCollider",
-		  "properties": {
-			  "center": [ 0.0, 0.0, 0.0 ],
-			  "size": [ 1.0, 1.0, 1.0 ],
-			  "isDebug": false
-		  }
         }
       ]
     },
 	{
-      "name": "Test2",
+      "name": "Orbit",
       "parent": "",
       "transform": {
-        "position": [ 0.0, 5.0, 0.0 ],
+        "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
       "components": [
         {
-          "type": "MeshRenderer3D",
+          "type": "MeshSpline",
           "properties": {
-            "mesh": "Sphere",
-            "materials":[
-				"Blue"
-			]
+            "pointObj": "Orbit.obj",
+            "color": [ 0.0, 1.0, 0.0, 1.0 ],
+            "lineWidth": 2.0
           }
-        },
-		{
-          "type": "SphereCollider",
-		  "properties": {
-			  "center": [ 0.0, 0.0, 0.0 ],
-			  "radius": 1.0,
-			  "isDebug": false
-		  }
-        },
-		{
-          "type": "RigidBody"
-        },
-		{
-			"type": "TestScript"
-		}
+        }
       ]
+    },
+	{
+      "name": "Light_Root",
+      "parent": "Orbit",
+      "transform": {
+        "position": [ 0.0, 0.0, 5.0 ],
+        "rotation": [ 0.0, 180.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
     }
   ]
 }

@@ -88,6 +88,7 @@ int main(int argc, char** argv) {
 	meshChache["Sphere"] = new Mesh("Default_Sphere.obj");
 	meshChache["Torus"] = new Mesh("Default_Torus.obj");
 	meshChache["SpotLight"] = new Mesh("Default_SpotLight.obj");
+	meshChache["Orbit"] = new Mesh("Orbit.obj");
 
 	Material* darkGreen = new Material(shaders["Standard"]);
 	darkGreen->SetVec4("tColor", vec4(0.29f, 0.31f, 0.29f, 1.0f));
