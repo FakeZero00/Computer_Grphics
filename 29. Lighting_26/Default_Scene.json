@@ -2,9 +2,7 @@
   "SceneName": "Default_Scene",
   "Objects": [
     {
-	  "
-      
-      ": true, 
+	  "isValid": true, 
       "name": "MainCamera",
       "parent": "",
       "transform": {

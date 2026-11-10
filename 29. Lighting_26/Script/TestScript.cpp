@@ -42,6 +42,11 @@ void TestScript::Update(float deltaTime) {
 		orbitTr->SetLocalScale(orbitTr->scale.x + 0.5f * deltaTime, 1.0f, orbitTr->scale.z + 0.5f * deltaTime);
 	}
 
+	if (inputManager->GetKeyDown(GLFW_KEY_N)) {
+		objRootTr->children[0]->gameObject->isValid = !objRootTr->children[0]->gameObject->isValid;
+		objRootTr->children[1]->gameObject->isValid = !objRootTr->children[1]->gameObject->isValid;
+	}
+
 	lightObjTr->SetLocalPosition(orbitChildTr->worldPosition);
 }
 
