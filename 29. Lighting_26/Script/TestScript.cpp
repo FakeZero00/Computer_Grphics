@@ -2,7 +2,10 @@
 #include "Object.h"
 
 void TestScript::Start() {
+	lightObjTr = lightObj->GetComponent<Transform>();
 	light = lightObj->GetComponent<Light>();
+
+	objRootTr = objRoot->GetComponent<Transform>();
 
 	orbitTr = orbitObj->GetComponent<Transform>();
 	orbitChildTr = orbitChild->GetComponent<Transform>();
@@ -21,6 +24,25 @@ void TestScript::Update(float deltaTime) {
 			isLightOn = true;
 		}
 	}
+
+	if (inputManager->GetKeyPressed(GLFW_KEY_Y)) {
+		objRootTr->Rotate(0.0f, 90.0f * deltaTime, 0.0f);
+	}
+
+	if (inputManager->GetKeyPressed(GLFW_KEY_R)) {
+		orbitTr->Rotate(0.0f, 90.0f * deltaTime, 0.0f);
+		lightObjTr->Rotate(0.0f, 90.0f * deltaTime, 0.0f);
+	}
+
+	if (inputManager->GetKeyPressed(GLFW_KEY_LEFT_SHIFT) &&
+		inputManager->GetKeyPressed(GLFW_KEY_Z)) {
+		orbitTr->SetLocalScale(orbitTr->scale.x - 0.5f * deltaTime, 1.0f, orbitTr->scale.z - 0.5f * deltaTime);
+	}
+	else if (inputManager->GetKeyPressed(GLFW_KEY_Z)) {
+		orbitTr->SetLocalScale(orbitTr->scale.x + 0.5f * deltaTime, 1.0f, orbitTr->scale.z + 0.5f * deltaTime);
+	}
+
+	lightObjTr->SetLocalPosition(orbitChildTr->worldPosition);
 }
 
 Component* TestScript::CreateFromJson(Object* obj, const json& props, const map<string, Object*>& spawnedObjects) {

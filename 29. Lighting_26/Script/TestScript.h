@@ -6,9 +6,11 @@
 class TestScript : public Component {
 private:
 	Object* lightObj;
+	Transform* lightObjTr;
 	Light* light;
 
 	Object* objRoot;
+	Transform* objRootTr;
 
 	Object* orbitObj;
 	Transform* orbitTr;
