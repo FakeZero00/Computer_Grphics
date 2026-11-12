@@ -32,7 +32,8 @@ void main()
 	vec3 norm = length(Normal) > 0.0 ? normalize(Normal) : vec3(0.0, 1.0, 0.0);
 	vec3 viewDir = normalize(viewPos - FragPos);
 	
-	vec3 finalLighting = vec3(0.0); // 누적할 최종 조명 색상
+	vec3 finalAmbientDiffuse = vec3(0.0); // 누적할 최종 조명 색상
+	vec3 finalSpecular = vec3(0.0); // 누적할 최종 정반사광 색상
 
 	// 씬에 존재하는 모든 빛을 순회하며 조명 값 합산
 	int count = min(numLights, MAX_LIGHTS);
@@ -71,7 +72,7 @@ void main()
 		vec3 diffuse = diff * lights[i].color;
 
 		// 3. Specular (정반사광)
-		float shiness = 128.0;
+		float shiness = 32.0;
 		vec3 reflectDir = reflect(lightDirNormalized, norm);  
 		float spec = pow(max(dot(viewDir, reflectDir), 0.0f), shiness);
 		vec3 specular = spec * lights[i].color;
@@ -80,9 +81,10 @@ void main()
 		specular *= attenuation * spotIntensity;
 
 		// 누적
-		finalLighting += (ambient + diffuse + specular);
+		finalAmbientDiffuse += (ambient + diffuse);
+		finalSpecular += specular;
 	}
 
-	vec3 result = finalLighting * vec3(tColor);
+	vec3 result = (finalAmbientDiffuse * vec3(tColor)) + (finalAmbientDiffuse * 0.1) + finalSpecular;
 	FragColor = vec4(result, tColor.a);
 }
