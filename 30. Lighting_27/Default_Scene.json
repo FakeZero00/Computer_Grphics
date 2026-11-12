@@ -1,0 +1,138 @@
+{
+  "SceneName": "Default_Scene",
+  "Objects": [
+    {
+	  "isValid": true,
+      "name": "MainCamera",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 10.0, 10.0 ],
+        "rotation": [ 45.0, 180.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "Camera",
+          "properties": {
+            "fov": 60.0,
+            "nearPlane": 0.1,
+            "farPlane": 1000.0
+          }
+        },
+        {
+          "type": "SceneCamera"
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "LightArm",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 10.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+		{
+          "type": "TestScript",
+          "properties": {
+            "lightObj": "Directional Light"
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Directional Light",
+      "parent": "LightArm",
+      "transform": {
+        "position": [ 0.0, 10.0, 10.0 ],
+        "rotation": [ 150.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+		{
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "SpotLight",
+            "materials":[
+				"Green"
+			]
+          }
+        },
+        {
+          "type": "Light",
+          "properties": {
+            "lightType": "Directional",
+            "lightColor": [1.0, 1.0, 1.0, 1.0],
+            "intensity": 2.0
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Sun",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials":[
+				"Red"
+			]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Planet",
+      "parent": "Sun",
+      "transform": {
+        "position": [ -5.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.7, 0.7, 0.7 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials":[
+				"Green"
+			]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Moon",
+      "parent": "Planet",
+      "transform": {
+        "position": [ -2.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials":[
+				"Blue"
+			]
+          }
+        }
+      ]
+    }
+  ]
+}
