@@ -1,0 +1,286 @@
+{
+  "SceneName": "Default_Scene",
+  "Objects": [
+	{
+	  "isValid": true,
+      "name": "CameraArm",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+		{
+          "type": "TestScript",
+          "properties": {
+            "lightObj": "Directional Light",
+			"lightRootObj": "LightArm"
+          }
+        }
+      ]
+    },
+    {
+	  "isValid": true,
+      "name": "MainCamera",
+      "parent": "CameraArm",
+      "transform": {
+        "position": [ 0.0, 5.0, 5.0 ],
+        "rotation": [ 45.0, 180.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "Camera",
+          "properties": {
+            "fov": 60.0,
+            "nearPlane": 0.1,
+            "farPlane": 1000.0
+          }
+        },
+        {
+          "type": "SceneCamera"
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "LightArm",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 135.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
+	{
+	  "isValid": true,
+      "name": "Directional Light",
+      "parent": "LightArm",
+      "transform": {
+        "position": [ 0.0, 10.0, 10.0 ],
+        "rotation": [ 150.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+		{
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "SpotLight",
+            "materials":[
+				"Green"
+			]
+          }
+        },
+        {
+          "type": "Light",
+          "properties": {
+            "lightType": "Directional",
+            "lightColor": [1.0, 1.0, 1.0, 1.0],
+            "intensity": 1.0
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Ground",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Ground",
+            "materials": [ "LightBlue" ]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Body_Root",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
+	{
+	  "isValid": true,
+      "name": "Bottom_Body.L",
+      "parent": "Body_Root",
+      "transform": {
+        "position": [ 0.88, 0.28, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Bottom_Body",
+            "materials": [ "Gray" ]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Bottom_Body.R",
+      "parent": "Body_Root",
+      "transform": {
+        "position": [ -0.88, 0.28, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Bottom_Body",
+            "materials": [ "Gray" ]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Middle_Body",
+      "parent": "Body_Root",
+      "transform": {
+        "position": [ 0.0, 0.76, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Middle_Body",
+            "materials": [ "LightGray" ]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Top_Body.L",
+      "parent": "Middle_Body",
+      "transform": {
+        "position": [ 0.88, 0.41, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Top_Body",
+            "materials": [ "LightGreen" ]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Barrel.L",
+      "parent": "Top_Body.L",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.19 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Barrel",
+            "materials": [ "LightYellow" ]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Flag.L",
+      "parent": "Top_Body.L",
+      "transform": {
+        "position": [ 0.0, 0.2, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Flag",
+            "materials": [ "Orange" ]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Top_Body.R",
+      "parent": "Middle_Body",
+      "transform": {
+        "position": [ -0.88, 0.41, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Top_Body",
+            "materials": [ "LightGreen" ]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Barrel.R",
+      "parent": "Top_Body.R",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.19 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Barrel",
+            "materials": [ "LightYellow" ]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Flag.R",
+      "parent": "Top_Body.R",
+      "transform": {
+        "position": [ 0.0, 0.2, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Flag",
+            "materials": [ "Orange" ]
+          }
+        }
+      ]
+    }
+  ]
+}
