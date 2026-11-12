@@ -13,8 +13,8 @@ private:
 
 	vec4 lightColor[3] = {
 		vec4(1.0f, 1.0f, 1.0f, 1.0f),
-		vec4(0.0f, 1.0f, 0.0f, 1.0f),
-		vec4(0.0f, 0.0f, 1.0f, 1.0f)
+		vec4(0.2f, 1.0f, 0.2f, 1.0f),
+		vec4(0.2f, 0.2f, 1.0f, 1.0f)
 	};
 	int currentColorIndex = 0;
 	float rotateSpeed = 90.0f;

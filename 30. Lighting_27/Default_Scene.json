@@ -29,7 +29,7 @@
       "name": "LightArm",
       "parent": "",
       "transform": {
-        "position": [ 0.0, 0.0, 10.0 ],
+        "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
@@ -47,8 +47,8 @@
       "name": "Directional Light",
       "parent": "LightArm",
       "transform": {
-        "position": [ 0.0, 10.0, 10.0 ],
-        "rotation": [ 150.0, 0.0, 0.0 ],
+        "position": [ 0.0, 0.0, 10.0 ],
+        "rotation": [ 0.0, 180.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
       "components": [
@@ -64,9 +64,9 @@
         {
           "type": "Light",
           "properties": {
-            "lightType": "Directional",
+            "lightType": "Spot",
             "lightColor": [1.0, 1.0, 1.0, 1.0],
-            "intensity": 2.0
+            "intensity": 1.0
           }
         }
       ]

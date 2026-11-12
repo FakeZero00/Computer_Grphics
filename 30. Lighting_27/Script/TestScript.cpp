@@ -15,10 +15,10 @@ void TestScript::Update(float deltaTime) {
 	}
 
 	if (inputManager->GetKeyPressed(GLFW_KEY_LEFT_SHIFT) &&
-		inputManager->GetKeyDown(GLFW_KEY_R)) {
+		inputManager->GetKeyPressed(GLFW_KEY_R)) {
 		tr->Rotate(0.0f, rotateSpeed * deltaTime, 0.0f);
 	}
-	else if (inputManager->GetKeyDown(GLFW_KEY_R)) {
+	else if (inputManager->GetKeyPressed(GLFW_KEY_R)) {
 		tr->Rotate(0.0f, -rotateSpeed * deltaTime, 0.0f);
 	}
 }
