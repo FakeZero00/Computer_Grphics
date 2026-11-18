@@ -46,6 +46,7 @@
     <ClInclude Include="Default_Scene.h" />
     <ClInclude Include="Script\SceneCamera.h" />
     <ClInclude Include="Script\TestScript.h" />
+    <ClInclude Include="Script\YukiGenerator.h" />
     <ClInclude Include="Utility\ColliderManager.h" />
     <ClInclude Include="Utility\InputManager.h" />
     <ClInclude Include="Utility\ObjImporter.h" />
@@ -70,6 +71,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Script\SceneCamera.cpp" />
     <ClCompile Include="Script\TestScript.cpp" />
+    <ClCompile Include="Script\YukiGenerator.cpp" />
     <ClCompile Include="Utility\ColliderManager.cpp" />
     <ClCompile Include="Utility\ObjImporter.cpp" />
     <ClCompile Include="Utility\SceneLoader.cpp" />

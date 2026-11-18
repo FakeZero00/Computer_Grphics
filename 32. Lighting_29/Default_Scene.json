@@ -55,7 +55,22 @@
     },
 	{
 	  "isValid": true,
-      "name": "Test",
+      "name": "Manager",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+		{
+			"type": "TestScript"
+		}
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Ground",
       "parent": "",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
@@ -66,11 +81,55 @@
         {
           "type": "MeshRenderer3D",
           "properties": {
-            "mesh": "Pyramid",
+            "mesh": "Ground",
             "materials":[
-				"Red"
+				"DarkGray"
 			]
           }
+        },
+		{
+			"type": "BoxCollider",
+			"properties": {
+				"center": [0.0, 0.0, 0.0],
+				"size": [1.0, 1.0, 1.0],
+				"isDebug": true
+			}
+		}
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "BigPyramid",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "BigPyramid",
+            "materials":[
+				"Cyan"
+			]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "YukiGenerator",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 20.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "YukiGenerator"
         }
       ]
     }

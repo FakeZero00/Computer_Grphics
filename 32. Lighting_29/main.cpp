@@ -88,15 +88,11 @@ int main(int argc, char** argv) {
 	meshChache["Sphere"] = new Mesh("Default_Sphere.obj");
 	meshChache["Torus"] = new Mesh("Default_Torus.obj");
 	meshChache["SpotLight"] = new Mesh("Default_SpotLight.obj");
+	meshChache["BigPyramid"] = new Mesh("BigPyramid.obj");
+	meshChache["Ground"] = new Mesh("Ground.obj");
 
-	Material* darkGreen = new Material(shaders["Standard"]);
-	darkGreen->SetVec4("tColor", vec4(0.29f, 0.31f, 0.29f, 1.0f));
 	Material* darkGray = new Material(shaders["Standard"]);
-	darkGray->SetVec4("tColor", vec4(0.1f, 0.1f, 0.1f, 1.0f));
-	Material* lightGray = new Material(shaders["Standard"]);
-	lightGray->SetVec4("tColor", vec4(0.34f, 0.34f, 0.39f, 1.0f));
-	Material* darkYellow = new Material(shaders["Standard"]);
-	darkYellow->SetVec4("tColor", vec4(0.72f, 0.66f, 0.24f, 1.0f));
+	darkGray->SetVec4("tColor", vec4(0.4f, 0.4f, 0.4f, 1.0f));
 	Material* black = new Material(shaders["Standard"]);
 	black->SetVec4("tColor", vec4(0.0f, 0.0f, 0.0f, 1.0f));
 	Material* red = new Material(shaders["Standard"]);
@@ -109,18 +105,21 @@ int main(int argc, char** argv) {
 	orange->SetVec4("tColor", vec4(1.0f, 0.5f, 0.0f, 1.0f));
 	Material* purple = new Material(shaders["Standard"]);
 	purple->SetVec4("tColor", vec4(0.5f, 0.0f, 1.0f, 1.0f));
+	Material* cyan = new Material(shaders["Standard"]);
+	cyan->SetVec4("tColor", vec4(0.0f, 1.0f, 1.0f, 1.0f));
+	Material* white = new Material(shaders["Standard"]);
+	white->SetVec4("tColor", vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 	materialChache["LocalPosColor"] = new Material(shaders["LocalPosColor"]);
-	materialChache["DarkGreen"] = darkGreen;
 	materialChache["DarkGray"] = darkGray;
-	materialChache["LightGray"] = lightGray;
-	materialChache["DarkYellow"] = darkYellow;
 	materialChache["Black"] = black;
 	materialChache["Red"] = red;
 	materialChache["Green"] = green;
 	materialChache["Blue"] = blue;
 	materialChache["Orange"] = orange;
 	materialChache["Purple"] = purple;
+	materialChache["Cyan"] = cyan;
+	materialChache["White"] = white;
 
 	//////////////////사용자 정의 초기화////////////////////
 

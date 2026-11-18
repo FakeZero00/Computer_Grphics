@@ -144,6 +144,9 @@
     <ClInclude Include="Data_Structure\LightType.h">
       <Filter>Data_Structure\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Script\YukiGenerator.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -208,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="Component\Light.cpp">
       <Filter>Component\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\YukiGenerator.cpp">
+      <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
