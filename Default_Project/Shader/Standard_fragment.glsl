@@ -13,9 +13,7 @@ struct Light {
     vec3 direction;
     vec3 color;
 
-    float constant;
-    float linear;
-    float quadratic;
+    float radius;
     
     float cutOff;
     float outerCutOff;
@@ -56,7 +54,17 @@ void main()
 			lightDirNormalized = normalize(lightToFrag);
 
 			// 거리 감쇠 (Attenuation)
-			attenuation = 1.0 / (lights[i].constant + lights[i].linear * distance + lights[i].quadratic * (distance * distance));
+			float attenuation = 0.0;
+			if (distance < lights[i].radius) {
+				// 거리 비율 (0.0 ~ 1.0)
+				float d = distance / lights[i].radius;
+				
+				// 반경 끝에서 빛이 부드럽게 0이 되도록 깎아주는 윈도우 함수
+				float falloff = clamp(1.0 - (d * d * d * d), 0.0, 1.0);
+				
+				// 최종 감쇠 = 역제곱 법칙 * 윈도우 함수
+				attenuation = (falloff * falloff) / (distance * distance + 1.0);
+			}
 
 			// 스팟 원뿔 각도 (Spotlight CutOff)
 			if (lights[i].type == 2) {
