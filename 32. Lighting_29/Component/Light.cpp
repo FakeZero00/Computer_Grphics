@@ -25,9 +25,8 @@ Component* Light::CreateFromJson(Object* obj, const json& props, const map<strin
 	}
 
 	// Spotlight 및 감쇠 속성 로드
-	if (props.contains("constant")) light->constant = props["constant"];
-	if (props.contains("linear")) light->linear = props["linear"];
-	if (props.contains("quadratic")) light->quadratic = props["quadratic"];
+	if (props.contains("radius")) light->radius = props["constant"];
+
 	if (props.contains("cutOff")) light->cutOff = props["cutOff"];
 	if (props.contains("outerCutOff")) light->outerCutOff = props["outerCutOff"];
 

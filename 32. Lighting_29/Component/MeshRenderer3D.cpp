@@ -71,9 +71,7 @@ void MeshRenderer3D::Render(Camera* activeCamera) {
 				vec3 lightPos = vec3(lightTr->worldMatrix[3]); // Transform 4번째 열(위치값)
 				glUniform3fv(glGetUniformLocation(material->shaderProgram, (baseName + "position").c_str()), 1, value_ptr(lightPos));
 
-				glUniform1f(glGetUniformLocation(material->shaderProgram, (baseName + "constant").c_str()), sceneLight->constant);
-				glUniform1f(glGetUniformLocation(material->shaderProgram, (baseName + "linear").c_str()), sceneLight->linear);
-				glUniform1f(glGetUniformLocation(material->shaderProgram, (baseName + "quadratic").c_str()), sceneLight->quadratic);
+				glUniform1f(glGetUniformLocation(material->shaderProgram, (baseName + "radius").c_str()), sceneLight->radius);
 
 				if (sceneLight->lightType == LightType::Spot) {
 					glUniform1f(glGetUniformLocation(material->shaderProgram, (baseName + "cutOff").c_str()), glm::cos(glm::radians(sceneLight->cutOff)));
