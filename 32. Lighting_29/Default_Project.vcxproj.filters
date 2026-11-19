@@ -147,6 +147,9 @@
     <ClInclude Include="Script\YukiGenerator.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="Script\Manager.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\MeshRenderer3D.cpp">
@@ -213,6 +216,9 @@
       <Filter>Component\Source</Filter>
     </ClCompile>
     <ClCompile Include="Script\YukiGenerator.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Manager.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

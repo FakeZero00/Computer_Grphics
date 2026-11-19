@@ -48,18 +48,28 @@
           "properties": {
             "lightType": "Directional",
             "lightColor": [1.0, 1.0, 1.0, 1.0],
-            "intensity": 0.5
+            "intensity": 0.3
           }
         }
       ]
     },
 	{
 	  "isValid": true,
-      "name": "Spot Light",
+      "name": "Spot Light Arm",
       "parent": "",
       "transform": {
-        "position": [ 0.0, 10.0, 10.0 ],
-        "rotation": [ 45.0, 180.0, 0.0 ],
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ -45.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
+	{
+	  "isValid": true,
+      "name": "Spot Light",
+      "parent": "Spot Light Arm",
+      "transform": {
+        "position": [ 0.0, 0.0, 20.0 ],
+        "rotation": [ 0.0, 180.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
       "components": [
@@ -94,7 +104,11 @@
       },
       "components": [
 		{
-			"type": "TestScript"
+			"type": "Manager",
+			"properties": {
+				"lightArm": "Spot Light Arm",
+				"lightObj": "Spot Light"
+			}
 		}
       ]
     },
@@ -171,7 +185,12 @@
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
-      }
+      },
+	  "components": [
+		{
+			"type": "TestScript"
+		}
+      ]
     },
 	{
 	  "isValid": true,
@@ -202,7 +221,12 @@
         "position": [ 0.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 45.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
-      }
+      },
+	  "components": [
+		{
+			"type": "TestScript"
+		}
+      ]
     },
 	{
 	  "isValid": true,
@@ -231,9 +255,35 @@
       "parent": "",
       "transform": {
         "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, -45.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+	  "components": [
+		{
+			"type": "TestScript"
+		}
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Planet3",
+      "parent": "Root3",
+      "transform": {
+        "position": [ 10.0, 0.0, 0.0 ],
         "rotation": [ 0.0, 0.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
-      }
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials":[
+				"Green"
+			]
+          }
+        }
+      ]
     }
   ]
 }

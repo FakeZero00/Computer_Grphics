@@ -44,6 +44,7 @@
     <ClInclude Include="Data_Structure\ScreenSize.h" />
     <ClInclude Include="Data_Structure\Vertex.h" />
     <ClInclude Include="Default_Scene.h" />
+    <ClInclude Include="Script\Manager.h" />
     <ClInclude Include="Script\SceneCamera.h" />
     <ClInclude Include="Script\TestScript.h" />
     <ClInclude Include="Script\YukiGenerator.h" />
@@ -69,6 +70,7 @@
     <ClCompile Include="Data_Structure\Scene.cpp" />
     <ClCompile Include="Default_Scene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Script\Manager.cpp" />
     <ClCompile Include="Script\SceneCamera.cpp" />
     <ClCompile Include="Script\TestScript.cpp" />
     <ClCompile Include="Script\YukiGenerator.cpp" />
