@@ -29,8 +29,37 @@
       "name": "Directional Light",
       "parent": "",
       "transform": {
+        "position": [ 0.0, 20.0, 0.0 ],
+        "rotation": [ 45.0, 180.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+		{
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "SpotLight",
+            "materials":[
+				"Red"
+			]
+          }
+        },
+        {
+          "type": "Light",
+          "properties": {
+            "lightType": "Directional",
+            "lightColor": [1.0, 1.0, 1.0, 1.0],
+            "intensity": 0.5
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Spot Light",
+      "parent": "",
+      "transform": {
         "position": [ 0.0, 10.0, 10.0 ],
-        "rotation": [ 150.0, 0.0, 0.0 ],
+        "rotation": [ 45.0, 180.0, 0.0 ],
         "scale": [ 1.0, 1.0, 1.0 ]
       },
       "components": [
@@ -46,9 +75,10 @@
         {
           "type": "Light",
           "properties": {
-            "lightType": "Directional",
+            "lightType": "Spot",
             "lightColor": [1.0, 1.0, 1.0, 1.0],
-            "intensity": 1.0
+            "intensity": 1.0,
+			"outerCutOff" : 20.0
           }
         }
       ]
@@ -132,6 +162,78 @@
           "type": "YukiGenerator"
         }
       ]
+    },
+	{
+	  "isValid": true,
+      "name": "Root1",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
+	{
+	  "isValid": true,
+      "name": "Planet1",
+      "parent": "Root1",
+      "transform": {
+        "position": [ 10.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials":[
+				"Red"
+			]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Root2",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 45.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    },
+	{
+	  "isValid": true,
+      "name": "Planet2",
+      "parent": "Root2",
+      "transform": {
+        "position": [ 10.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "Sphere",
+            "materials":[
+				"Blue"
+			]
+          }
+        }
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "Root3",
+      "parent": "",
+      "transform": {
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
     }
   ]
 }

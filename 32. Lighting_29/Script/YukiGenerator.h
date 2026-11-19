@@ -24,6 +24,7 @@ private:
 
 	vector<Object*> yukiObjects;
 	vector<float> yukiSpeeds;
+	vector<Transform*> yukiTransforms;
 
 	InputManager* inputManager;
 
