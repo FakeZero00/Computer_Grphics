@@ -2,9 +2,13 @@
 in vec3 out_Color;
 in vec3 FragPos;
 in vec3 Normal;
+in vec2 TexCoord;
 
 uniform vec4 tColor;				
-uniform vec3 viewPos;		
+uniform vec3 viewPos;
+
+uniform sampler2D mainTex;
+uniform bool useTexture;
 
 //다중 광원을 받기 위한 구조체 정의
 struct Light {
@@ -27,6 +31,11 @@ out vec4 FragColor;
 
 void main()
 {
+	vec4 baseColor = tColor;
+	if (useTexture) {
+		baseColor *= texture(mainTex, TexCoord);
+	}
+
 	vec3 norm = length(Normal) > 0.0 ? normalize(Normal) : vec3(0.0, 1.0, 0.0);
 	vec3 viewDir = normalize(viewPos - FragPos);
 	
@@ -54,7 +63,7 @@ void main()
 			lightDirNormalized = normalize(lightToFrag);
 
 			// 거리 감쇠 (Attenuation)
-			float attenuation = 0.0;
+			attenuation = 0.0;
 			if (distance < lights[i].radius) {
 				// 거리 비율 (0.0 ~ 1.0)
 				float d = distance / lights[i].radius;
@@ -93,6 +102,6 @@ void main()
 		finalSpecular += specular;
 	}
 
-	vec3 result = (finalAmbientDiffuse * vec3(tColor)) + (finalAmbientDiffuse * 0.1) + finalSpecular;
-	FragColor = vec4(result, tColor.a);
+	vec3 result = (finalAmbientDiffuse * vec3(baseColor)) + (finalAmbientDiffuse * 0.1) + finalSpecular;
+	FragColor = vec4(result, baseColor.a);
 }

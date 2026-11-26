@@ -42,6 +42,7 @@
     <ClInclude Include="Data_Structure\Object.h" />
     <ClInclude Include="Data_Structure\Scene.h" />
     <ClInclude Include="Data_Structure\ScreenSize.h" />
+    <ClInclude Include="Data_Structure\Texture.h" />
     <ClInclude Include="Data_Structure\Vertex.h" />
     <ClInclude Include="Default_Scene.h" />
     <ClInclude Include="Script\SceneCamera.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="Utility\ObjImporter.h" />
     <ClInclude Include="Utility\SceneLoader.h" />
     <ClInclude Include="Utility\ShaderManager.h" />
+    <ClInclude Include="Utility\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\BoxCollider.cpp" />
@@ -66,6 +68,7 @@
     <ClCompile Include="Data_Structure\Mesh.cpp" />
     <ClCompile Include="Data_Structure\Object.cpp" />
     <ClCompile Include="Data_Structure\Scene.cpp" />
+    <ClCompile Include="Data_Structure\Texture.cpp" />
     <ClCompile Include="Default_Scene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Script\SceneCamera.cpp" />
@@ -141,6 +144,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>Component;Data_Structure;Script;Utility;$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>Component;Data_Structure;Script;Shader;Utility;Assets;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -205,6 +211,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalOptions>opengl32.lib glew32.lib glfw3.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Manifest>
       <EnableSegmentHeap>true</EnableSegmentHeap>

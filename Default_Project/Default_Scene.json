@@ -120,7 +120,7 @@
           "properties": {
             "mesh": "Sphere",
             "materials":[
-				"Blue"
+				"ColorGrid"
 			]
           }
         },
@@ -138,6 +138,29 @@
 		{
 			"type": "TestScript"
 		}
+      ]
+    },
+	{
+	  "isValid": true,
+      "name": "MeetMat",
+      "parent": "",
+      "transform": {
+        "position": [ 5.0, 0.0, 0.0 ],
+        "rotation": [ 0.0, 0.0, 0.0 ],
+        "scale": [ 0.4, 0.4, 0.4 ]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer3D",
+          "properties": {
+            "mesh": "MeetMat",
+            "materials":[
+				"MeetMat_Head",
+				"MeetMat_Body",
+				"MeetMat_Base"
+			]
+          }
+        }
       ]
     }
   ]
